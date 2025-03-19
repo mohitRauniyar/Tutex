@@ -1,0 +1,296 @@
+1. Register User
+    endpoint: /register
+    method: POST
+    payload:
+    {
+        username: String,
+        password: String,
+        email: String,
+        DOB: Date,
+        Gender: Char
+    }
+    success response:
+    {
+        message: String,
+        body:{
+            username: String
+        }
+    }
+    error response:
+    {
+        message: String
+    }
+
+2. Login User
+    endpoint: /login
+    method: POST
+    payload:
+    {
+        username: String,
+        password: String
+    }
+    success response:
+    {
+        message: String,
+        body:{
+            username: String,
+        }
+    }
+    error response:
+    {
+        message: String
+    }
+
+3. Get all tutorials
+    endpoint: /tutorial/all
+    method: Get
+    Success response:
+    {
+        message: String,
+        body:[
+            {
+                courseId: Long,
+                title: String,
+                pictureUrl: String,
+                status: String,
+                slug: String
+            },...
+        ]
+    }
+    error response:
+    {
+        message: String
+    }
+
+4. Get tutorial detail with tutorialId
+    endpoint: /tutorial/{tutorialId}
+    method: Get
+    Success Response:
+    {
+        message: String,
+        body:{
+            courseId: Long,
+            title: String,
+            pictureUrl: String,
+            status: String,
+            lessons: [
+                {
+                    lessonId: Long,
+                    lessonNumber: Int,
+                    title: String,
+                    description: String,
+                    progress: Double
+                },...
+            ]
+        }
+    }
+    error response:
+    {
+        message: String
+    }
+
+5. Start a tutorial
+    endpoint: /tutorial/{tutorialId}/start
+    method: Get
+    Success Response:
+    {
+        message: String,
+        body:{
+            assignmentId: Long,
+            courseId: Long,
+            title: String,
+            status: String,
+            lessons: [
+                {
+                    lessonId: Long,
+                    lessonNumber: Int,
+                    title: String,
+                    description: String,
+                    progress: Double
+                }, ...
+            ]
+        }
+    }
+    Error Response:
+    {
+        message: String
+    }
+
+6. Get user-specific courses
+    endpoint: /user/tutorial/all
+    method: Get
+    Success Response:
+    {
+        message: String,
+        body:[
+            body:{
+                assignmentId: Long,
+                courseId: Long,
+                title: String,
+                pictureUrl: String,
+                status: String,
+            }
+        ]
+    }
+    error response:
+    {
+        message: String
+    }
+
+7. Get specific assignement of user
+    endpoint: /user/tutorial/{tutorialId}
+    method: Get
+    Success Response:
+    {
+        message: String,
+        body:{
+            assignemntId: String,
+            courseId: Long,
+            title: String,
+            pictureUrl: String,
+            status: String,
+            lessons: [
+                {
+                    lessonId: Long,
+                    lessonNumber: Int,
+                    title: String,
+                    description: String,
+                    progress: Double
+                },...
+            ]
+        }
+    }
+    error response:
+    {
+        message: String
+    }
+
+8. Complete a lesson
+    endpoint: /user/{assignemntId}/{lessonId}/{moduleName}/complete
+    method: Get
+    Success Response:
+    {
+        message: String,
+        body:{
+            assignemntId: String,
+            courseId: Long,
+            title: String,
+            pictureUrl: String,
+            status: String,
+            lessons: [
+                {
+                    lessonId: Long,
+                    lessonNumber: Int,
+                    title: String,
+                    description: String,
+                    progress: Double
+                },...
+            ]
+        }
+    }
+    error response:
+    {
+        message: String
+    }
+
+9. Signout
+    endpoint: /signout
+    method: Get
+    success Response:
+    {
+        message: String
+    }
+    error response:
+    {
+        message: String
+    }
+
+10. Delete
+    endpoint: /delete
+    method: Get
+    success Response:
+    {
+        message: String
+    }
+    error response:
+    {
+        message: String
+    }
+
+11. Get profile data
+    endpoint: /user/profile
+    method: GET
+    success Response:
+    {
+        message: String,
+        body:{
+            username: String,
+            email: String,
+            DOB: Date,
+            Gender: Char,
+            profileImageUrl: String
+        }
+    }
+    error response:
+    {
+        message: String
+    }
+
+12. Update Profile
+    endpoint: /user/update
+    method: POST
+    payload:{
+        username: String,
+        email: String,
+        DOB: Date,
+        Gender: Char,
+        profileImageUrl: String
+    }
+    success Response:
+    {
+        message: String,
+        body:{
+            username: String,
+            email: String,
+            DOB: Date,
+            Gender: Char,
+            profileImageUrl: String
+        }
+    }
+    error response:
+    {
+        message: String
+    }
+
+13. Change password
+    endpoint: /user/password/change
+    method: POST
+    payload:{
+        oldPassword: String,
+        newPassword: String
+    }
+    success Response:
+    {
+        message: String
+    }
+    error Response:
+    {
+        message: String
+    }
+
+14. Forgot password
+    endpoint: /user/password/forgot
+    method: POST
+    payload: {
+        email: String
+    }
+    success Response:
+    {
+        message: String,
+        email: String
+    }
+    error response:{
+        message: String
+    }
+
+15. Verify email password change link
