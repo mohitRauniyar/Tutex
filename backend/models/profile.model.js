@@ -1,6 +1,6 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
-const User = require("./user.model");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
+import User from "./user.model.js";
 
 const Profile = sequelize.define("Profile", {
     profileId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -14,4 +14,4 @@ const Profile = sequelize.define("Profile", {
 User.hasOne(Profile, { foreignKey: "userId" });
 Profile.belongsTo(User, { foreignKey: "userId" });
 
-module.exports = Profile;
+export default Profile;

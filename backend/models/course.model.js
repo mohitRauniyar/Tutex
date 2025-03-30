@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
 const Course = sequelize.define("Course", {
     courseId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -9,4 +9,4 @@ const Course = sequelize.define("Course", {
     createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 });
 
-module.exports = Course;
+export default Course;
