@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { MdCancel } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
+import {MODES} from "../../../constants"
+import WalkthroughOverlay from "./WalkThrough/WalkThroughOverlay";
+
 
 function EnterPin() {
+  const { mode } = useParams();
+  const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
   const [pin, setPin] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,6 +60,15 @@ function EnterPin() {
 
   return (
     <div className="h-screen bg-gray-100 flex flex-col justify-between">
+      {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
+        <WalkthroughOverlay
+        step="enterPin"
+        refs={{
+        
+        }}
+          onComplete={() => setIsWalkthroughComplete(true)}
+        />
+      )}
       {/* Header Section */}
       <div className="">
 

@@ -1,9 +1,18 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaRegCircleQuestion,FaRegImage  } from "react-icons/fa6";
 import { BiSolidTorch } from "react-icons/bi";
+import { MODES } from "../../../constants";
+import WalkthroughOverlay from "./WalkThrough/WalkThroughOverlay";
+
 
 function ScanQR() {
+  const { mode } = useParams();
+
+  const qrCodeRef = useRef(null);
+  const uploadQRRef = useRef(null);
+  const scanningArea = useRef(null);
+  const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
   const [isDropped, setIsDropped] = useState(false);
   const navigate = useNavigate();
 
@@ -12,7 +21,7 @@ function ScanQR() {
     e.preventDefault();
     setIsDropped(true);
     setTimeout(() => {
-      navigate("/tutorial/UPI/enter-amount");
+      navigate(`/tutorial/UPI/enter-amount/${mode}`);
     }, 1000);
   };
 
@@ -23,6 +32,15 @@ function ScanQR() {
 
   return (
     <div className="relative w-full h-screen">
+      {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
+        <WalkthroughOverlay
+        step="qrScanning"
+        refs={{
+          qrCodeRef, uploadQRRef, scanningArea
+        }}
+          onComplete={() => setIsWalkthroughComplete(true)}
+        />
+      )}
       {/* Top Header */}
       <div className="flex items-center justify-between p-4 absolute top-0 w-full">
         <div className="flex gap-4">
@@ -34,16 +52,17 @@ function ScanQR() {
 
       {/* QR Scanning Box */}
       <div
-        className="absolute top-40 left-[50%] -translate-x-[50%] flex justify-center items-center"
+        className="absolute top-30 left-[50%] -translate-x-[50%] flex justify-center items-center"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
+        
       >
         <div
           className={`w-64 h-64 relative bg-black bg-opacity-40 rounded-lg ${
             isDropped
               ? "border-4 border-green-500"
               : "border-dashed border-4 border-purple-500"
-          }`}
+          }` } ref={scanningArea}
         >
           {/* Purple Corner Borders */}
           <div className="absolute top-1 left-1 w-6 h-6 border-t-4 border-l-4 border-purple-500"></div>
@@ -67,22 +86,22 @@ function ScanQR() {
       {/* Draggable QR Box */}
       {!isDropped && (
         <div
-          className="absolute bottom-20 left-1/2 transform -translate-x-1/2 cursor-pointer"
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer"
           draggable
           onDragStart={(e) => {
             e.dataTransfer.setData("text/plain", "qr");
           }}
         >
-          <div className="w-48 h-48 bg-gray-300 rounded-lg shadow-lg flex items-center justify-center">
+          <div className="w-48 h-48 bg-gray-300 rounded-lg shadow-lg flex items-center justify-center" ref={qrCodeRef}>
             <img src="/assets/Tutorials/UPI/QRPayments/qrCode.webp" alt="" />
           </div>
         </div>
       )}
 
       {/* Upload & Torch Buttons */}
-      <div className="absolute top-110 w-full flex justify-center gap-8">
-        <div className="flex flex-col items-center">
-          <div className="w-12 h-12 bg-gray-200 flex justify-center items-center text-xl rounded-full mb-2"><FaRegImage /></div>
+      <div className="absolute top-100 w-full flex justify-center gap-8 -z-10">
+        <div className="flex flex-col items-center" ref={uploadQRRef}>
+          <div className="w-12 h-12 bg-gray-200 flex justify-center items-center text-xl rounded-full mb-2" ><FaRegImage /></div>
           <p className="text-black text-xs">Upload QR</p>
         </div>
         <div className="flex flex-col items-center">
