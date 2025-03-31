@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { configDotenv } from "dotenv";
 import { sendEmail } from "../utils/EmailUtility.js";
 import { generateOTP } from "../utils/OTPGeneration.js";
+import { generateToken } from "../utils/JwtTokenHandler.js";
 
 configDotenv();
 
@@ -42,14 +43,4 @@ const handleResponse = (req,res,username)=>{
         httpOnly:true,
     });
     return res.status(200).json({message:"Login Successful",body:{username:username,emailVerified:true}});
-}
-
-const generateToken = (username)=>{
-    try{
-        const token = jwt.sign(username,JWT_SECRET_KEY);
-        return token;
-    }catch(err){
-        console.log(err.message);
-        return null;
-    }
 }

@@ -7,6 +7,7 @@ const Profile = sequelize.define("Profile", {
     name: { type: DataTypes.STRING(255), allowNull: false },
     gender: { type: DataTypes.CHAR(1) },
     dob: { type: DataTypes.DATE },
+    email:{type:DataTypes.STRING,allowNull:false,unique:true,validate:{notEmpty:true}},
     profileUrl: { type: DataTypes.STRING(255) },
     createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 });

@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 configDotenv();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const authenticateUser = (req,res,next)=>{
-    if(req.path === "/login" || req.path === "/register" || req.path === "/register/verification")return next();
+    if(req.path === "/login" || req.path === "/register" || req.path === "/register/verify")return next();
     else{
         const authToken = req.cookies["auth-token"];
         if(!authToken){
