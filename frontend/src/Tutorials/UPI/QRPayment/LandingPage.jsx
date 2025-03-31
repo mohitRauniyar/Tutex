@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {Link} from "react-router-dom"
 import { IoCallOutline } from "react-icons/io5";
 import { BiSolidBank } from "react-icons/bi";
@@ -13,12 +13,19 @@ import WalkthroughOverlay from "./WalkThrough/WalkThroughOverlay";
 
 
 function LandingPage({mode}) {
+  // const mobileTransferRef = useRef(null);
+  const qrScanRef = useRef(null);
+  const uploadQRRef = useRef(null)
+  // const checkBalanceRef = useRef(null);
   const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
   return (
     <div className="bg-white min-h-screen text-black font-sans">
       {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
         <WalkthroughOverlay
-          step="landing"
+        step="landing"
+        refs={{
+          qrScanRef
+        }}
           onComplete={() => setIsWalkthroughComplete(true)}
         />
       )}
@@ -29,7 +36,6 @@ function LandingPage({mode}) {
           alt="could not load image"
         />
       </div>
-
       {/* Money Transfers */}
       <div className="p-4 pb-0">
         <h2 className="text-lg font-bold">Money transfers</h2>
@@ -166,9 +172,9 @@ function LandingPage({mode}) {
           <IoIosSearch className="text-xl"/>
           <p>Search</p>
         </div>
-        <Link to="qr">
-        <div className="flex flex-col items-center text-sm text-gray-500">
-          <div className="bg-[#6510C5] p-4 text-white rounded-full text-2xl">
+        <Link to={`qr/${mode}`}>
+        <div className="flex flex-col items-center text-sm text-gray-500" >
+          <div className="bg-[#6510C5] p-4 text-white rounded-full text-2xl" ref={qrScanRef}>
             <BsQrCodeScan className="text-lg"/>
           </div>
         </div>

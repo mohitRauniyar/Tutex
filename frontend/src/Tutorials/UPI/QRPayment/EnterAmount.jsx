@@ -1,12 +1,21 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaCheckCircle } from "react-icons/fa";
 import { CiBank } from "react-icons/ci";
+import { MODES } from "../../../constants";
+import WalkthroughOverlay from "./WalkThrough/WalkThroughOverlay";
+
 
 function EnterAmount() {
+  const { mode } = useParams();
+  const amountInputRef = useRef(null);
+  const proceedRef = useRef(null);
+  const summaryRef = useRef(null);
+  const payRef = useRef(null);
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
   const [showPaymentSheet, setShowPaymentSheet] = useState(false);
+  const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
   const navigate = useNavigate();
 
   // Check if amount is valid to enable button
@@ -21,11 +30,20 @@ function EnterAmount() {
 
   // Handle Pay Now
   const handlePayNow = () => {
-    navigate("/tutorial/UPI/enter-pin", {state: {amount: amount}});
+    navigate(`/tutorial/UPI/enter-pin/${mode}`, {state: {amount: amount}});
   };
 
   return (
     <div className="bg-gray-100 relative">
+      {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
+        <WalkthroughOverlay
+        step="enterAmount"
+        refs={{
+          amountInputRef, proceedRef, summaryRef, payRef
+        }}
+          onComplete={() => setIsWalkthroughComplete(true)}
+        />
+      )}
       {/* Header Section */}
       <div className="flex items-center p-4 bg-white shadow-md">
         <button className="text-black text-xl">&larr;</button>
@@ -49,7 +67,7 @@ function EnterAmount() {
         </div>
 
         {/* Amount Input */}
-        <div className="mt-4 border border-purple-500 rounded-lg flex items-center p-3">
+        <div className="mt-4 border border-purple-500 rounded-lg flex items-center p-3" ref={amountInputRef}>
           <span className="text-lg font-bold mr-2">₹</span>
           <input
             type="number"
@@ -82,6 +100,7 @@ function EnterAmount() {
           }`}
           onClick={handleProceedToPay}
           disabled={!isAmountValid}
+          ref={proceedRef}
         >
           Proceed To Pay
         </button>
@@ -99,7 +118,7 @@ function EnterAmount() {
       <div
         className={`fixed bottom-0 left-0 w-full bg-white rounded-t-2xl shadow-lg transition-transform duration-300 ${
           showPaymentSheet ? "translate-y-0" : "translate-y-full"
-        }`}
+        }`} ref={summaryRef}
       >
         {/* Close Button and Total Payable */}
         <div className="flex justify-between items-center p-4">
@@ -151,7 +170,7 @@ function EnterAmount() {
         <div className="p-4 bg-white shadow-md">
           <button
             onClick={handlePayNow}
-            className="w-full bg-purple-600 text-white font-bold py-3 rounded-lg"
+            className="w-full bg-purple-600 text-white font-bold py-3 rounded-lg" ref={payRef}
             >
             Pay ₹{amount || "0"}
           </button>
