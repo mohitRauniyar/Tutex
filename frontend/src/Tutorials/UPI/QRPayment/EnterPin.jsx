@@ -3,7 +3,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { MdCancel } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
 import {MODES} from "../../../constants"
-import WalkthroughOverlay from "./WalkThrough/WalkThroughOverlay";
+import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
+import PracticeOverlay from "./Overlays/PracticeOverlay";
 
 
 function EnterPin() {
@@ -67,6 +68,11 @@ function EnterPin() {
         
         }}
           onComplete={() => setIsWalkthroughComplete(true)}
+        />
+      )}
+      {mode === MODES.PRACTICE && (
+        <PracticeOverlay
+        step="UPI_QR_enterPin"
         />
       )}
       {/* Header Section */}
