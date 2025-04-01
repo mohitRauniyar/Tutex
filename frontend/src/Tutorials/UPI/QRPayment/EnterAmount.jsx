@@ -5,6 +5,7 @@ import { CiBank } from "react-icons/ci";
 import { MODES } from "../../../constants";
 import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
 import PracticeOverlay from "./Overlays/PracticeOverlay";
+import AssessmentOverlay from "./Overlays/AssessmentOverlay";
 
 
 function EnterAmount() {
@@ -53,6 +54,9 @@ function EnterAmount() {
         }}
         />
       )}
+      {mode === MODES.ASSESSMENT && (
+              <AssessmentOverlay/>
+            )}
       {/* Header Section */}
       <div className="flex items-center p-4 bg-white shadow-md">
         <button className="text-black text-xl">&larr;</button>

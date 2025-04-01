@@ -11,6 +11,7 @@ import {BsQrCodeScan } from "react-icons/bs";
 import { MODES } from "../../../constants";
 import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
 import PracticeOverlay from "./Overlays/PracticeOverlay";
+import AssessmentOverlay from "./Overlays/AssessmentOverlay";
 
 
 function LandingPage({mode}) {
@@ -32,6 +33,9 @@ function LandingPage({mode}) {
         <PracticeOverlay
         step="UPI_QR_landing"
         />
+      )}
+      {mode === MODES.ASSESSMENT && (
+        <AssessmentOverlay/>
       )}
       {/* Banner Section */}
       <div className="">

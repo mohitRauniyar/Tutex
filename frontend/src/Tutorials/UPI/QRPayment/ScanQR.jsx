@@ -5,6 +5,7 @@ import { BiSolidTorch } from "react-icons/bi";
 import { MODES } from "../../../constants";
 import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
 import PracticeOverlay from "./Overlays/PracticeOverlay";
+import AssessmentOverlay from "./Overlays/AssessmentOverlay";
 
 
 function ScanQR() {
@@ -48,6 +49,9 @@ function ScanQR() {
           refs = {{qrCodeRef, scanningArea}}
         />
       )}
+      {mode === MODES.ASSESSMENT && (
+              <AssessmentOverlay/>
+            )}
       {/* Top Header */}
       <div className="flex items-center justify-between p-4 absolute top-0 w-full">
         <div className="flex gap-4">
