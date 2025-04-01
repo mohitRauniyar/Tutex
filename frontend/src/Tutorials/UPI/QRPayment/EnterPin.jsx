@@ -5,6 +5,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import {MODES} from "../../../constants"
 import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
 import PracticeOverlay from "./Overlays/PracticeOverlay";
+import AssessmentOverlay from "./Overlays/AssessmentOverlay";
 
 
 function EnterPin() {
@@ -75,6 +76,9 @@ function EnterPin() {
         step="UPI_QR_enterPin"
         />
       )}
+      {mode === MODES.ASSESSMENT && (
+              <AssessmentOverlay/>
+            )}
       {/* Header Section */}
       <div className="">
 

@@ -27,6 +27,7 @@ function App() {
         <Route path="/search" element={<Search/>}/>
         <Route path="/tutorial/UPI/walkthrough" element={<LandingPage mode={MODES.WALKTHROUGH}/>}/>
         <Route path="/tutorial/UPI/practice" element={<LandingPage mode={MODES.PRACTICE}/>}/>
+        <Route path="/tutorial/UPI/assessment" element={<LandingPage mode={MODES.ASSESSMENT}/>}/>
         <Route path={"/tutorial/UPI/qr/:mode"} element={<ScanQR/>}/>
         <Route path="/tutorial/UPI/enter-amount/:mode" element={<EnterAmount/>}/>
         <Route path="/tutorial/UPI/enter-pin/:mode" element={<EnterPin/>}/>
