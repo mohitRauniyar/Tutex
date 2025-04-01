@@ -9,14 +9,13 @@ import {GoBell } from "react-icons/go";
 import {MdOutlineAccessTime } from "react-icons/md";
 import {BsQrCodeScan } from "react-icons/bs";
 import { MODES } from "../../../constants";
-import WalkthroughOverlay from "./WalkThrough/WalkThroughOverlay";
+import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
+import PracticeOverlay from "./Overlays/PracticeOverlay";
 
 
 function LandingPage({mode}) {
-  // const mobileTransferRef = useRef(null);
   const qrScanRef = useRef(null);
-  const uploadQRRef = useRef(null)
-  // const checkBalanceRef = useRef(null);
+  
   const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
   return (
     <div className="bg-white min-h-screen text-black font-sans">
@@ -27,6 +26,11 @@ function LandingPage({mode}) {
           qrScanRef
         }}
           onComplete={() => setIsWalkthroughComplete(true)}
+        />
+      )}
+      {mode === MODES.PRACTICE && (
+        <PracticeOverlay
+        step="UPI_QR_landing"
         />
       )}
       {/* Banner Section */}
@@ -52,7 +56,7 @@ function LandingPage({mode}) {
             <div className="w-12 h-12 bg-[#6510C5] rounded-full flex justify-center items-end overflow-hidden text-[40px] text-[#E1CEFC]">
               <BiSolidBank className="-mb-1.5" />
             </div>
-            <p className="text-sm mt-2">To bank & self account</p>
+            <p className="text-sm mt-2">To bank & <br />self account</p>
           </div>
           <div className="flex flex-col items-center">
             <div className="w-12 h-12 bg-[#6510C5] rounded-full flex justify-end items-end overflow-hidden">
@@ -172,7 +176,7 @@ function LandingPage({mode}) {
           <IoIosSearch className="text-xl"/>
           <p>Search</p>
         </div>
-        <Link to={`qr/${mode}`}>
+        <Link to={`/tutorial/UPI/qr/${mode}`}>
         <div className="flex flex-col items-center text-sm text-gray-500" >
           <div className="bg-[#6510C5] p-4 text-white rounded-full text-2xl" ref={qrScanRef}>
             <BsQrCodeScan className="text-lg"/>

@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FaRegCircleQuestion,FaRegImage  } from "react-icons/fa6";
 import { BiSolidTorch } from "react-icons/bi";
 import { MODES } from "../../../constants";
-import WalkthroughOverlay from "./WalkThrough/WalkThroughOverlay";
+import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
+import PracticeOverlay from "./Overlays/PracticeOverlay";
 
 
 function ScanQR() {
@@ -34,11 +35,17 @@ function ScanQR() {
     <div className="relative w-full h-screen">
       {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
         <WalkthroughOverlay
-        step="qrScanning"
-        refs={{
-          qrCodeRef, uploadQRRef, scanningArea
-        }}
-          onComplete={() => setIsWalkthroughComplete(true)}
+          step="qrScanning"
+          refs={{
+            qrCodeRef, uploadQRRef, scanningArea
+          }}
+            onComplete={() => setIsWalkthroughComplete(true)}
+        />
+      )}
+      {mode === MODES.PRACTICE && (
+        <PracticeOverlay
+          step="UPI_QR_qrScanning"
+          refs = {{qrCodeRef, scanningArea}}
         />
       )}
       {/* Top Header */}

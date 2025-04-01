@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FaCheckCircle } from "react-icons/fa";
 import { CiBank } from "react-icons/ci";
 import { MODES } from "../../../constants";
-import WalkthroughOverlay from "./WalkThrough/WalkThroughOverlay";
+import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
+import PracticeOverlay from "./Overlays/PracticeOverlay";
 
 
 function EnterAmount() {
@@ -42,6 +43,14 @@ function EnterAmount() {
           amountInputRef, proceedRef, summaryRef, payRef
         }}
           onComplete={() => setIsWalkthroughComplete(true)}
+        />
+      )}
+      {mode === MODES.PRACTICE && (
+        <PracticeOverlay
+        step="UPI_QR_enterAmount"
+        refs={{
+          amountInputRef, proceedRef
+        }}
         />
       )}
       {/* Header Section */}
