@@ -13,6 +13,7 @@ import YourLessons from "./pages/YourLessons"
 import CoursePage from "./pages/CoursePage"
 import ModulesPage from "./pages/ModulesPage"
 import Search from "./pages/Search"
+import CoverPage from "./components/CoverPage"
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/course" element={<CoursePage/>}/>
         <Route path="/modules" element={<ModulesPage/>}/>
         <Route path="/search" element={<Search/>}/>
+        <Route path="/coverpage" element={<CoverPage page="Practice" title="UPI Paymeny via QR Scan" instruction="This is the instruction."/>}/>
         <Route path="/tutorial/UPI/walkthrough" element={<LandingPage mode={MODES.WALKTHROUGH}/>}/>
         <Route path="/tutorial/UPI/practice" element={<LandingPage mode={MODES.PRACTICE}/>}/>
         <Route path="/tutorial/UPI/assessment" element={<LandingPage mode={MODES.ASSESSMENT}/>}/>
