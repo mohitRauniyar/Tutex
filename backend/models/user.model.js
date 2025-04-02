@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
 const User = sequelize.define("User", {
     userId: { 
@@ -12,16 +12,12 @@ const User = sequelize.define("User", {
         allowNull: false, 
         unique: true,  // Ensures username is unique
         validate: {
-            isAlphanumeric: true,  // Ensures only alphabets and numbers
             notEmpty: true         // Prevents empty values
         }
     },
     password: { 
-        type: DataTypes.STRING(45), 
+        type: DataTypes.STRING(100), 
         allowNull: false, 
-        validate: {
-            len: [8, 45]  // Ensures password has at least 8 characters
-        }
     },
     verified: {
         type: DataTypes.BOOLEAN,
@@ -29,4 +25,4 @@ const User = sequelize.define("User", {
     }
 });
 
-module.exports = User;
+export default User;
