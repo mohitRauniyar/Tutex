@@ -1,6 +1,6 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
-const Course = require("./course.model");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
+import Course from "./course.model.js";
 
 const Lesson = sequelize.define("Lesson", {
     lessonId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -11,4 +11,4 @@ const Lesson = sequelize.define("Lesson", {
 Course.hasMany(Lesson, { foreignKey: "courseId" });
 Lesson.belongsTo(Course, { foreignKey: "courseId" });
 
-module.exports = Lesson;
+export default Lesson;
