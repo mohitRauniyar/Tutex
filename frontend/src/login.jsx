@@ -7,7 +7,7 @@ const LoginPage = () => {
     <div
       className="flex items-center justify-center min-h-screen w-full bg-cover bg-center bg-[url(/assets/background.png)]"
     >
-      <div className="bg-white rounded-xl shadow-lg p-8 w-95 mt-94 h-108">
+      <div className="bg-white rounded-xl p-8 w-95 mt-94 h-108">
         <h3 className="text-xl font-bold text-center mt-4">Login</h3>
         <form className="mt-6">
           <div className="relative mb-4">

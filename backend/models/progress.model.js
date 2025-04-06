@@ -1,7 +1,8 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
-const Lesson = require("./lesson.model");
-const Assignment = require("./assignment.model");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
+import Lesson from "./lesson.model.js";
+import Assignment from "./assignment.model.js";
+
 
 const Progress = sequelize.define("Progress", {
     progressId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -19,4 +20,4 @@ Progress.belongsTo(Lesson, { foreignKey: "lessonId" });
 Assignment.hasMany(Progress, { foreignKey: "assignmentId" });
 Progress.belongsTo(Assignment, { foreignKey: "assignmentId" });
 
-module.exports = Progress;
+export default Progress;
