@@ -8,6 +8,8 @@ import NumberSearch from "./Tutorials/UPI/MobilePayment/newContact"
 import SendMoneyDetailsPage from "./Tutorials/UPI/MobilePayment/sendMoney"
 import DashBoard from "./Tutorials/UPI/MobilePayment/LandingPage"
 import { MODES } from "./constants";
+import LoginPage from "./login";
+import RegisterPage from "./register";
 
 function App() {
 
@@ -23,6 +25,8 @@ function App() {
         <Route path="/tutorial/UPI/new-contact" element={<NumberSearch />} />
         <Route path="/tutorial/UPI/send-money" element={<SendMoneyDetailsPage />} />
         <Route path="/tutorial/UPI/phonepe" element={<DashBoard />}/>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>
     </>
