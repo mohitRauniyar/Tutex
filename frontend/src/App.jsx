@@ -13,8 +13,18 @@ import YourLessons from "./pages/YourLessons"
 import CoursePage from "./pages/CoursePage"
 import ModulesPage from "./pages/ModulesPage"
 import Search from "./pages/Search"
+<<<<<<< Updated upstream
 import LoginPage from "./login";
 import RegisterPage from "./register";
+=======
+import BankLandingPage from "./Tutorials/UPI/BankPayment/BankLandingPage"
+import Options from "./Tutorials/UPI/BankPayment/ChooseService"
+import AddBenificiaryAccount from "./Tutorials/UPI/BankPayment/AddBenificiary"
+import BankSelector from "./Tutorials/UPI/BankPayment/FindBank"
+import AddBankDetails from "./Tutorials/UPI/BankPayment/BankDetails"
+import EnterBankAmount from "./Tutorials/UPI/BankPayment/EnterAmount"
+import EnterBankPin from "./Tutorials/UPI/BankPayment/EnterPin"
+>>>>>>> Stashed changes
 
 function App() {
 
@@ -30,6 +40,9 @@ function App() {
         <Route path="/tutorial/UPI/walkthrough" element={<LandingPage mode={MODES.WALKTHROUGH}/>}/>
         <Route path="/tutorial/UPI/practice" element={<LandingPage mode={MODES.PRACTICE}/>}/>
         <Route path="/tutorial/UPI/assessment" element={<LandingPage mode={MODES.ASSESSMENT}/>}/>
+        <Route path="/tutorial/UPI/Bank/walkthrough" element={<BankLandingPage mode={MODES.WALKTHROUGH}/>}/>
+        <Route path="/tutorial/UPI/Bank/practice" element={<BankLandingPage mode={MODES.PRACTICE}/>}/>
+        <Route path="/tutorial/UPI/Bank/assessment" element={<BankLandingPage mode={MODES.ASSESSMENT}/>}/>
         <Route path={"/tutorial/UPI/qr/:mode"} element={<ScanQR/>}/>
         <Route path="/tutorial/UPI/enter-amount/:mode" element={<EnterAmount/>}/>
         <Route path="/tutorial/UPI/enter-pin/:mode" element={<EnterPin/>}/>
@@ -37,8 +50,17 @@ function App() {
         <Route path="/tutorial/UPI/new-contact" element={<NumberSearch />} />
         <Route path="/tutorial/UPI/send-money" element={<SendMoneyDetailsPage />} />
         <Route path="/tutorial/UPI/phonepe" element={<DashBoard />}/>
+<<<<<<< Updated upstream
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+=======
+        <Route path="/tutorial/UPI/Bank/options/:mode" element={<Options />}/>
+        <Route path="/tutorial/UPI/Bank/add/:mode" element={<AddBenificiaryAccount />}/>
+        <Route path="/tutorial/UPI/Bank/select/:mode" element={<BankSelector/>}/>
+        <Route path="/tutorial/UPI/Bank/addDetails/:mode" element={<AddBankDetails/>}/>
+        <Route path="/tutorial/UPI/Bank/enteramount/:mode" element={<EnterBankAmount/>}/>
+        <Route path="/tutorial/UPI/Bank/enter-bank-pin/:mode" element={<EnterBankPin/>}/>
+>>>>>>> Stashed changes
       </Routes>
     </BrowserRouter>
     </>

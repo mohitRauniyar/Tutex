@@ -14,10 +14,10 @@ const Progress = sequelize.define("Progress", {
 });
 
 // Define relationships
-Lesson.hasMany(Progress, { foreignKey: "lessonId" });
-Progress.belongsTo(Lesson, { foreignKey: "lessonId" });
+Lesson.hasMany(Progress, { foreignKey: "lessonId",onDelete:'CASCADE',onUpdate:'CASCADE' });
+Progress.belongsTo(Lesson, { foreignKey: "lessonId",onDelete:'CASCADE',onUpdate:'CASCADE' });
 
-Assignment.hasMany(Progress, { foreignKey: "assignmentId" });
-Progress.belongsTo(Assignment, { foreignKey: "assignmentId" });
+Assignment.hasMany(Progress, { foreignKey: "assignmentId",onDelete:'CASCADE',onUpdate:'CASCADE' });
+Progress.belongsTo(Assignment, { foreignKey: "assignmentId",onDelete:'CASCADE',onUpdate:'CASCADE' });
 
 export default Progress;

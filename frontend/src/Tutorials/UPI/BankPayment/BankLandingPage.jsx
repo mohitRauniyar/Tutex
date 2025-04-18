@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import {Link} from "react-router-dom"
 import { IoCallOutline } from "react-icons/io5";
 import { BiSolidBank } from "react-icons/bi";
@@ -8,11 +8,35 @@ import {IoIosSearch } from "react-icons/io";
 import {GoBell } from "react-icons/go";
 import {MdOutlineAccessTime } from "react-icons/md";
 import {BsQrCodeScan } from "react-icons/bs";
+import { MODES } from "../../../constants";
+import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
+import PracticeOverlay from "./Overlays/PracticeOverlay";
+import AssessmentOverlay from "./Overlays/AssessmentOverlay";
 
 
-function LandingPage({mode}) {
+function BankLandingPage({mode}) {
+  const BankButtonRef = useRef(null);
+  
+  const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
   return (
     <div className="bg-white min-h-screen text-black font-sans">
+      {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
+        <WalkthroughOverlay
+        step="landing"
+        refs={{
+          BankButtonRef
+        }}
+          onComplete={() => setIsWalkthroughComplete(true)}
+        />
+      )}
+      {mode === MODES.PRACTICE && (
+        <PracticeOverlay
+        step="UPI_QR_landing"
+        />
+      )}
+      {mode === MODES.ASSESSMENT && (
+        <AssessmentOverlay/>
+      )}
       {/* Banner Section */}
       <div className="">
         <img
@@ -20,7 +44,6 @@ function LandingPage({mode}) {
           alt="could not load image"
         />
       </div>
-
       {/* Money Transfers */}
       <div className="p-4 pb-0">
         <h2 className="text-lg font-bold">Money transfers</h2>
@@ -33,12 +56,14 @@ function LandingPage({mode}) {
             </div>
             <p className="text-sm mt-2">To mobile number</p>
           </div>
+          <Link to={`/tutorial/UPI/Bank/options/${mode}`}>
           <div className="flex flex-col items-center">
-            <div className="w-12 h-12 bg-[#6510C5] rounded-full flex justify-center items-end overflow-hidden text-[40px] text-[#E1CEFC]">
+            <div className="w-12 h-12 bg-[#6510C5] rounded-full flex justify-center items-end overflow-hidden text-[40px] text-[#E1CEFC]" ref={BankButtonRef}>
               <BiSolidBank className="-mb-1.5" />
             </div>
-            <p className="text-sm mt-2">To bank & self account</p>
+            <p className="text-sm mt-2">To bank & <br />self account</p>
           </div>
+          </Link>
           <div className="flex flex-col items-center">
             <div className="w-12 h-12 bg-[#6510C5] rounded-full flex justify-end items-end overflow-hidden">
               <div className="bg-[#E1CEFC] p-2 rounded-sm text-xl text-[#6510C5]">
@@ -157,13 +182,11 @@ function LandingPage({mode}) {
           <IoIosSearch className="text-xl"/>
           <p>Search</p>
         </div>
-        <Link to="qr">
-        <div className="flex flex-col items-center text-sm text-gray-500">
+        <div className="flex flex-col items-center text-sm text-gray-500" >
           <div className="bg-[#6510C5] p-4 text-white rounded-full text-2xl">
             <BsQrCodeScan className="text-lg"/>
           </div>
         </div>
-        </Link>
         <div className="flex flex-col items-center text-sm text-gray-500">
           <GoBell className="text-lg"/>
           <p>Alerts</p>
@@ -177,4 +200,4 @@ function LandingPage({mode}) {
   );
 }
 
-export default LandingPage;
+export default BankLandingPage;
