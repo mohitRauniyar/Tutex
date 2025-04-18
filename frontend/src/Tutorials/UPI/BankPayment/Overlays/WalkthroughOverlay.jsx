@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./WalkThroughOverlay.css"
+import EnterAmount from "../EnterAmount";
 
 function WalkthroughOverlay({ step, refs, onComplete }) {
   const instructions = {
     landing: [
       {
-        text: "Welcome to tutorial lesson for payment via QR code scanning.",
+        text: "Welcome to tutorial lesson for payment via Bank Account number.",
         target: null,
         button: true,
       },
@@ -15,67 +16,90 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
         button: true,
       },
       {
-        text: "Tap the QR icon to scan a QR code.",
-        target: "qrScanRef",
-        instructionPosition: { x: 0, y: -700 },
+        text: "Tap the Bank icon to choose receiver's bank.",
+        target: "BankButtonRef",
+        instructionPosition: { x: 0, y: 300 },
         pulsate: true,
       },
     ],
-    qrScanning: [
+    chooseService:[
       {
-        text: "Here you will have to scan the QR code of the receiver using your phone camera.",
-        target: "scanningArea",
-        button: true,
-        instructionPosition: { x: 0, y: 100 },
+        text:"Here you have to choose whether send money to your account or other's account",
+        target:null,
+        button:true,
       },
       {
-        text: "This is what a QR code looks like.",
-        target: "qrCodeRef",
-        button: true,
-        instructionPosition: { x: 0, y: -600 },
+        text:"Tap on 'To Other's bank account'",
+        target:"chooseOption",
+        instructionPosition:{x:-20,y:20},
+        pulsate:true
+      }
+    ],
+    AddAccount:[
+      {
+        text:"Here you will have to add account to whom you want to send money",
+        target:null,
+        button:true,
       },
       {
-        text: "Or you can upload a QR code from your gallery.",
-        target: "uploadQRRef",
-        button: true,
-        instructionPosition: { x: 40, y: -300 },
+        text:"Click on `Add Beneficiary Account` Button",
+        target:"AddAccount",
+        pulsate:true,
+        instructionPosition:{x:0,y:-250},
+      }
+    ],
+    selectBank:[
+      {
+        text:"Now you will have to select the receiver bank.",
+        target:null,
+        button:true,
+      },{
+        text:"Type 'DhanLaxmi Bank' in search bar. Your searched bank will appear just below the search bar if it exist!",
+        target:"searchRef",
+        instructionPosition:{x:0,y:250},
+        button:true
+      },{
+        text:"Click on DhanLaxmi Bank",
+        target:"bankRef",
+        instructionPosition:{x:0,y:250},
+      }
+    ],
+    AddBankDetails:[
+      {
+        text:"Enter correct receiver Account Number: 123456789. Enter correct receiver IFSC code: DLXB0000",
+        target:"inputRef",
+        button:true
       },
       {
-        text: "Drag this QR code into the scanning area.",
-        target: "qrCodeRef",
-        button: true,
-        instructionPosition: { x: 0, y: -600 },
+        text:"Now you can see the account holder name to whom you are sending the money. You can verify the name of account holder.",
+        button:true,
+        target:"accountHolder"
+      },
+      {
+        text:"Click on 'PROCEED TO PAY' button",
+        target:"buttonRef",
+        pulsate:true
+      },
+      {
+        text:"Please Enter correct receiver Account Number and correct IFSC code.",
+        target:null,
+        button:true
       },
     ],
-    enterAmount: [
+    EnterAmount:[
       {
-        text: "In this step, you will enter the amount to be sent.",
-        target: null,
-        button: true,
+        text:"In this page, you will have to enter the amount you want to send to the receiver. you can verify the details from top of the page.",
+        target:"headRef",
+        button:true,
+        instructionPosition:{x:0,y:250}
       },
       {
-        text: "Enter the amount in this field. For this exercise let's enter an amount of Rs. 120.",
-        target: "amountInputRef",
-        instructionPosition: { x: 0, y: 200 },
-      },
-      {
-        text: "Click on proceed to pay to go to the next step.",
-        target: "proceedRef",
-        instructionPosition: { x: 0, y: -400 },
-      },
-      {
-        text: "This is a summary of your choices, if everything looks good, you can now proceed to pay the amount.",
-        target: "summaryRef",
-        button: true,
-        instructionPosition: { x: 0, y: -600 },
-      },
-      {
-        text: "Click on Pay button.",
-        target: "payRef",
-        instructionPosition: { x: 0, y: -600 },
-      },
+        text:"Enter the amount and click the green send button:",
+        target:"inputRef",
+        instructionPosition:{x:0,y:-500}
+      }
     ],
-    enterPin: [
+    EnterPin: [
       {
         text: "In this step, you will enter your secret UPI-PIN.",
         target: null,
@@ -100,10 +124,10 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
     if (!targetRef?.current) return null;
     const rect = targetRef.current.getBoundingClientRect();
     return {
-      top: rect.top + window.scrollY,
-      left: rect.left + window.scrollX,
-      width: rect.width,
-      height: rect.height,
+      top: rect.top + window.scrollY -10,
+      left: rect.left + window.scrollX - 10,
+      width: rect.width + 20,
+      height: rect.height + 20,
     };
   };
 
@@ -150,23 +174,6 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
     };
   }, [currentStep, step]);
 
-  // Handle amount input
-  useEffect(() => {
-    const targetRef = refs["amountInputRef"];
-    if (targetRef?.current) {
-      const handleInputChange = (e) => {
-        if (e.target.value === "120" && instructions[step][currentStep]?.target === "amountInputRef") {
-          delayedHandleNext();
-        }
-      };
-
-      targetRef.current.addEventListener("input", handleInputChange);
-
-      return () => {
-        // targetRef.current.removeEventListener("input", handleInputChange);
-      };
-    }
-  }, [currentStep, step]);
 
   const delayedHandleNext = () => {
     setTimeout(() => {
@@ -174,29 +181,29 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
     }, 300); // 200ms delay to allow DOM update
   };
   
-  // Detect 'Proceed to Pay' button click and go to the next step
-  useEffect(() => {
-    const targetRef = refs["proceedRef"];
-    if (targetRef?.current && instructions[step][currentStep]?.target === "proceedRef") {
-      const handleProceedClick = () => {
-        delayedHandleNext(); // Go to the next step
-      };
-
-      targetRef.current.addEventListener("click", handleProceedClick);
-
-      return () => {
-        // targetRef.current.removeEventListener("click", handleProceedClick);
-      };
-    }
-  }, [currentStep, step]);
 
   // Move to the next step
   const handleNext = () => {
-    if (currentStep < instructions[step].length - 1) {
-      setCurrentStep((prev) => prev + 1);
-    } else {
-      onComplete(); // End the walkthrough
+    if(step === "AddBankDetails"){
+      if(currentStep === 1)return setCurrentStep(2);
+      if(currentStep === 2)return onComplete();
+      else if(currentStep === 3){
+        return setCurrentStep(0);
+      }
+      const [inputTag1,inputTag2] = refs["inputRef"].current.children;
+      if(inputTag1.value === "123456789" && inputTag2.value === "DLXB0000"){
+        setCurrentStep(1);
+      }else{
+        setCurrentStep(3);
+      }
+    }else{
+      if (currentStep < instructions[step].length - 1) {
+        setCurrentStep((prev) => prev + 1);
+      } else {
+        onComplete(); // End the walkthrough
+      }
     }
+    
   };
 
   if (currentStep >= instructions[step].length) return null;

@@ -45,14 +45,14 @@ export const verifyRegistration = async (req,res)=>{
                 return res.status(400).json({message:"Invalid OTP"})
             }else{
                 //otp is valid and within time so move data from unverifiedUser to user and profile
-                res.clearCookie("verify-token");
+                res.clearCookie("verify-token",{httpOnly:true,path:"/register"});
                 const user = await UnverifiedUser.findOne({
                     where:{
                         email:cookieContent.email
                     }
                 });
                 if(!user){
-                    return res.status(401).json({message:"Registration Cancelled!"});
+                    return res.status(401).json({message:"Registration Failed!"});
                 }
                 //delete data in unverifieduser as it not required
                 await UnverifiedUser.destroy({
