@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { MdCancel } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
+import AssessmentOverlay from "./Overlays/AssessmentOverlay";
+import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
+import PracticeOverlay from "./Overlays/PracticeOverlay";
+import { MODES } from "../../../constants";
 
-function EnterPin() {
+const EnterPin = ()=>{
   const [pin, setPin] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const { amount } = location.state || {};
+  const {mode} = useParams();
+  const [isWalkthroughComplete,setIsWalkthroughComplete] = useState(false);
 
   // Check if the pin is correct
   const isPinCorrect = pin === "0000";
@@ -18,7 +24,7 @@ function EnterPin() {
       setPin(pin.slice(0, -1)); // Remove last character
     } else if (value === "submit") {
       if (isPinCorrect) {
-        navigate("/tutorial/UPI/success");
+        navigate("/tutorial/UPI/bank/success");
       } else {
         alert("Incorrect UPI PIN. Please try again!");
       }
@@ -55,6 +61,23 @@ function EnterPin() {
 
   return (
     <div className="h-screen bg-gray-100 flex flex-col justify-between">
+      {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
+            <WalkthroughOverlay
+            step="EnterPin"
+            refs={{}}
+            onComplete={() => setIsWalkthroughComplete(true)}
+            />
+      )}
+      {mode === MODES.PRACTICE && (
+          <PracticeOverlay
+          step="UPI_QR_enterAmount"
+          refs={{
+          }}
+          />
+      )}
+      {mode === MODES.ASSESSMENT && (
+           <AssessmentOverlay/>
+      )}
       {/* Header Section */}
       <div className="">
 

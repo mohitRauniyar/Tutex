@@ -109,7 +109,7 @@
                     progress: Double
                 }, ...
             ]
-        }
+        }   
     }
     Error Response:
     {

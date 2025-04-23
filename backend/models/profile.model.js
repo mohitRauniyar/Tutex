@@ -12,7 +12,7 @@ const Profile = sequelize.define("Profile", {
     createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 });
 
-User.hasOne(Profile, { foreignKey: "userId" });
-Profile.belongsTo(User, { foreignKey: "userId" });
+User.hasOne(Profile, { foreignKey: "userId",onDelete:'CASCADE',onUpdate:'CASCADE' });
+Profile.belongsTo(User, { foreignKey: "userId",onDelete:'CASCADE',onUpdate:'CASCADE' });
 
 export default Profile;

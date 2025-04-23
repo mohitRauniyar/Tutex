@@ -4,23 +4,25 @@ import { configDotenv } from "dotenv";
 import Profile from "../models/profile.model.js";
 import { sendEmail } from "../utils/EmailUtility.js";
 import { decryptToken, generateToken } from "../utils/JwtTokenHandler.js";
+import { validateEmail,validatePassword,validateDate,validateUsername } from "../utils/verificationUtilities.js";
 import UnverifiedUser from "../models/unverifiedData.model.js";
 
 
 configDotenv();
 export const registrationController = async (req,res)=>{
-    let {username,password,email,DOB,gender } = req.body;
+    let {name,password,email,DOB,gender } = req.body;
 
-    if(!username || !password || !email || !DOB || !gender){
+    if(!name || !password || !email || !DOB || !gender){
         return res.status(400).json({message:"Incomplete request"});
     }
 
-    username = username.trim();
-    if(!validateUsername(username)){
+    let nameValidateRes = validateUsername(name);
+    if(!nameValidateRes.valid){
         return res.status(400).json({message:"Invalid username"});
     }
+    name = nameValidateRes.name;
 
-    if(!validPassword(password)){
+    if(!validatePassword(password)){
         return res.status(400).json({message:"Password doesn't statisfy the necessary conditions"});
     }
 
@@ -54,13 +56,7 @@ export const registrationController = async (req,res)=>{
     }
     const saltRounds = parseInt(process.env.SALT_ROUNDS);
     const hashpassword = bcrypt.hashSync(password,saltRounds);
-    const OTP = generateOTP();
-    try{
-        //add data to database
-        sendEmail(email,OTP);
-    }catch(err){
-        return res.status(400).json({message:"Couldn't send email"});
-    }
+    
 
     //check if UnverifiedUser left the registration verification and came back before 10-min elapsed.
     const tokenExists = req.cookies["verify-token"];
@@ -74,14 +70,26 @@ export const registrationController = async (req,res)=>{
             });
         }
     }
+    try{
+        await UnverifiedUser.create({
+            name:name,
+            gender:gender,
+            dob:new Date(`${DOB.year}-${DOB.month}-${DOB.day}`),
+            email:email,
+            password:hashpassword
+        });
+    }catch(err){
+        console.log("UnverfiedUsers insertion Error:",err.message);
+        return res.status(400).json({message:"Registration failed!"});
+    }
+
+    const OTP = generateOTP();
+    try{
+        sendEmail(email,OTP);
+    }catch(err){
+        return res.status(400).json({message:"Couldn't send email"});
+    }
     
-    await UnverifiedUser.create({
-        name:username,
-        gender:gender,
-        dob:new Date(`${DOB.year}-${DOB.month}-${DOB.day}`),
-        email:email,
-        password:hashpassword
-    });
     const cookieContent = {
         email:email,
         otp:OTP,
@@ -94,34 +102,9 @@ export const registrationController = async (req,res)=>{
         maxAge:10 * 60 * 1000
     });
 
-    return res.status(200).json({message:"Check your email. You must have received OTP"});
+    return res.status(200).json({message:"Check your email. You must have received an OTP"});
 }
 
 
 
-const validateUsername=(username)=>{
-    username = username.trim();
-    let arr = username.split(" ");
-    let alpharegex = /^[A-Za-z]+$/
-    let newarr = arr.filter((token)=>alpharegex.test(token))
-    return arr.length === newarr.length;
-}
-
-const validateDate=(DOB)=>{
-    if(typeof DOB !== "object")return false;
-    const {year,month,day} = DOB;
-    if(!year || !month || !day)return false;
-    const date = new Date(year,month-1,day);
-    return date.getFullYear() === year && date.getMonth() === month-1 && date.getDate() === day && new Date().getFullYear()>date.getFullYear();
-}
-
-const validateEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-}
-
-const validPassword = (password)=>{
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return passwordRegex.test(password);
-}
 
