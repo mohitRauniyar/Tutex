@@ -43,6 +43,12 @@ export default function Homepage() {
           <CourseBanner />
           <CourseBanner />
           <CourseBanner />
+          <CourseBanner />
+          <CourseBanner />
+          <CourseBanner />
+          <CourseBanner />
+          <CourseBanner />
+          <CourseBanner />
         </div>
       </div>
       <Navbar />
