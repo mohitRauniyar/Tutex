@@ -15,6 +15,7 @@ import ModulesPage from "./pages/ModulesPage"
 import Search from "./pages/Search"
 import LoginPage from "./login";
 import RegisterPage from "./register";
+import ProfilePage from "./profileUpdate"
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/tutorial/UPI/phonepe" element={<DashBoard />}/>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/update-profile" element={<ProfilePage/>} />
       </Routes>
     </BrowserRouter>
     </>
