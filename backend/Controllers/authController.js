@@ -6,8 +6,7 @@ import Profile from "../models/profile.model.js";
 
 configDotenv();
 
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
-const loginController = async (req,res)=>{
+export const loginController = async (req,res)=>{
     const {username,password} = req.body;
     if(username === undefined || password === undefined){
         return res.status(400).json({ message: "Username and password are required." });
@@ -42,7 +41,6 @@ const loginController = async (req,res)=>{
     }
 }
 
-export default loginController;
 
 const handleResponse = (req,res,profile)=>{
     const authToken = generateToken(profile.profileId);
@@ -51,4 +49,20 @@ const handleResponse = (req,res,profile)=>{
         httpOnly:true,
     });
     return res.status(200).json({message:"Login Successful",body:{userProfile:profile}});
+}
+
+
+
+
+export const logOutController = (req,res)=>{
+    try{
+        if(req.cookies["auth-token"] === undefined){
+            return res.status(400).json({message:"Bad request"});
+        }
+        res.clearCookie("auth-token");
+        return res.status(200).json({message:"Logout Successful"});
+    }catch(err){
+        console.log(err.message);
+        return res.status(500).json({message:"Internal Server error"});
+    }
 }

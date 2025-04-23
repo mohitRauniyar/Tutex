@@ -8,7 +8,7 @@ const Lesson = sequelize.define("Lesson", {
     description: { type: DataTypes.BLOB },
 });
 
-Course.hasMany(Lesson, { foreignKey: "courseId" });
-Lesson.belongsTo(Course, { foreignKey: "courseId" });
+Course.hasMany(Lesson, { foreignKey: "courseId",onDelete:'CASCADE',onUpdate:'CASCADE' });
+Lesson.belongsTo(Course, { foreignKey: "courseId",onDelete:'CASCADE',onUpdate:'CASCADE' });
 
 export default Lesson;

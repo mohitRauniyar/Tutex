@@ -22,7 +22,7 @@ export const sendEmail = (email, message) => {
     const mailOptions = {
         from: process.env.SYSTEM_EMAIL,
         to: email,
-        subject: "Tutex account verification",
+        subject: "Tutex email verification",
         html: `<p>Your <b>verification code: ${message}</b>. Don't share it with anyone!</p>`,
     };
 

@@ -10,10 +10,10 @@ const Assignment = sequelize.define("Assignment", {
     createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
 });
 
-Profile.hasMany(Assignment, { foreignKey: "profileId" });
-Assignment.belongsTo(Profile, { foreignKey: "profileId" });
+Profile.hasMany(Assignment, { foreignKey: "profileId",onDelete:'CASCADE',onUpdate:'CASCADE' });
+Assignment.belongsTo(Profile, { foreignKey: "profileId",onDelete:'CASCADE',onUpdate:'CASCADE' });
 
-Course.hasMany(Assignment, { foreignKey: "courseId" });
-Assignment.belongsTo(Course, { foreignKey: "courseId" });
+Course.hasMany(Assignment, { foreignKey: "courseId",onDelete:'CASCADE',onUpdate:'CASCADE' });
+Assignment.belongsTo(Course, { foreignKey: "courseId",onDelete:'CASCADE',onUpdate:'CASCADE' });
 
 export default Assignment;
