@@ -13,6 +13,8 @@ import YourLessons from "./pages/YourLessons"
 import CoursePage from "./pages/CoursePage"
 import ModulesPage from "./pages/ModulesPage"
 import Search from "./pages/Search"
+import LoginPage from "./login";
+import RegisterPage from "./register";
 import CoverPage from "./components/CoverPage"
 
 function App() {
@@ -37,6 +39,8 @@ function App() {
         <Route path="/tutorial/UPI/new-contact" element={<NumberSearch />} />
         <Route path="/tutorial/UPI/send-money" element={<SendMoneyDetailsPage />} />
         <Route path="/tutorial/UPI/phonepe" element={<DashBoard />}/>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>
     </>

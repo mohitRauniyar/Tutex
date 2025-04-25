@@ -44,6 +44,7 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
         text: "Drag this QR code into the scanning area.",
         target: "qrCodeRef",
         button: true,
+        pulsate: true,
         instructionPosition: { x: 0, y: -600 },
       },
     ],
@@ -61,6 +62,7 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
       {
         text: "Click on proceed to pay to go to the next step.",
         target: "proceedRef",
+        pulsate: true,
         instructionPosition: { x: 0, y: -400 },
       },
       {
@@ -72,6 +74,7 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
       {
         text: "Click on Pay button.",
         target: "payRef",
+        pulsate:true,
         instructionPosition: { x: 0, y: -600 },
       },
     ],
@@ -100,10 +103,10 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
     if (!targetRef?.current) return null;
     const rect = targetRef.current.getBoundingClientRect();
     return {
-      top: rect.top + window.scrollY,
-      left: rect.left + window.scrollX,
-      width: rect.width,
-      height: rect.height,
+      top: rect.top + window.scrollY -10,
+      left: rect.left + window.scrollX -10,
+      width: rect.width + 20,
+      height: rect.height + 20,
     };
   };
 
