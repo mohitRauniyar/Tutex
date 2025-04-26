@@ -47,6 +47,8 @@ const handleResponse = (req,res,profile)=>{
     res.cookie("auth-token",authToken,{
         maxAge:24*60*60*1000,
         httpOnly:true,
+        secure:true,
+        sameSite:"None"
     });
     return res.status(200).json({message:"Login Successful",body:{userProfile:profile}});
 }
