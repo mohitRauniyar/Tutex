@@ -2,9 +2,12 @@ import React from "react";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import Module from "../components/Module";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function ModulesPage({lessonNumber, lessonTitle, description}) {
+  const assignmentId = useParams().assignmentId;
+  const lessonId = useParams().lessonId;
+  
   return (
     <div className="min-h-screen bg-[#F0F0F0] pt-20 pb-16">
       <Header />

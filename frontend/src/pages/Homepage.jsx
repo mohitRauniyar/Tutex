@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 export default function Homepage() {
   const userProfile = useSelector((state) => state.user.userProfile);
   const [courses, setCourses] = useState([]);
+  const [subscribedCourses, setSubscribedCourses] = useState([]);
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -33,6 +34,30 @@ export default function Homepage() {
 
     fetchCourses();
   }, []);
+
+  useEffect(() => {
+    const fetchSubscribedCourses = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/tutorial/all`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setSubscribedCourses(data.body || []); // store the subscribedCourses list
+        console.log(subscribedCourses);
+      } catch (err) {
+        console.error("Failed to fetch subscribedCourses:", err);
+        // setError(err.message);
+      } 
+    };
+
+    fetchSubscribedCourses();
+  }, []);
   return (
     <div>
       <Header />
@@ -44,13 +69,16 @@ export default function Homepage() {
           </Link>
         </div>
         <div className="overflow-x-scroll scrollbar-hidden flex gap-3 justify-evenly">
-          <CourseCard imageLink={"/assets/Tutorials/phonepeBanner.png"} title={"UPI Payment Tutorial"}/>
+          {subscribedCourses.map((data, index)=>(
+            <CourseCard imageLink={data.photoUrl} title={data.title} status={data.status} assignmentId={data.assignmentId}/>
+          ))}
+          {/* <CourseCard imageLink={"/assets/Tutorials/phonepeBanner.png"} title={"UPI Payment Tutorial"}/>
           <CourseCard imageLink={"/assets/Tutorials/whatsapp.png"} title={"Messaging on whatapp"}/>
           <CourseCard imageLink={"/assets/Tutorials/instagram.png"} title={"Using Instagram"}/>
           <CourseCard imageLink={"/assets/Tutorials/facebook.png"} title={"Using facebook"}/>
           <CourseCard imageLink={"/assets/Tutorials/irctc.png"} title={"Ticket booking"}/>
           <CourseCard imageLink={"/assets/Tutorials/amazon.png"} title={"Shopping on Amazon"}/>
-          <CourseCard imageLink={"/assets/Tutorials/flipkart.png"} title={"Shopping on Flipkart"}/>
+          <CourseCard imageLink={"/assets/Tutorials/flipkart.png"} title={"Shopping on Flipkart"}/> */}
         </div>
 
         <Link
