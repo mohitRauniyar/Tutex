@@ -5,8 +5,11 @@ import CourseCard from "../components/CourseCard";
 import { Link } from "react-router-dom";
 import { MdOutlineSearch } from "react-icons/md";
 import CourseBanner from "../components/CourseBanner";
+import { useSelector } from "react-redux";
 
 export default function Homepage() {
+  const userProfile = useSelector((state) => state.user.userProfile);
+  console.log(userProfile)
   return (
     <div>
       <Header />
