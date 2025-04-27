@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import CourseCard from "../components/CourseCard";
@@ -9,7 +9,30 @@ import { useSelector } from "react-redux";
 
 export default function Homepage() {
   const userProfile = useSelector((state) => state.user.userProfile);
-  console.log(userProfile)
+  const [courses, setCourses] = useState([]);
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tutorial/all`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setCourses(data.body || []); // store the courses list
+        console.log(courses);
+      } catch (err) {
+        console.error("Failed to fetch courses:", err);
+        // setError(err.message);
+      } 
+    };
+
+    fetchCourses();
+  }, []);
   return (
     <div>
       <Header />
