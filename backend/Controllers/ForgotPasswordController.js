@@ -39,7 +39,7 @@ export const forgotPassword = async(req,res)=>{
             httpOnly:true,
             path:'/password/forgot',
             maxAge:2*60*1000,
-            secure:true,
+            // secure:true,
             sameSite:"None"
         });
         return res.status(200).json({message:"Please enter otp sent on your email address"});
@@ -73,7 +73,7 @@ export const forgotPasswordVerifier = async (req,res)=>{
             httpOnly:true,
             path:'/password/forgot',
             maxAge:5*60*1000,
-            secure:true,
+            // secure:true,
             sameSite:"None"
         })
         return res.status(200).json({message:"Please enter your new password!"});
