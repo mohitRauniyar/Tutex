@@ -196,6 +196,15 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
       }else{
         setCurrentStep(3);
       }
+
+    }else if(step == "selectBank"){
+      if(currentStep === 1){
+        const bankName = refs["searchRef"].current.value.toLowerCase();
+        if("Dhanlaxmi Bank".toLowerCase() === bankName)setCurrentStep(2);
+      }else{
+        setCurrentStep((prev)=>prev+1);
+      }
+      
     }else{
       if (currentStep < instructions[step].length - 1) {
         setCurrentStep((prev) => prev + 1);

@@ -6,8 +6,8 @@ export default function LessonBanner({lesson, index}) {
   const assignmentId = useParams().assignmentId;
   const progressString = lesson.progress.split("")
   let progress = 0;
-  for(let i = 0; i < progressString.length(); i++){
-    if(progressString[i]=="0")
+  for(let i = 0; i < progressString.length; i++){
+    if(progressString[i]=="1")
         progress++;
   }
 
@@ -23,7 +23,7 @@ export default function LessonBanner({lesson, index}) {
       <div className="h-1 bg-gray-200 rounded-full w-full mt-2">
         <div
           className="h-1 bg-green-500 rounded-full"
-          style={{ width: `${progress/progressString.length()}%` }}
+          style={{ width: `${progress/progressString.length *100}%` }}
         ></div>
       </div>
     </Link>

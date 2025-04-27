@@ -45,34 +45,48 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Homepage/>}/>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        
+
         <Route path="/lessons" element={<YourLessons/>}/>
         <Route path="/course/:assignmentId" element={<CoursePage/>}/>
         <Route path="/modules/:assignmentId/:lessonId" element={<ModulesPage/>}/>
         <Route path="/search" element={<Search/>}/>
-        <Route path="/tutorialView" element={<TutorialView/>}/>
+        <Route path="/tutorial/:courseId/view" element={<TutorialView/>}/>
+        <Route path="/update-profile" element={<ProfilePage/>} />
+
         <Route path="/coverpage" element={<CoverPage page="Practice" title="UPI Paymeny via QR Scan" instruction="This is the instruction."/>}/>
+        
+        
+        {/*UPI QR routes */}
         <Route path="/tutorial/UPI/walkthrough" element={<LandingPage mode={MODES.WALKTHROUGH}/>}/>
         <Route path="/tutorial/UPI/practice" element={<LandingPage mode={MODES.PRACTICE}/>}/>
         <Route path="/tutorial/UPI/assessment" element={<LandingPage mode={MODES.ASSESSMENT}/>}/>
-        <Route path="/tutorial/UPI/Bank/walkthrough" element={<BankLandingPage mode={MODES.WALKTHROUGH}/>}/>
-        <Route path="/tutorial/UPI/Bank/practice" element={<BankLandingPage mode={MODES.PRACTICE}/>}/>
-        <Route path="/tutorial/UPI/Bank/assessment" element={<BankLandingPage mode={MODES.ASSESSMENT}/>}/>
         <Route path={"/tutorial/UPI/qr/:mode"} element={<ScanQR/>}/>
         <Route path="/tutorial/UPI/enter-amount/:mode" element={<EnterAmount/>}/>
         <Route path="/tutorial/UPI/enter-pin/:mode" element={<EnterPin/>}/>
-        <Route path="/tutorial/UPI/to-contact" element={<SendMoneyPage />} />
-        <Route path="/tutorial/UPI/new-contact" element={<NumberSearch />} />
-        <Route path="/tutorial/UPI/send-money" element={<SendMoneyDetailsPage />} />
-        <Route path="/tutorial/UPI/phonepe" element={<DashBoard />}/>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/update-profile" element={<ProfilePage/>} />
+
+
+        {/*UPI bank routes */}
+        <Route path="/tutorial/UPI/Bank/walkthrough" element={<BankLandingPage mode={MODES.WALKTHROUGH}/>}/>
+        <Route path="/tutorial/UPI/Bank/practice" element={<BankLandingPage mode={MODES.PRACTICE}/>}/>
+        <Route path="/tutorial/UPI/Bank/assessment" element={<BankLandingPage mode={MODES.ASSESSMENT}/>}/>
         <Route path="/tutorial/UPI/Bank/options/:mode" element={<Options />}/>
         <Route path="/tutorial/UPI/Bank/add/:mode" element={<AddBenificiaryAccount />}/>
         <Route path="/tutorial/UPI/Bank/select/:mode" element={<BankSelector/>}/>
         <Route path="/tutorial/UPI/Bank/addDetails/:mode" element={<AddBankDetails/>}/>
         <Route path="/tutorial/UPI/Bank/enteramount/:mode" element={<EnterBankAmount/>}/>
         <Route path="/tutorial/UPI/Bank/enter-bank-pin/:mode" element={<EnterBankPin/>}/>
+
+
+        {/*UPI Mobile routes */}
+        <Route path="/tutorial/UPI/to-contact" element={<SendMoneyPage />} />
+        <Route path="/tutorial/UPI/new-contact" element={<NumberSearch />} />
+        <Route path="/tutorial/UPI/send-money" element={<SendMoneyDetailsPage />} />
+        <Route path="/tutorial/UPI/phonepe" element={<DashBoard />}/>
+
+
       </Routes>
     </BrowserRouter>
     </>

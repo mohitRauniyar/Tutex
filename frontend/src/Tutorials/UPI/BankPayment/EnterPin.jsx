@@ -11,7 +11,7 @@ const EnterPin = ()=>{
   const [pin, setPin] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const { amount } = location.state || {};
+  const { amount,bankName } = location.state;
   const {mode} = useParams();
   const [isWalkthroughComplete,setIsWalkthroughComplete] = useState(false);
 
@@ -70,7 +70,7 @@ const EnterPin = ()=>{
       )}
       {mode === MODES.PRACTICE && (
           <PracticeOverlay
-          step="UPI_QR_enterAmount"
+          step="Enter_Pin_Value"
           refs={{
           }}
           />
@@ -95,7 +95,7 @@ const EnterPin = ()=>{
         <div className="flex w-full justify-between">
 
         <p className="text-xs text-gray-500">To:</p>
-        <p className="text-sm font-bold">Recipient Name</p>
+        <p className="text-sm font-bold">XYZ</p>
         </div>
         <div className="flex w-full justify-between">
 
@@ -114,7 +114,7 @@ const EnterPin = ()=>{
         <div className="mt-4 bg-yellow-100 text-xs text-black px-4 py-2 rounded-md">
           <span className="text-orange-600 font-bold mr-1">⚠️</span>
           You are transferring money from your Bank Name account to{" "}
-          <span className="font-bold">Recipient's Name</span>
+          <span className="font-bold">{bankName}</span>
         </div>
       </div>
 

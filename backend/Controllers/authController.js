@@ -48,7 +48,7 @@ const handleResponse = (req,res,profile)=>{
         maxAge:24*60*60*1000,
         httpOnly:true,
         // secure:true,
-        sameSite:"None"
+        // sameSite:"None"
     });
     return res.status(200).json({message:"Login Successful",body:{userProfile:profile}});
 }

@@ -39,7 +39,7 @@ export const getCourseById = async(req,res)=>{
         const id = req.params.id;
         const course = await getCourseAndLessons(id);
         if(!course){
-            return res.status(404).json({message:"Couse doesn't exist",body:{}});
+            return res.status(404).json({message:"Course doesn't exist",body:{}});
         }
         return res.status(200).json({message:"Course searched successful",body:course});
     }catch(err){

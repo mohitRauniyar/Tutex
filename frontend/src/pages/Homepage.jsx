@@ -24,12 +24,13 @@ export default function Homepage() {
         }
 
         const data = await response.json();
-        setCourses(data.body || []); // store the courses list
-        console.log(courses);
+        const list = data.body
+        setCourses(list); // store the courses list
+
       } catch (err) {
         console.error("Failed to fetch courses:", err);
         // setError(err.message);
-      } 
+      }
     };
 
     fetchCourses();
@@ -91,14 +92,16 @@ export default function Homepage() {
 
         <h2 className="mb-8 font-semibold text-lg">Explore</h2>
         <div className="grid grid-cols-2 gap-8 mx-4">
-          <CourseBanner imageLink={"/assets/Tutorials/phonepeBanner.png"} title={"UPI Payment Tutorial"} lessonCount={3}/>
-          <CourseBanner imageLink={"/assets/Tutorials/whatsapp.png"} title={"Messaging on whatapp"} lessonCount={4}/>
+          {courses.map((data, index)=>(
+            <CourseBanner imageLink={data.photoUrl} title={data.title} key={index} courseId={data.courseId}/>
+          ))}
+          {/* <CourseBanner imageLink={"/assets/Tutorials/whatsapp.png"} title={"Messaging on whatapp"} lessonCount={4}/>
           <CourseBanner imageLink={"/assets/Tutorials/instagram.png"} title={"Using Instagram"} lessonCount={6}/>
           <CourseBanner imageLink={"/assets/Tutorials/facebook.png"} title={"Using facebook"} lessonCount={5}/>
           <CourseBanner imageLink={"/assets/Tutorials/uber.png"} title={"Booking Taxi"} lessonCount={4}/>
           <CourseBanner imageLink={"/assets/Tutorials/irctc.png"} title={"Ticket booking"} lessonCount={2}/>
           <CourseBanner imageLink={"/assets/Tutorials/amazon.png"} title={"Shopping on Amazon"} lessonCount={3}/>
-          <CourseBanner imageLink={"/assets/Tutorials/flipkart.png"} title={"Shopping on Flipkart"} lessonCount={3}/>
+          <CourseBanner imageLink={"/assets/Tutorials/flipkart.png"} title={"Shopping on Flipkart"} lessonCount={3}/> */}
         </div>
       </div>
       <Navbar />
