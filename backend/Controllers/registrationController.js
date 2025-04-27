@@ -100,7 +100,7 @@ export const registrationController = async (req,res)=>{
         httpOnly:true,
         path:'/register',
         maxAge:10 * 60 * 1000,
-        secure:true,
+        // secure:true,
         sameSite:"None"
     });
 

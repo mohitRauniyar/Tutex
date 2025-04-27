@@ -9,7 +9,7 @@ export const sendEmail = (email, message) => {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
-        secure: false, 
+        // secure: false, 
         auth: {
             user: process.env.SYSTEM_EMAIL,
             pass: process.env.SYSTEM_EMAIL_PASSCODE, // Use an App Password
