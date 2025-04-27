@@ -43,5 +43,3 @@ try{
 }catch(err){
     console.log("Couldn't start the server")
 }
-
-

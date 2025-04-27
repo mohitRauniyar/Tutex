@@ -23,8 +23,21 @@ import BankSelector from "./Tutorials/UPI/BankPayment/FindBank"
 import AddBankDetails from "./Tutorials/UPI/BankPayment/BankDetails"
 import EnterBankAmount from "./Tutorials/UPI/BankPayment/EnterAmount"
 import EnterBankPin from "./Tutorials/UPI/BankPayment/EnterPin"
+import CoverPage from "./components/CoverPage"
+import { useDispatch } from "react-redux"
+import { useEffect } from "react"
+import { setUserProfile } from "./redux/userSlice"
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storedProfile = localStorage.getItem("userProfile");
+    if (storedProfile) {
+      dispatch(setUserProfile(JSON.parse(storedProfile)));
+    }
+  }, []);
 
   return (
     <>
@@ -35,6 +48,7 @@ function App() {
         <Route path="/course" element={<CoursePage/>}/>
         <Route path="/modules" element={<ModulesPage/>}/>
         <Route path="/search" element={<Search/>}/>
+        <Route path="/coverpage" element={<CoverPage page="Practice" title="UPI Paymeny via QR Scan" instruction="This is the instruction."/>}/>
         <Route path="/tutorial/UPI/walkthrough" element={<LandingPage mode={MODES.WALKTHROUGH}/>}/>
         <Route path="/tutorial/UPI/practice" element={<LandingPage mode={MODES.PRACTICE}/>}/>
         <Route path="/tutorial/UPI/assessment" element={<LandingPage mode={MODES.ASSESSMENT}/>}/>
