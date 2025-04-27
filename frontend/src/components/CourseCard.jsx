@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function CourseCard({ imageLink, title }) {
+export default function CourseCard({ imageLink, title, status, assignmentId }) {
   return (
-    <Link to="/course">
+    <Link to={`/course/${assignmentId}`}>
       <div
         className="w-28 h-44 bg-cover"
         style={{ backgroundImage: `url(${imageLink})` }}
@@ -15,7 +15,7 @@ export default function CourseCard({ imageLink, title }) {
           <div className="text-white flex flex-col gap-2">
             <h2 className="text-md text-left">{title}</h2>
             <button className="p-[2px] w-full rounded-xs bg-gradient-to-r from-[#6FF2FE] to-[#30A0FE] text-black text-xs">
-              status
+              {status === "pending"? "Continue": "Completed"}
             </button>
           </div>
         </div>
