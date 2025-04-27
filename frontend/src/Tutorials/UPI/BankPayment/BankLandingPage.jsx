@@ -31,7 +31,10 @@ function BankLandingPage({mode}) {
       )}
       {mode === MODES.PRACTICE && (
         <PracticeOverlay
-        step="UPI_QR_landing"
+        step="Bank_Pay_landing"
+        ref={{
+          BankButtonRef
+        }}
         />
       )}
       {mode === MODES.ASSESSMENT && (

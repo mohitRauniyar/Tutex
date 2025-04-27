@@ -108,5 +108,40 @@ export const HINTS = {
     text: "Enter the pin as '0000' using the keyboard.",
     ref: []
   },
+  "Bank_Pay_landing":{
+    text:"Click on the bank icon present at the middle of the screen.",
+    ref:[]
+  },
+  "Bank_Choose_Option":{
+    text:"Select 'To Account Number & IFSC' in second option",
+    ref:[]
+  },
+  "Bank_Add_Button":{
+    text:"Click on 'Add Beneficiary Account' button.",
+    ref:[]
+  },
+  "Select_Bank_Step":{
+    text:"Search the name of receiver's bank or select from the given options.",
+    ref:[]
+  },
+  "Fill_Account_Details":{
+    text:"Here, you need to fill the account number and IFSC code of receiver's bank. For practice purpose, Assume receiver's account number = '123456789' and IFSC code = 'ABCD0000'. After entering correctly receiver's name: XYZ will be displayed.",
+    ref:[]
+  },
+  "Enter_Amount_Value":{
+    text:"Here, you need the enter the amount you want to send to the receiver's bank account.",
+    ref:[]
+  },
+  "Enter_Pin_Value":{
+    text:"Here, you need to give your pin. For practice, assume pin = '0000'",
+    ref:[]
+  }
 
 };
+
+export const URL_MAPS = {
+  1: "UPI",
+  2: "UPI/Mobile",
+  3: "UPI/Bank"
+
+}

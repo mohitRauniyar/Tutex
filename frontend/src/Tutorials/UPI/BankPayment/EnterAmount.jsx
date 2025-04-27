@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { IoArrowBack } from "react-icons/io5";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
 import PracticeOverlay from "./Overlays/PracticeOverlay";
 import AssessmentOverlay from "./Overlays/AssessmentOverlay";
@@ -10,9 +10,10 @@ import { MODES } from "../../../constants.js";
 export default function EnterAmount() {
   const [amount, setAmount] = useState("");
   const navigate = useNavigate();
-  const name = "XYZ";
-  const number = "DhanLaxmi Bank";
-  const bankingName = "XYZ";
+  const location = useLocation()
+  const {name,bankName} = location.state;
+  const number = bankName;
+  const bankingName = name;
   const inputRef = useRef();
   const { mode } = useParams();
   const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
@@ -38,7 +39,7 @@ export default function EnterAmount() {
         />
       )}
       {mode === MODES.PRACTICE && (
-        <PracticeOverlay step="UPI_QR_enterAmount" refs={{}} />
+        <PracticeOverlay step="Enter_Amount_Value" refs={{}} />
       )}
       {mode === MODES.ASSESSMENT && <AssessmentOverlay />}
       {/* Header Section */}
@@ -93,7 +94,7 @@ export default function EnterAmount() {
             }`}
             disabled={!amount}
             onClick={() =>
-              navigate(`/tutorial/UPI/Bank/enter-bank-pin/${mode}`, { state: { amount: amount } })
+              navigate(`/tutorial/UPI/Bank/enter-bank-pin/${mode}`, { state: { amount: amount,bankName:bankName } })
             }
           >
             ➤
