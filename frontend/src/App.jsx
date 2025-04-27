@@ -27,6 +27,7 @@ import CoverPage from "./components/CoverPage"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { setUserProfile } from "./redux/userSlice"
+import TutorialView from "./pages/TutorialView"
 
 function App() {
 
@@ -48,6 +49,8 @@ function App() {
         <Route path="/course" element={<CoursePage/>}/>
         <Route path="/modules" element={<ModulesPage/>}/>
         <Route path="/search" element={<Search/>}/>
+        <Route path="/tutorialView" element={<TutorialView/>}/>
+
         <Route path="/coverpage" element={<CoverPage page="Practice" title="UPI Paymeny via QR Scan" instruction="This is the instruction."/>}/>
         <Route path="/tutorial/UPI/walkthrough" element={<LandingPage mode={MODES.WALKTHROUGH}/>}/>
         <Route path="/tutorial/UPI/practice" element={<LandingPage mode={MODES.PRACTICE}/>}/>
