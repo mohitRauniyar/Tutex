@@ -83,14 +83,14 @@ export const sendEmail = (email, message) => {
   <!-- Countdown Timer Script -->
   <script>
     // Set the timer for 10 minutes (600 seconds)
-    let timeLeft = 600; 
+    let timeLeft = 120; 
 
     const timerElement = document.getElementById('time');
 
     function updateTimer() {
       const minutes = Math.floor(timeLeft / 60);
       const seconds = timeLeft % 60;
-      timerElement.textContent = ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')};
+      timerElement.textContent = \`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}\`;
       if (timeLeft > 0) {
         timeLeft--;
       } else {

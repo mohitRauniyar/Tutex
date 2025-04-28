@@ -8,6 +8,7 @@ import PracticeOverlay from "./Overlays/PracticeOverlay";
 import AssessmentOverlay from "./Overlays/AssessmentOverlay";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAssignment } from "../../../redux/currentAssignmentSlice.js";
+import toast from "react-hot-toast";
 
 function EnterPin() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function EnterPin() {
   const { assignmentId, lessonId, moduleName } = useSelector(
     (state) => state.currentAssignment
   );
+  const [attempts, setAttempts] = useState(0);
 
   const isPinCorrect = pin === "0000";
 
@@ -42,15 +44,24 @@ function EnterPin() {
 
           if (response.ok) {
             dispatch(clearAssignment());
-            alert("Successfully marked completed.");
+            toast.success("Successfully marked completed.");
             navigate("/tutorial/UPI/success");
           } else {
-            // ❌ API error
-            alert("Failed to mark assignment complete. Please try again.");
+            toast.error("Failed to mark assignment complete. Please try again.");
+            setPin("")
+            setAttempts(attempts+1);
+            if(attempts >= 3){
+              navigate(`/`)
+            }
           }
         } catch (error) {
           console.error(error);
-          alert("Something went wrong! Please try again.");
+          toast.error("Something went wrong! Please try again.");
+          setPin("")
+          setAttempts(attempts + 1);
+          if(attempts >= 3){
+            navigate(`/`)
+          }
         }
       } else {
         alert("Incorrect UPI PIN. Please try again!");

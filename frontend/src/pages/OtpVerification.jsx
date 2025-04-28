@@ -26,14 +26,17 @@ export default function OtpVerification(){
 
       if (response.ok) {
         setMessage("✅ OTP Verified Successfully!");
+        toast.success(data.message)
         navigate("/login");
         
       } else {
         setMessage(`❌ Error: ${data.message || "Invalid OTP"}`);
+        toast.error(data.message)
       }
     } catch (error) {
       console.error("Error verifying OTP:", error);
       setMessage("❌ Network Error");
+      toast.error(data.message)
     } finally {
       setLoading(false);
     }
