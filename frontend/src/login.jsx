@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom"
 import { useDispatch } from "react-redux";
 import axios from "axios"; // Install it if you haven't: npm install axios
 import { setUserProfile } from "./redux/userSlice";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -26,15 +27,20 @@ const LoginPage = () => {
           withCredentials: true,
         }
       );
-
-      console.log("Login successful:", response.data.body);
+      if(response.ok){
+        console.log("Login successful:", response.data.body);
       dispatch(setUserProfile(response.data.body.userProfile)); // store in Redux
       localStorage.setItem("userProfile", JSON.stringify(response.data.body.userProfile)); // store in LocalStorage
+      toast.success(response.data.message)
       navigate("/")
+      }else{
+        toast.error(response.data.message)
+      }
+      
 
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);
-      alert("Login failed. Please check your credentials.");
+      toast.error("Login failed. Please check your credentials.");
     }
   };
 

@@ -52,6 +52,7 @@ const RegisterPage = () => {
     .then(response => response.json())
     .then(data => {
       console.log("Success:", data);
+      toast.success("Please check your email for the OTP.")
       navigate("/register/verify")
       // You can redirect or show success message here
     })

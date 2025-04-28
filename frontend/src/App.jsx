@@ -28,7 +28,7 @@ import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { setUserProfile } from "./redux/userSlice"
 import TutorialView from "./pages/TutorialView"
-import OtpVerification from "./pages/OtpVerification"
+import OtpVerification from "./pages/otpVerification"
 
 function App() {
 

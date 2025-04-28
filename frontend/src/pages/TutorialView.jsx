@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaSpinner} from "react-icons/fa"
+import toast from "react-hot-toast";
 
 export default function TutorialView() {
   const courseId = useParams().courseId;
@@ -23,14 +24,14 @@ export default function TutorialView() {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }else{
-        alert('Course Started Successfully!');
         const data = await response.json();
+        toast.success(data.message);
         const assignmentId = data.body.assignmentId;
         navigate(`/course/${assignmentId}`)
       }
     }catch(err){
       console.log(err.message);
-      alert('failed to start the course');
+      toast.error('Failed to start the course');
       setLoading(false);
     }
 
