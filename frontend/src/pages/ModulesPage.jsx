@@ -91,9 +91,9 @@ export default function ModulesPage() {
             ></div>
           </div>
           <div className="flex flex-col gap-4 w-full mt-4">
-            <Module moduleName={"Walkthrough"} lessonId={lessonId} isComplete={progressString[0]=="1"}/>
-            <Module moduleName={"Practice"} lessonId={lessonId} isComplete={progressString[1]=="1"}/>
-            <Module moduleName={"Assessment"} lessonId={lessonId} isComplete={progressString[2]=="1"}/>
+            <Module moduleName={"Walkthrough"} lessonId={lessonId} isComplete={progressString[0]=="1"} assignmentId={assignmentId}/>
+            <Module moduleName={"Practice"} lessonId={lessonId} isComplete={progressString[1]=="1"} assignmentId={assignmentId}/>
+            <Module moduleName={"Assessment"} lessonId={lessonId} isComplete={progressString[2]=="1"} assignmentId={assignmentId}/>
           </div>
           {nextLessonId !== 0 && (
 

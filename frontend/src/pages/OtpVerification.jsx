@@ -26,8 +26,6 @@ export default function OtpVerification(){
 
       if (response.ok) {
         setMessage("✅ OTP Verified Successfully!");
-        // Redirect or do something after successful verification
-        // e.g., window.location.href = "/";
         navigate("/login");
         
       } else {
