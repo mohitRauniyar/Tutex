@@ -60,6 +60,14 @@ function EnterPin() {
     ["clear", 0, "submit"],
   ];
 
+  // const handleCompletion = ()=>{
+  //   try{
+  //     const response = fetch(`${import.meta.env.VITE_BACKEND_URL}/complete?assignmentId=3&lessonId=2&moduleName=walkthrough`)
+  //   }catch(error){
+  //     console.log(error);
+  //   }
+  // }
+
   return (
     <div className="h-screen bg-gray-100 flex flex-col justify-between">
       {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (

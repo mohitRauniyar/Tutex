@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { TbLockPassword } from "react-icons/tb";
 import { MdOutlineMail } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -44,11 +46,13 @@ const RegisterPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials:"include",
       body: JSON.stringify(body)
     })
     .then(response => response.json())
     .then(data => {
       console.log("Success:", data);
+      navigate("/register/verify")
       // You can redirect or show success message here
     })
     .catch(error => {

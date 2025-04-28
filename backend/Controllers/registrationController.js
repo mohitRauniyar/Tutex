@@ -101,7 +101,7 @@ export const registrationController = async (req,res)=>{
         path:'/register',
         maxAge:10 * 60 * 1000,
         // secure:true,
-        sameSite:"None"
+        // sameSite:"None"
     });
 
     return res.status(200).json({message:"Check your email. You must have received an OTP"});

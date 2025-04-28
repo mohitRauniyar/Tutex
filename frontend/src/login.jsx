@@ -85,7 +85,7 @@ const LoginPage = () => {
             <button
               type="button"
               className="border-[#007BFF] border-1 px-6 py-2 rounded-md text-sm font-medium hover:bg-[#007BFF] hover:text-white"
-              onClick={() => (window.location.href = "/signup")} // Redirect to signup page
+              onClick={() => (window.location.href = "/register")} // Redirect to signup page
             >
               Sign Up
             </button>
