@@ -28,6 +28,7 @@ import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { setUserProfile } from "./redux/userSlice"
 import TutorialView from "./pages/TutorialView"
+import OtpVerification from "./pages/OtpVerification"
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
         <Route path="/" element={<Homepage/>}/>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/register/verify" element={<OtpVerification />} />
         
 
         <Route path="/lessons" element={<YourLessons/>}/>

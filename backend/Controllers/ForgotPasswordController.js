@@ -74,7 +74,7 @@ export const forgotPasswordVerifier = async (req,res)=>{
             path:'/password/forgot',
             maxAge:5*60*1000,
             // secure:true,
-            sameSite:"None"
+            // sameSite:"None"
         })
         return res.status(200).json({message:"Please enter your new password!"});
     }catch(err){

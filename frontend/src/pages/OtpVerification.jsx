@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import { CgProfile } from "react-icons/cg";
-import { TbLockPassword } from "react-icons/tb";
 import {useNavigate} from "react-router-dom"
-import { useDispatch } from "react-redux";
-import axios from "axios"; // Install it if you haven't: npm install axios
-import { setUserProfile } from "./redux/userSlice";
 
-const otpVerification = () => {
+export default function OtpVerification(){
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -49,7 +44,7 @@ const otpVerification = () => {
   return (
     <div className="flex items-center justify-center min-h-screen w-full bg-cover bg-center bg-[url(/assets/background.png)]">
       <div className="bg-white rounded-xl p-8 w-95 mt-94 h-108">
-        <h3 className="text-xl font-bold text-center mt-4">Login</h3>
+        <h3 className="text-xl font-bold text-center mt-4">Enter OTP sent to your mail</h3>
         <form className="mt-6" onSubmit={handleSubmit}>
         <div className="mb-6">
             <label className="block text-sm font-semibold mb-2" htmlFor="otp">
@@ -86,4 +81,3 @@ const otpVerification = () => {
   );
 };
 
-export default otpVerification;
