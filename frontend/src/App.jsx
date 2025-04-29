@@ -55,8 +55,8 @@ function App() {
         <Route path="/course/:assignmentId" element={<CoursePage/>}/>
         <Route path="/modules/:assignmentId/:lessonId" element={<ModulesPage/>}/>
         <Route path="/search" element={<Search/>}/>
+        <Route path="/profile" element={<ProfilePage/>} />
         <Route path="/tutorial/:courseId/view" element={<TutorialView/>}/>
-        <Route path="/update-profile" element={<ProfilePage/>} />
 
         {/*UPI QR routes */}
         <Route path="/tutorial/UPI/walkthrough" element={<LandingPage mode={MODES.WALKTHROUGH}/>}/>
@@ -65,9 +65,6 @@ function App() {
         <Route path={"/tutorial/UPI/qr/:mode"} element={<ScanQR/>}/>
         <Route path="/tutorial/UPI/enter-amount/:mode" element={<EnterAmount/>}/>
         <Route path="/tutorial/UPI/enter-pin/:mode" element={<EnterPin/>}/>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/update-profile" element={<ProfilePage/>} />
         {/*UPI bank routes */}
         <Route path="/tutorial/UPI/Bank/walkthrough" element={<BankLandingPage mode={MODES.WALKTHROUGH}/>}/>
         <Route path="/tutorial/UPI/Bank/practice" element={<BankLandingPage mode={MODES.PRACTICE}/>}/>
@@ -79,10 +76,6 @@ function App() {
         <Route path="/tutorial/UPI/Bank/enteramount/:mode" element={<EnterBankAmount/>}/>
         <Route path="/tutorial/UPI/Bank/enter-bank-pin/:mode" element={<EnterBankPin/>}/>
         {/*UPI Mobile routes */}
-        {/* <Route path="/tutorial/UPI/to-contact" element={<SendMoneyPage />} />
-        <Route path="/tutorial/UPI/new-contact" element={<NumberSearch />} />
-        <Route path="/tutorial/UPI/send-money" element={<SendMoneyDetailsPage />} />
-        <Route path="/tutorial/UPI/phonepe" element={<DashBoard />}/> */}
         <Route path="/tutorial/UPI/Mobile/to-contact/:mode" element={<MainPage />} />
         <Route path="/tutorial/UPI/Mobile/choose-contact/:mode" element={<EnterContactPage />} />
         <Route path="/tutorial/UPI/Mobile/new-contact/:mode" element={<NumberSearch />} />
