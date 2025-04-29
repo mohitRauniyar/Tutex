@@ -4,7 +4,7 @@ import { ArrowLeft, HelpCircle } from "react-feather";
 import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
 import PracticeOverlay from "./Overlays/PracticeOverlay";
 import AssessmentOverlay from "./Overlays/AssessmentOverlay";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { MODES } from "../../../constants.js";
 
@@ -18,8 +18,15 @@ export default function AddBankDetails() {
   const [disabled,setDisabled] = useState(true);
   const [isWalkthroughComplete,setIsWalkthroughComplete] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const {bankName} = location.state;
   useEffect(()=>{
-    if(accountNumber === "123456789" && ifsc === "DLXB0000"){
+    const ifsc_mode = {
+      "walkthrough":"DLXB0000",
+      "practice":"ABCD0000",
+      "assessment":"IFSC1234"
+    }
+    if(accountNumber === "123456789" && ifsc === ifsc_mode[mode]){
         setDisabled(false);
     }else setDisabled(true);
   },[accountNumber,ifsc])
@@ -38,12 +45,13 @@ export default function AddBankDetails() {
         />
       )}
       {mode === MODES.PRACTICE && (
-        <PracticeOverlay step="UPI_QR_enterAmount" refs={{}} />
+        <PracticeOverlay step="Fill_Account_Details" refs={{}} />
       )}
       {mode === MODES.ASSESSMENT && <AssessmentOverlay />}
+
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="w-5 h-5" onClick={()=>navigate(-1)}/>
           <h2 className="text-lg font-semibold">Add Bank Account</h2>
         </div>
         <HelpCircle className="w-5 h-5" />
@@ -54,7 +62,7 @@ export default function AddBankDetails() {
         <div className="flex justify-between items-start">
           <div>
             <p className="text-sm text-gray-500">Selected bank</p>
-            <p className="text-lg font-medium">Dhanlaxmi Bank</p>
+            <p className="text-lg font-medium">{bankName}</p>
           </div>
           <Pencil className="w-4 h-4 text-purple-600" />
         </div>
@@ -85,6 +93,7 @@ export default function AddBankDetails() {
           placeholder="Account number"
           value="XYZ"
           className="border-b border-gray-300 focus:outline-none py-1 placeholder-gray-400"
+          
         />
       </div>
 
@@ -93,7 +102,7 @@ export default function AddBankDetails() {
         className="mt-auto w-full disabled:bg-gray-300 bg-purple-600 text-white py-3 rounded-none text-center font-medium tracking-wide"
         disabled={disabled}
         onClick={()=>{
-            navigate(`/tutorial/UPI/Bank/enteramount/${mode}`)
+            navigate(`/tutorial/UPI/Bank/enteramount/${mode}`,{state:{name:"XYZ",bankName:bankName}});
         }}
         ref={buttonRef}
       >

@@ -26,7 +26,7 @@ export default function AddBenificiaryAccount() {
         )}
         {mode === MODES.PRACTICE && (
             <PracticeOverlay
-            step="UPI_QR_enterAmount"
+            step="Bank_Add_Button"
             refs={{
             }}
             />
@@ -63,7 +63,7 @@ export default function AddBenificiaryAccount() {
 
         {/* Button */}
         <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg font-bold w-full max-w-md text-[18px]" ref={AddAccount}
-            onClick={()=>navigate("/tutorial/UPI/Bank/select/walkthrough")}
+            onClick={()=>navigate(`/tutorial/UPI/Bank/select/${mode}`)}
         >
             Add Beneficiary Account
         </button>

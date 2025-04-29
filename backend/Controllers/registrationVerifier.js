@@ -18,7 +18,7 @@ export const verifyRegistration = async (req,res)=>{
     try{
         cookieContent = decryptToken(verifyToken);
     }catch(err){
-        res.clearCookie("verify-token");
+        res.clearCookie("verify-token",{httpOnly:true,path:"/register"});
         return res.status(401).json({message:"Registration Cancelled!"})
     }
     const timeElapsed = new Date().getTime() - cookieContent.time;

@@ -6,8 +6,8 @@ export const validateUsername=(username)=>{
     let newarr = arr.filter((token)=>alpharegex.test(token))
     if(arr.length === newarr.length){
         let formatedUserName = "";
-        for(const token of newarr){
-            formatedUserName += token + " ";
+        for(let token of newarr){
+            formatedUserName += token.charAt(0).toUpperCase() + token.slice(1).toLowerCase() + " ";
         }
         formatedUserName = formatedUserName.trim();
         return {valid:true,name:formatedUserName};

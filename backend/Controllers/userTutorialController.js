@@ -42,11 +42,14 @@ export const completeSpecificPartOfLesson = async(req,res)=>{
     if(assignmentId === undefined || lessonId === undefined || moduleName === undefined){
         return res.status(400).json({message:"Bad request"});
     }
+    console.log(assignmentId)
+    console.log(lessonId)
+    console.log(moduleName)
 
     let index;
-    if(moduleName === "walkthrough") index = 0;
-    else if(moduleName === "practice") index = 1;
-    else if(moduleName === "assessment") index = 2;
+    if(moduleName.toLowerCase() == "walkthrough") index = 0;
+    else if(moduleName.toLowerCase() == "practice") index = 1;
+    else if(moduleName.toLowerCase() == "assessment") index = 2;
     else{
         return res.status(404).json({message:"Not Found"});
     }
