@@ -5,10 +5,12 @@ import CourseCard from "../components/CourseCard";
 import { Link } from "react-router-dom";
 import { MdOutlineSearch } from "react-icons/md";
 import CourseBanner from "../components/CourseBanner";
+import Loader from "../components/Loader";
 import { useSelector } from "react-redux";
 
 export default function Homepage() {
   const userProfile = useSelector((state) => state.user.userProfile);
+  const loadingStatus = useSelector((state)=>state.loading.isLoading);
   const [courses, setCourses] = useState([]);
   const [subscribedCourses, setSubscribedCourses] = useState([]);
   useEffect(() => {
