@@ -12,6 +12,7 @@ import { MODES } from "../../../constants";
 import WalkthroughOverlay from "./Overlays/WalkThroughOverlay";
 import PracticeOverlay from "./Overlays/PracticeOverlay";
 import AssessmentOverlay from "./Overlays/AssessmentOverlay";
+import CoverPage from "../../../components/CoverPage";
 
 
 function Dashboard({mode}) {
@@ -20,6 +21,7 @@ function Dashboard({mode}) {
   const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
   return (
     <div className={`bg-white min-h-screen text-black font-sans overflow-y-hidden ${mode === MODES.WALKTHROUGH ? "fixed": ""}`} >
+      {mode === MODES.PRACTICE && (<CoverPage/>)}
       {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
         <WalkthroughOverlay
         step="landing"
