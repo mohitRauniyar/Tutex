@@ -57,7 +57,8 @@ function App() {
         <Route path="/search" element={<Search/>}/>
         <Route path="/tutorial/:courseId/view" element={<TutorialView/>}/>
         <Route path="/update-profile" element={<ProfilePage/>} />
-        <Route path="/coverpage" element={<CoverPage page="Practice" title="UPI Paymeny via QR Scan" instruction="This is the instruction."/>}/> 
+
+        <Route path="/coverpage" element={<CoverPage page="Practice" title="UPI Paymeny via QR Scan" instruction="This is the instruction."/>}/>
         {/*UPI QR routes */}
         <Route path="/tutorial/UPI/walkthrough" element={<LandingPage mode={MODES.WALKTHROUGH}/>}/>
         <Route path="/tutorial/UPI/practice" element={<LandingPage mode={MODES.PRACTICE}/>}/>
