@@ -3,10 +3,12 @@ import LandingPage from "./Tutorials/UPI/QRPayment/LandingPage"
 import ScanQR from "./Tutorials/UPI/QRPayment/ScanQR"
 import EnterAmount from "./Tutorials/UPI/QRPayment/EnterAmount"
 import EnterPin from "./Tutorials/UPI/QRPayment/EnterPin"
-import  SendMoneyPage from "./Tutorials/UPI/MobilePayment/mainPage"
+import  MainPage from "./Tutorials/UPI/MobilePayment/mainPage"
 import NumberSearch from "./Tutorials/UPI/MobilePayment/newContact"
-import SendMoneyDetailsPage from "./Tutorials/UPI/MobilePayment/sendMoney"
+import EnterContactPage from "./Tutorials/UPI/MobilePayment/EnterContact"
+import SendMoneyPage from "./Tutorials/UPI/MobilePayment/sendMoney"
 import DashBoard from "./Tutorials/UPI/MobilePayment/LandingPage"
+import MobileEnterPin from "./Tutorials/UPI/MobilePayment/EnterPin"
 import { MODES } from "./constants";
 import Homepage from "./pages/Homepage"
 import YourLessons from "./pages/YourLessons"
@@ -59,8 +61,6 @@ function App() {
         <Route path="/update-profile" element={<ProfilePage/>} />
 
         <Route path="/coverpage" element={<CoverPage page="Practice" title="UPI Paymeny via QR Scan" instruction="This is the instruction."/>}/>
-        
-        
         {/*UPI QR routes */}
         <Route path="/tutorial/UPI/walkthrough" element={<LandingPage mode={MODES.WALKTHROUGH}/>}/>
         <Route path="/tutorial/UPI/practice" element={<LandingPage mode={MODES.PRACTICE}/>}/>
@@ -68,8 +68,17 @@ function App() {
         <Route path={"/tutorial/UPI/qr/:mode"} element={<ScanQR/>}/>
         <Route path="/tutorial/UPI/enter-amount/:mode" element={<EnterAmount/>}/>
         <Route path="/tutorial/UPI/enter-pin/:mode" element={<EnterPin/>}/>
-
-
+        <Route path="/tutorial/UPI/Mobile/to-contact/:mode" element={<MainPage />} />
+        <Route path="/tutorial/UPI/Mobile/choose-contact/:mode" element={<EnterContactPage />} />
+        <Route path="/tutorial/UPI/Mobile/new-contact/:mode" element={<NumberSearch />} />
+        <Route path="/tutorial/UPI/Mobile/send-money/:mode" element={<SendMoneyPage />} />
+        <Route path="/tutorial/UPI/Mobile/enter-pin/:mode" element={<MobileEnterPin/>} />
+        <Route path="/tutorial/UPI/Mobile/walkthrough" element={<DashBoard mode={MODES.WALKTHROUGH}/>}/>
+        <Route path="/tutorial/UPI/Mobile/practice" element={<DashBoard mode={MODES.PRACTICE}/>}/>
+        <Route path="/tutorial/UPI/Mobile/assessment" element={<DashBoard mode={MODES.ASSESSMENT}/>}/>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/update-profile" element={<ProfilePage/>} />
         {/*UPI bank routes */}
         <Route path="/tutorial/UPI/Bank/walkthrough" element={<BankLandingPage mode={MODES.WALKTHROUGH}/>}/>
         <Route path="/tutorial/UPI/Bank/practice" element={<BankLandingPage mode={MODES.PRACTICE}/>}/>
@@ -80,8 +89,6 @@ function App() {
         <Route path="/tutorial/UPI/Bank/addDetails/:mode" element={<AddBankDetails/>}/>
         <Route path="/tutorial/UPI/Bank/enteramount/:mode" element={<EnterBankAmount/>}/>
         <Route path="/tutorial/UPI/Bank/enter-bank-pin/:mode" element={<EnterBankPin/>}/>
-
-
         {/*UPI Mobile routes */}
         <Route path="/tutorial/UPI/to-contact" element={<SendMoneyPage />} />
         <Route path="/tutorial/UPI/new-contact" element={<NumberSearch />} />
