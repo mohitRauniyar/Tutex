@@ -1,3 +1,5 @@
+import { Divide } from "lucide-react";
+
 export const MODES = {
     WALKTHROUGH: "walkthrough",
     PRACTICE: "practice",
@@ -163,5 +165,20 @@ export const URL_MAPS = {
   1: "UPI",
   2: "UPI/Mobile",
   3: "UPI/Bank"
+}
 
+export const INSTRUCTIONS = {
+  1: {
+    title: "UPI payments via QR Scan",
+    instructionText:`<div class="flex flex-col gap-4 text-xl">
+              <h1>Send the following amount to the receiver using the QR code scanning method using the pin given below.</h1>
+              <ul class="list-disc ml-8">
+                <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
+                <li><h1><strong>Your Pin: </strong> 0000</h1></li>
+              </ul>
+              <h2><i>Click on the start button to start practicing.</i></h2>
+            </div>`
+  },
+  2: {},
+  3: {}
 }
