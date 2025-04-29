@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { TbLockPassword } from "react-icons/tb";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios"; // Install it if you haven't: npm install axios
 import { setUserProfile } from "./redux/userSlice";
@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
@@ -27,17 +27,18 @@ const LoginPage = () => {
           withCredentials: true,
         }
       );
-      if(response.ok){
+      if (response.status == 200) {
         console.log("Login successful:", response.data.body);
-      dispatch(setUserProfile(response.data.body.userProfile)); // store in Redux
-      localStorage.setItem("userProfile", JSON.stringify(response.data.body.userProfile)); // store in LocalStorage
-      toast.success(response.data.message)
-      navigate("/")
-      }else{
-        toast.error(response.data.message)
+        dispatch(setUserProfile(response.data.body.userProfile)); // store in Redux
+        localStorage.setItem(
+          "userProfile",
+          JSON.stringify(response.data.body.userProfile)
+        ); // store in LocalStorage
+        toast.success(response.data.message);
+        navigate("/");
+      } else {
+        toast.error(response.data.message);
       }
-      
-
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);
       toast.error("Login failed. Please check your credentials.");

@@ -51,8 +51,6 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/verify" element={<OtpVerification />} />
-        
-
         <Route path="/lessons" element={<YourLessons/>}/>
         <Route path="/course/:assignmentId" element={<CoursePage/>}/>
         <Route path="/modules/:assignmentId/:lessonId" element={<ModulesPage/>}/>

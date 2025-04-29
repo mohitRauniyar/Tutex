@@ -14,19 +14,21 @@ export default function Homepage() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tutorial/all`, {
-          method: "GET",
-          credentials: "include",
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/tutorial/all`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
-        const list = data.body
+        const list = data.body;
         setCourses(list); // store the courses list
-
       } catch (err) {
         console.error("Failed to fetch courses:", err);
         // setError(err.message);
@@ -39,10 +41,13 @@ export default function Homepage() {
   useEffect(() => {
     const fetchSubscribedCourses = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/tutorial/all`, {
-          method: "GET",
-          credentials: "include",
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/user/tutorial/all`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -54,7 +59,7 @@ export default function Homepage() {
       } catch (err) {
         console.error("Failed to fetch subscribedCourses:", err);
         // setError(err.message);
-      } 
+      }
     };
 
     fetchSubscribedCourses();
@@ -70,8 +75,13 @@ export default function Homepage() {
           </Link>
         </div>
         <div className="overflow-x-scroll scrollbar-hidden flex gap-3 justify-evenly">
-          {subscribedCourses.map((data, index)=>(
-            <CourseCard imageLink={data.photoUrl} title={data.title} status={data.status} assignmentId={data.assignmentId}/>
+          {subscribedCourses.map((data, index) => (
+            <CourseCard
+              imageLink={data.photoUrl}
+              title={data.title}
+              status={data.status}
+              assignmentId={data.assignmentId}
+            />
           ))}
           {/* <CourseCard imageLink={"/assets/Tutorials/phonepeBanner.png"} title={"UPI Payment Tutorial"}/>
           <CourseCard imageLink={"/assets/Tutorials/whatsapp.png"} title={"Messaging on whatapp"}/>
@@ -92,8 +102,13 @@ export default function Homepage() {
 
         <h2 className="mb-8 font-semibold text-lg">Explore</h2>
         <div className="grid grid-cols-2 gap-8 mx-4">
-          {courses.map((data, index)=>(
-            <CourseBanner imageLink={data.photoUrl} title={data.title} key={index} courseId={data.courseId}/>
+          {courses.map((data, index) => (
+            <CourseBanner
+              imageLink={data.photoUrl}
+              title={data.title}
+              key={index}
+              courseId={data.courseId}
+            />
           ))}
           {/* <CourseBanner imageLink={"/assets/Tutorials/whatsapp.png"} title={"Messaging on whatapp"} lessonCount={4}/>
           <CourseBanner imageLink={"/assets/Tutorials/instagram.png"} title={"Using Instagram"} lessonCount={6}/>
