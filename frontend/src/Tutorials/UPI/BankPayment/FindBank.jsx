@@ -5,7 +5,7 @@ import WalkthroughOverlay from "./Overlays/WalkthroughOverlay";
 import PracticeOverlay from "./Overlays/PracticeOverlay";
 import AssessmentOverlay from "./Overlays/AssessmentOverlay";
 import { MODES } from "../../../constants.js";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const popularBanks = [
@@ -48,6 +48,8 @@ const BankSelector = () => {
   const [Banks, setBanks] = useState(allBanks);
   const [search, searchState] = useState("block");
   const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
+  const navigate = useNavigate();
+  const screenFixed = mode===MODES.WALKTHROUGH?"h-screen overflow-hidden":"";
   const handleText = (e) => {
     const inputValue = e.target.value;
     setText(inputValue);
@@ -60,9 +62,12 @@ const BankSelector = () => {
     );
     setBanks(filteredBanks);
   };
-
+  const handleSelect = (bankName)=>{
+    navigate(`/tutorial/UPI/Bank/addDetails/${mode}`,{state:{bankName:bankName}});
+  }
+  
   return (
-    <div className="max-w-md mx-auto px-2 pb-2 font-sans">
+    <div className={`max-w-md mx-auto px-2 pb-2 font-sans ${screenFixed}`}>
       {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
         <WalkthroughOverlay
           step="selectBank"
@@ -74,10 +79,10 @@ const BankSelector = () => {
         />
       )}
       {mode === MODES.PRACTICE && (
-        <PracticeOverlay step="UPI_QR_enterAmount" refs={{}} />
+        <PracticeOverlay step="Select_Bank_Step" refs={{}} />
       )}
       {mode === MODES.ASSESSMENT && <AssessmentOverlay />}
-      <h2 className="text-2xl font-bold py-4">Select receiver Bank</h2>
+      <h2 className={`text-2xl font-bold py-4`}>Select receiver Bank</h2>
 
       {/* Search Bar */}
       <div className="sticky top-0 w-full pt-2 pb-8 bg-white ">
@@ -102,6 +107,7 @@ const BankSelector = () => {
             <div
               key={bank.name}
               className="flex flex-col items-center text-center text-sm"
+              onClick={()=>handleSelect(bank.name)}
             >
               <div className="border-zinc-700 w-fit h-fit p-2 border-1 rounded-xl">
                 <Bank size={40} className="text-purple-600" />
@@ -117,18 +123,19 @@ const BankSelector = () => {
         <h3 className="text-lg font-semibold mb-2">All Banks</h3>
         <div className="space-y-2 p-2">
           {Banks.map((bank, idx) => (
-            <Link to={`/tutorial/UPI/Bank/addDetails/${mode}`}>
+            // <Link to={`/tutorial/UPI/Bank/addDetails/${mode}`}>
               <div
                 key={idx}
                 className="px-3 py-2 shadow text-sm flex items-center"
                 ref={bank == "DhanLaxmi Bank" ? bankRef : null}
+                onClick={()=>handleSelect(bank)}
               >
                 <div>
                   <Bank size={40} className="text-purple-600 mr-5" />
                 </div>
                 <p className="text-lg truncate">{bank}</p>
               </div>
-            </Link>
+            // </Link>
           ))}
         </div>
       </div>

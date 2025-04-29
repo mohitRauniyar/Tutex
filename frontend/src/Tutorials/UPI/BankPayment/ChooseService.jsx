@@ -24,7 +24,7 @@ export default function Options() {
             )}
             {mode === MODES.PRACTICE && (
                 <PracticeOverlay
-                step="UPI_QR_enterAmount"
+                step="Bank_Choose_Option"
                 refs={{
                 }}
                 />

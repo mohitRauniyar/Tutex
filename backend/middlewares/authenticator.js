@@ -4,7 +4,6 @@ import Profile from "../models/profile.model.js";
 configDotenv();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const authenticateUser = async(req,res,next)=>{
-    
     const authToken = req.cookies["auth-token"];
     if(!authToken){
         return res.status(401).json({message:"Access denied"});

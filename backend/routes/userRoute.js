@@ -11,7 +11,7 @@ route.get("/complete",completeSpecificPartOfLesson);
 route.get("/profile",getUserProfile)
 route.patch("/update",updateProfile);
 route.patch("/password/change",changePassword)
-route.get("/delete",deleteAccount);
+route.delete("/delete",deleteAccount);
 
 
 export default route;
