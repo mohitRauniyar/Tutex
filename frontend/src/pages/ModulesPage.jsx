@@ -9,7 +9,7 @@ export default function ModulesPage() {
   const lessonId = useParams().lessonId;
   const [lessonNumber, setLessonNumber] = useState(0);
   const [progressPercent, setProgressPercent] = useState(0.0);
-  const [progressString, setProgressString]  = useState("");
+  const [progressString, setProgressString] = useState("");
   const [lesson, setLesson] = useState(null);
   const [nextLessonId, setNextLessonId] = useState(0);
   const [assignmentDetail, setAssignmentDetail] = useState(null);
@@ -45,25 +45,26 @@ export default function ModulesPage() {
       for (let i = 0; i < assignmentDetail.lessons.length; i++) {
         if (assignmentDetail.lessons[i].lessonId == lessonId) {
           setLesson(assignmentDetail.lessons[i]);
+
           setLessonNumber(i + 1);
           console.log(i);
-          if(i+1 < assignmentDetail.lessons.length){
-            setNextLessonId(assignmentDetail.lessons[i+1].lessonId);
+          if (i + 1 < assignmentDetail.lessons.length) {
+            setNextLessonId(assignmentDetail.lessons[i + 1].lessonId);
           }
         }
       }
-      
     }
   }, [assignmentDetail]);
 
   useEffect(() => {
     if (lesson !== null) {
-      const progressString = lesson.progress.split("");
+      setProgressString(lesson.progress);
+      const progressStringList = lesson.progress.split("");
       let progress = 0;
-      for (let i = 0; i < progressString.length; i++) {
-        if (progressString[i] == "1") progress++;
+      for (let i = 0; i < progressStringList.length; i++) {
+        if (progressStringList[i] == "1") progress++;
       }
-      setProgressPercent(progress/progressString.length * 100)
+      setProgressPercent((progress / progressStringList.length) * 100);
     }
   }, [lesson]);
 
@@ -91,18 +92,32 @@ export default function ModulesPage() {
             ></div>
           </div>
           <div className="flex flex-col gap-4 w-full mt-4">
-            <Module moduleName={"Walkthrough"} lessonId={lessonId} isComplete={progressString[0]=="1"} assignmentId={assignmentId}/>
-            <Module moduleName={"Practice"} lessonId={lessonId} isComplete={progressString[1]=="1"} assignmentId={assignmentId}/>
-            <Module moduleName={"Assessment"} lessonId={lessonId} isComplete={progressString[2]=="1"} assignmentId={assignmentId}/>
+            <Module
+              moduleName={"Walkthrough"}
+              lessonId={lessonId}
+              isComplete={progressString[0] == "1"}
+              assignmentId={assignmentId}
+            />
+            <Module
+              moduleName={"Practice"}
+              lessonId={lessonId}
+              isComplete={progressString[1] == "1"}
+              assignmentId={assignmentId}
+            />
+            <Module
+              moduleName={"Assessment"}
+              lessonId={lessonId}
+              isComplete={progressString[2] == "1"}
+              assignmentId={assignmentId}
+            />
           </div>
           {nextLessonId !== 0 && (
-
             <Link
-            to={`/modules/${assignmentId}/${nextLessonId}`}
-            className="px-8 py-3 ml-auto mr-0 bg-[#30A0FE] text-white my-4 rounded-sm"
+              to={`/modules/${assignmentId}/${nextLessonId}`}
+              className="px-8 py-3 ml-auto mr-0 bg-[#30A0FE] text-white my-4 rounded-sm"
             >
-            Next Lesson
-          </Link>
+              Next Lesson
+            </Link>
           )}
         </div>
       )}

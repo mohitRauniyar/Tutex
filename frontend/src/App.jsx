@@ -51,8 +51,6 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/verify" element={<OtpVerification />} />
-        
-
         <Route path="/lessons" element={<YourLessons/>}/>
         <Route path="/course/:assignmentId" element={<CoursePage/>}/>
         <Route path="/modules/:assignmentId/:lessonId" element={<ModulesPage/>}/>
@@ -89,12 +87,6 @@ function App() {
         <Route path="/tutorial/UPI/Bank/addDetails/:mode" element={<AddBankDetails/>}/>
         <Route path="/tutorial/UPI/Bank/enteramount/:mode" element={<EnterBankAmount/>}/>
         <Route path="/tutorial/UPI/Bank/enter-bank-pin/:mode" element={<EnterBankPin/>}/>
-        {/*UPI Mobile routes */}
-        <Route path="/tutorial/UPI/to-contact" element={<SendMoneyPage />} />
-        <Route path="/tutorial/UPI/new-contact" element={<NumberSearch />} />
-        <Route path="/tutorial/UPI/send-money" element={<SendMoneyDetailsPage />} />
-        <Route path="/tutorial/UPI/phonepe" element={<DashBoard />}/>
-
 
       </Routes>
     </BrowserRouter>
