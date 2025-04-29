@@ -7,8 +7,9 @@ import WalkthroughOverlay from "./Overlays/WalkThroughOverlay";
 import PracticeOverlay from "./Overlays/PracticeOverlay";
 import AssessmentOverlay from "./Overlays/AssessmentOverlay";
 
-const MainPage = () => {
+function EnterContactPage() {
   const { mode } = useParams();
+  const [searchActive, setSearchActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
@@ -21,13 +22,15 @@ const MainPage = () => {
     { name: "Marie", number: "5893748091", bankingName: "MARIE CURIE" },
   ];
 
-  // const filteredContacts = contacts.filter(
-  //   (contact) =>
-  //     contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //     contact.number.includes(searchTerm)
-  // );
+  const filteredContacts = contacts.filter(
+    (contact) =>
+      contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      contact.number.includes(searchTerm)
+  );
 
-  const searchbox = useRef(null);
+  const Textbox = useRef(null);
+  const searchtext = useRef(null);
+  const inputbox = useRef(null);
   const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
   return (
     <div
@@ -37,16 +40,16 @@ const MainPage = () => {
     >
       {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
         <WalkthroughOverlay
-          step="search"
+          step="chooseContact"
           refs={{
-            searchbox,
+            Textbox,
+            searchtext,
           }}
           onComplete={() => setIsWalkthroughComplete(true)}
         />
       )}
-      {mode === MODES.PRACTICE && <PracticeOverlay step="UPI_Mobile_Searchbox" refs={{searchbox,}}/>}
+      {mode === MODES.PRACTICE && <PracticeOverlay step="UPI_Mobile_TypeMarie"  refs={{Textbox}}/>}
       {mode === MODES.ASSESSMENT && <AssessmentOverlay />}
-
 
       <div className="w-full h-screen bg-white p-4">
         {/* Header */}
@@ -55,41 +58,23 @@ const MainPage = () => {
           <FaQuestionCircle size={20} />
         </div>
 
-        {/* Conditional Rendering for Image */}
-        <div className="w-full h-60 mt-2">
-          <img
-            src="/assets/Tutorials/UPI/QRPayments/mainPage-img.jpg"
-            alt="Send Money"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
-
         {/* Search Bar */}
-        <div className="mt-6">
+        <div className="mt-6 w-full">
           <p className="text-lg font-semibold">Select Contact</p>
-          <div className="flex items-center bg-gray-100 rounded-full p-2 mt-4" ref={searchbox}>
-            <FaSearch className="text-gray-500 ml-2" />
+          <div
+            className="flex items-center bg-gray-100 rounded-full p-2 mt-4 w-full justify-between"
+          >
+            <FaSearch className="text-gray-500 ml-2 w-5" />
             <input
               type="text"
               placeholder="Search any mobile number"
-              className="w-full bg-transparent outline-none px-2"
-              // onFocus={() => setSearchActive(true)}
-              // onBlur={() => setSearchActive(false)}
-              // onChange={(e) => setSearchTerm(e.target.value)}
-              onClick={() =>
-                navigate(`/tutorial/UPI/Mobile/choose-contact/${mode}`)
-              }
+              className="w-70 bg-transparent outline-none px-2 py-3 block flex-1"
+              onFocus={() => setSearchActive(true)}
+              onBlur={() => setSearchActive(false)}
+              onChange={(e) => setSearchTerm((e.target.value).toLowerCase())}
+              ref={Textbox}
             />
           </div>
-        </div>
-
-        {/* New Mobile Number */}
-        <div
-          className="mt-6 text-purple-600 font-semibold cursor-pointer"
-          onClick={() => navigate("/tutorial/UPI/new-contact")}
-        >
-          <p>New Mobile Number</p>
         </div>
 
         {/* Separator Line */}
@@ -97,13 +82,16 @@ const MainPage = () => {
 
         {/* Contact List */}
         <div className="mt-4">
-          {contacts.map((contact, index) => (
+          {filteredContacts.map((contact, index) => (
             <div
               key={index}
               className="flex items-center py-2 cursor-pointer"
               onClick={() =>
-                navigate(`/tutorial/UPI/Mobile/send-money/${mode}`, { state: contact })
+                navigate(`/tutorial/UPI/Mobile/send-money/${mode}`, {
+                  state: contact,
+                })
               }
+              ref={contact.name == "Marie" ? searchtext : null}
             >
               <FaUserCircle size={40} className="text-gray-500 mr-4" />
               <div>
@@ -116,6 +104,5 @@ const MainPage = () => {
       </div>
     </div>
   );
-};
-
-export default MainPage;
+}
+export default EnterContactPage;

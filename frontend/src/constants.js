@@ -108,5 +108,25 @@ export const HINTS = {
     text: "Enter the pin as '0000' using the keyboard.",
     ref: []
   },
+  "UPI_Mobile_landing":{
+    text: "Click on the To mobile Number icon right below the Money Transfer",
+    ref:["mobilecontact"]
+  },
+  "UPI_Mobile_Searchbox":{
+    text: "Click on the search box.",
+    ref:["searchbox"],
+  },
+  "UPI_Mobile_TypeMarie":{
+    text:"Type marie on the search box first and then click on the box where Marie's contact is popping up.",
+    ref:["Textbox"],
+  },
+  "UPI_Mobile_EnterAmount":{
+    text:"Click on the chatbox to enter an amount of your choice and then click on green send button at the right corner.",
+    ref:["amountInputRef"],
+  },
+  "UPI_Mobile_EnterPin":{
+    text: "Enter pin 0000 using the keyboard to send an amount.",
+    ref:[],
+  },
 
 };
