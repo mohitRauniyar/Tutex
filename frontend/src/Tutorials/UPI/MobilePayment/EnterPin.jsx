@@ -6,12 +6,20 @@ import { MODES } from "../../../constants";
 import WalkthroughOverlay from "./Overlays/WalkThroughOverlay";
 import PracticeOverlay from "./Overlays/PracticeOverlay";
 import AssessmentOverlay from "./Overlays/AssessmentOverlay";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { clearAssignment } from "../../../redux/currentAssignmentSlice";
 
 function MobileEnterPin() {
   const [pin, setPin] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const { amount } = location.state || {};
+  const { assignmentId, lessonId, moduleName } = useSelector(
+    (state) => state.currentAssignment
+  );
+  const [attempts, setAttempts] = useState(0);
 
   // Check if the pin is correct
   const isPinCorrect = pin === "0000";
@@ -19,12 +27,44 @@ function MobileEnterPin() {
   const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
 
   // Handle Keypad Input
-  const handleKeyPress = (value) => {
+  const handleKeyPress = async (value) => {
     if (value === "clear") {
       setPin(pin.slice(0, -1)); // Remove last character
     } else if (value === "submit") {
       if (isPinCorrect) {
-        navigate("/tutorial/UPI/success");
+        try {
+          const response = await fetch(
+            `${
+              import.meta.env.VITE_BACKEND_URL
+            }/user/complete?assignmentId=${assignmentId}&lessonId=${lessonId}&moduleName=${moduleName}`,
+            {
+              method: "GET",
+              credentials: "include",
+            }
+          );
+
+          if (response.ok) {
+            dispatch(clearAssignment());
+            toast.success("Successfully marked completed.");
+            navigate(`/modules/${assignmentId}/${lessonId}`);
+          } else {
+            toast.error("Failed to mark assignment complete. Please try again.");
+            setPin("")
+            setAttempts(attempts+1);
+            if(attempts >= 3){
+              toast.error("Internal Server Error. Try again later.")
+              navigate(`/modules/${assignmentId}/${lessonId}`)
+            }
+          }
+        } catch (error) {
+          console.error(error);
+          toast.error("Something went wrong! Please try again.");
+          setPin("")
+          setAttempts(attempts + 1);
+          if(attempts >= 3){
+            navigate(`/modules/${assignmentId}/${lessonId}`)
+          }
+        }
       } else {
         alert("Incorrect UPI PIN. Please try again!");
       }

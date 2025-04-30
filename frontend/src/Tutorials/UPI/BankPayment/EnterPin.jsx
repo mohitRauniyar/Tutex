@@ -44,13 +44,14 @@ const EnterPin = () => {
           if (response.ok) {
             dispatch(clearAssignment());
             toast.success("Successfully marked completed.");
-            navigate("/tutorial/UPI/success");
+            navigate(`/modules/${assignmentId}/${lessonId}`);
           } else {
             toast.error("Failed to mark assignment complete. Please try again.");
             setPin("")
             setAttempts(attempts+1);
             if(attempts >= 3){
-              navigate(`/`)
+              toast.error("Internal Server Error. Try again later.")
+              navigate(`/modules/${assignmentId}/${lessonId}`);
             }
           }
         } catch (error) {
@@ -59,7 +60,7 @@ const EnterPin = () => {
           setPin("")
           setAttempts(attempts + 1);
           if(attempts >= 3){
-            navigate(`/`)
+            navigate(`/modules/${assignmentId}/${lessonId}`);
           }
         }
       } else {
