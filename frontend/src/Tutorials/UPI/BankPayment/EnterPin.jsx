@@ -8,6 +8,8 @@ import PracticeOverlay from "./Overlays/PracticeOverlay";
 import { MODES } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { clearUserProfile } from "../../../redux/userSlice";
+import { clearAssignment } from "../../../redux/currentAssignmentSlice";
 
 const EnterPin = () => {
   const [pin, setPin] = useState("");
@@ -40,7 +42,13 @@ const EnterPin = () => {
               credentials: "include", // <-- Important to send your auth-token cookie
             }
           );
-
+          if(response.status === 401){
+            dispatch(clearUserProfile());
+            dispatch(clearAssignment());
+            toast.error("Session Expired");
+            navigate("/login");
+            return;
+          }
           if (response.ok) {
             dispatch(clearAssignment());
             toast.success("Successfully marked completed.");

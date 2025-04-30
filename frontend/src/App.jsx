@@ -25,12 +25,12 @@ import BankSelector from "./Tutorials/UPI/BankPayment/FindBank"
 import AddBankDetails from "./Tutorials/UPI/BankPayment/BankDetails"
 import EnterBankAmount from "./Tutorials/UPI/BankPayment/EnterAmount"
 import EnterBankPin from "./Tutorials/UPI/BankPayment/EnterPin"
-import CoverPage from "./components/CoverPage"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { setUserProfile } from "./redux/userSlice"
 import TutorialView from "./pages/TutorialView"
 import OtpVerification from "./pages/OtpVerification"
+import ComingSoon from "./pages/ComingSoon"
 
 function App() {
 
@@ -51,12 +51,14 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/verify" element={<OtpVerification />} />
+        
         <Route path="/lessons" element={<YourLessons/>}/>
         <Route path="/course/:assignmentId" element={<CoursePage/>}/>
         <Route path="/modules/:assignmentId/:lessonId" element={<ModulesPage/>}/>
         <Route path="/search" element={<Search/>}/>
         <Route path="/profile" element={<ProfilePage/>} />
         <Route path="/tutorial/:courseId/view" element={<TutorialView/>}/>
+        <Route path="/tutorial/coming-soon" element={<ComingSoon/>}/>
 
         {/*UPI QR routes */}
         <Route path="/tutorial/UPI/walkthrough" element={<LandingPage mode={MODES.WALKTHROUGH}/>}/>
