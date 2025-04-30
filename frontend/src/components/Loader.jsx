@@ -2,7 +2,7 @@ import React from "react";
 
 const Loader = () => {
   return (
-    <>
+    <div className="w-full min-h-screen flex items-center">
       <style>{`
         @keyframes jump7456 {
           15% { border-bottom-right-radius: 3px; }
@@ -33,7 +33,7 @@ const Loader = () => {
         <div className="absolute top-[60px] left-0 w-12 h-[5px] bg-gray-400 rounded-full loader-shadow"></div>
         <div className="absolute top-0 left-0 w-full h-full bg-blue-600 rounded-md loader-jump"></div>
       </div>
-    </>
+    </div>
   );
 };
 

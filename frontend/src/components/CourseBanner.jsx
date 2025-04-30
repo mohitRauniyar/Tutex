@@ -6,7 +6,7 @@ export default function CourseBanner({ imageLink, title, courseId }) {
     <Link to={`/tutorial/${courseId}/view`} className="w-40 h-68 block">
       <div
         className="rounded-lg bg-cover w-full h-full"
-        style={{ backgroundImage: `url(${imageLink})` }}
+        style={{ backgroundImage: `url(/assets/Tutorials/${imageLink})` }}
       >
         <div className="relative text-white w-full h-full bg-gradient-to-b from-[#00000076] to-gray-950 to-80% rounded-lg p-4 gap-2 flex flex-col justify-end">
           <h2 className="text-2xl">{title}</h2>
