@@ -9,6 +9,7 @@ import AssessmentOverlay from "./Overlays/AssessmentOverlay";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { clearAssignment } from "../../../redux/currentAssignmentSlice";
+import { clearUserProfile } from "../../../redux/userSlice";
 
 function MobileEnterPin() {
   const [pin, setPin] = useState("");
@@ -42,7 +43,13 @@ function MobileEnterPin() {
               credentials: "include",
             }
           );
-
+          if(response.status === 401){
+            dispatch(clearAssignment());
+            dispatch(clearUserProfile());
+            toast.error("Session Expired");
+            navigate("/login");
+            return;
+          }
           if (response.ok) {
             dispatch(clearAssignment());
             toast.success("Successfully marked completed.");

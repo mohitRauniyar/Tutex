@@ -164,7 +164,8 @@ export const HINTS = {
 export const URL_MAPS = {
   1: "UPI",
   2: "UPI/Mobile",
-  3: "UPI/Bank"
+  3: "UPI/Bank",
+  _: "coming-soon"
 }
 
 export const INSTRUCTIONS = {
@@ -179,6 +180,30 @@ export const INSTRUCTIONS = {
               <h2><i>Click on the start button to start practicing.</i></h2>
             </div>`
   },
-  2: {},
-  3: {}
+  2: {
+    title: "UPI payments to a mobile number",
+    instructionText:`<div class="flex flex-col gap-4 text-xl">
+              <h1>Send the following amount to the receiver using their mobile number scanning method using the pin given below.</h1>
+              <ul class="list-disc ml-8">
+                <li><h1><strong>Receiver: </strong>Marie</h1></li>
+                <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
+                <li><h1><strong>Your Pin: </strong> 0000</h1></li>
+              </ul>
+              <h2><i>Click on the start button to start practicing.</i></h2>
+            </div>`
+  },
+  3: {
+    title: "UPI payments via QR Scan",
+    instructionText:`<div class="flex flex-col gap-4 text-xl">
+              <h1>Send the following amount to the receiver using their bank account number using the pin given below.</h1>
+              <ul class="list-disc ml-8">
+                <li><h1><strong>Bank: </strong>DhanLaxmi Bank</h1></li>
+                <li><h1><strong>IFSC Code: </strong>ABCD0000</h1></li>
+                <li><h1><strong>Account Number: </strong>123456789</h1></li>
+                <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
+                <li><h1><strong>Your Pin: </strong> 0000</h1></li>
+              </ul>
+              <h2><i>Click on the start button to start practicing.</i></h2>
+            </div>`
+  }
 }
