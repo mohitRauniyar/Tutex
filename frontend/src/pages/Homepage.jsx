@@ -50,7 +50,7 @@ export default function Homepage() {
         setCourses(list);
       } catch (err) {
         console.error("Failed to fetch courses:", err);
-        toast.error("Failed to fetch courses");
+        // toast.error("Failed to fetch courses");
       } finally {
         dispatch(setLoading(false));
       }
@@ -91,7 +91,7 @@ export default function Homepage() {
         setSubscribedCourses(data.body || []); // store the subscribedCourses list
       } catch (err) {
         console.error("Failed to fetch subscribedCourses:", err);
-        toast.error("Failed to fetch subscribedCourses");
+        // toast.error("Failed to fetch subscribedCourses");
       } finally {
         dispatch(setLoading(false));
       }
