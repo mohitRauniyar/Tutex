@@ -8,11 +8,13 @@ import { useNavigate } from "react-router-dom";
 import SettingCard from "../components/ui/SettingsCard";
 import { clearUserProfile, setUserProfile } from "../redux/userSlice";
 import { clearAssignment } from "../redux/currentAssignmentSlice";
+import Loader from "../components/Loader";
 
 export default function ProfileUpdate() {
   const userProfile = useSelector((state) => state.user.userProfile);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const loadingStatus = useSelector((state) => state.loading.isLoading);
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -100,7 +102,7 @@ export default function ProfileUpdate() {
     ) {
       return;
     }
-
+    dispatch(setLoading(true));
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/user/delete`,
@@ -123,146 +125,164 @@ export default function ProfileUpdate() {
     } catch (error) {
       console.error("Delete account error:", error);
       toast.error("Something went wrong. Please try again later.");
+    }finally{
+      dispatch(setLoading(false));
     }
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <Header />
+    <>
+      {loadingStatus ? (
+        <Loader />
+      ) : (
+        <div className="min-h-screen bg-white flex flex-col">
+          <Header />
 
-      <div className="flex flex-row justify-evenly mt-28">
-        <div className="w-32 h-32 mt-5 rounded-full flex justify-center items-center border-2 border-gray-300 bg-gray-200">
-          {userProfile && userProfile.profileUrl?(
-            <img src={userProfile.profileUrl} className="w-full h-full rounded-full" alt="dp"/>
-          ) : (
-            <svg
-              className="w-25 h-25"
-              viewBox="0 0 24 24"
-              fill="#ccc"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="12" cy="7" r="5" fill="#bbb" />
-              <path d="M12 14c-5 0-9 3-9 5v2h18v-2c0-2-4-5-9-5z" fill="#bbb" />
-            </svg>
-          )}
-        </div>
-        {userProfile && (
-          <div className="w-fit h-fit mt-5 flex flex-col gap-3">
-            {isEditing ? (
-              <>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="border-none focus:ring-0 pl-2 py-1 text-xl font-semibold rounded"
-                  placeholder="Name"
+          <div className="flex flex-row justify-evenly mt-28">
+            <div className="w-32 h-32 mt-5 rounded-full flex justify-center items-center border-2 border-gray-300 bg-gray-200">
+              {userProfile && userProfile.profileUrl ? (
+                <img
+                  src={userProfile.profileUrl}
+                  className="w-full h-full rounded-full"
+                  alt="dp"
                 />
-                <input
-                  type="date"
-                  name="dob"
-                  value={formData.dob}
-                  onChange={handleChange}
-                  className="focus:border-0 pl-2 py-1 rounded"
-                />
-                <select
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  className="focus:border-0 pl-2 py-1 rounded"
+              ) : (
+                <svg
+                  className="w-25 h-25"
+                  viewBox="0 0 24 24"
+                  fill="#ccc"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <option value="">Select Gender</option>
-                  <option value="M">Male</option>
-                  <option value="F">Female</option>
-                  <option value="O">Other</option>
-                </select>
-              </>
-            ) : (
-              <>
-                <h2 className="text-2xl font-semibold">{formData.name}</h2>
-                <p className="text-sm text-gray-600">{userProfile.email}</p>
-                <p className="text-sm text-gray-600">Age: {age}</p>
-                <p className="text-sm text-gray-600">
-                  Gender: {genderMap[formData.gender]}
-                </p>
-              </>
-            )}
+                  <circle cx="12" cy="7" r="5" fill="#bbb" />
+                  <path
+                    d="M12 14c-5 0-9 3-9 5v2h18v-2c0-2-4-5-9-5z"
+                    fill="#bbb"
+                  />
+                </svg>
+              )}
+            </div>
+            {userProfile && (
+              <div className="w-fit h-fit mt-5 flex flex-col gap-3">
+                {isEditing ? (
+                  <>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="border-none focus:ring-0 pl-2 py-1 text-xl font-semibold rounded"
+                      placeholder="Name"
+                    />
+                    <input
+                      type="date"
+                      name="dob"
+                      value={formData.dob}
+                      onChange={handleChange}
+                      className="focus:border-0 pl-2 py-1 rounded"
+                    />
+                    <select
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                      className="focus:border-0 pl-2 py-1 rounded"
+                    >
+                      <option value="">Select Gender</option>
+                      <option value="M">Male</option>
+                      <option value="F">Female</option>
+                      <option value="O">Other</option>
+                    </select>
+                  </>
+                ) : (
+                  <>
+                    <h2 className="text-2xl font-semibold">{formData.name}</h2>
+                    <p className="text-sm text-gray-600">{userProfile.email}</p>
+                    <p className="text-sm text-gray-600">Age: {age}</p>
+                    <p className="text-sm text-gray-600">
+                      Gender: {genderMap[formData.gender]}
+                    </p>
+                  </>
+                )}
 
-            {isEditing ? (
-              <div className="flex gap-3 justify-between">
-                <button
-                  onClick={handleSave}
-                  disabled={loading}
-                  className={`px-5 py-1 w-full text-white rounded ${
-                    loading ? "bg-gray-400" : "bg-[#30A0FE]"
-                  }`}
-                >
-                  {loading ? (
-                    <div className="flex items-center gap-2">
-                      <svg
-                        className="animate-spin h-5 w-5 text-white"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                          fill="none"
-                        />
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                        />
-                      </svg>
-                      Saving...
-                    </div>
-                  ) : (
-                    "Save"
-                  )}
-                </button>
+                {isEditing ? (
+                  <div className="flex gap-3 justify-between">
+                    <button
+                      onClick={handleSave}
+                      disabled={loading}
+                      className={`px-5 py-1 w-full text-white rounded ${
+                        loading ? "bg-gray-400" : "bg-[#30A0FE]"
+                      }`}
+                    >
+                      {loading ? (
+                        <div className="flex items-center gap-2">
+                          <svg
+                            className="animate-spin h-5 w-5 text-white"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                              fill="none"
+                            />
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                            />
+                          </svg>
+                          Saving...
+                        </div>
+                      ) : (
+                        "Save"
+                      )}
+                    </button>
 
-                {/* ✅ Cancel Button */}
-                <button
-                  onClick={() => {
-                    setIsEditing(false);
-                    const dobDate = new Date(userProfile.dob);
-                    setFormData({
-                      name: userProfile.name || "",
-                      dob: dobDate.toISOString().split("T")[0],
-                      gender: userProfile.gender || "",
-                    });
-                  }}
-                  className="px-5 py-1 text-gray-700 border border-gray-400 rounded"
-                >
-                  Cancel
-                </button>
+                    {/* ✅ Cancel Button */}
+                    <button
+                      onClick={() => {
+                        setIsEditing(false);
+                        const dobDate = new Date(userProfile.dob);
+                        setFormData({
+                          name: userProfile.name || "",
+                          dob: dobDate.toISOString().split("T")[0],
+                          gender: userProfile.gender || "",
+                        });
+                      }}
+                      className="px-5 py-1 text-gray-700 border border-gray-400 rounded"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className="bg-[#30A0FE] border-1 px-7 py-1 text-white rounded"
+                    onClick={() => setIsEditing(true)}
+                  >
+                    Edit
+                  </button>
+                )}
               </div>
-            ) : (
-              <button
-                className="bg-[#30A0FE] border-1 px-7 py-1 text-white rounded"
-                onClick={() => setIsEditing(true)}
-              >
-                Edit
-              </button>
             )}
           </div>
-        )}
-      </div>
 
-      <div className="mt-8">
-        <SettingCard name="Delete Account" handleNext={handleDeleteAccount} />
-        <SettingCard
-          name="Change Password"
-          handleNext={() => {
-            navigate("/profile/update/password");
-          }}
-        />
-      </div>
-      <Navbar />
-    </div>
+          <div className="mt-8">
+            <SettingCard
+              name="Delete Account"
+              handleNext={handleDeleteAccount}
+            />
+            <SettingCard
+              name="Change Password"
+              handleNext={() => {
+                navigate("/profile/update/password");
+              }}
+            />
+          </div>
+          <Navbar />
+        </div>
+      )}
+    </>
   );
 }

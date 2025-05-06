@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userProfile: null, 
+  userProfile: null,
+  accountLoading:true
 };
 
 const userSlice = createSlice({
@@ -15,8 +16,11 @@ const userSlice = createSlice({
       state.userProfile = null;
       localStorage.removeItem("userProfile");
     },
+    setAccountLoading:(state,action)=>{
+      state.accountLoading = action.payload
+    }
   },
 });
 
-export const { setUserProfile, clearUserProfile } = userSlice.actions;
+export const { setUserProfile, clearUserProfile,setAccountLoading } = userSlice.actions;
 export default userSlice.reducer;
