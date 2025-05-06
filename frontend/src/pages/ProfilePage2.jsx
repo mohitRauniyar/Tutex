@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Logout from "../components/ui/Logout";
-import { clearUserProfile } from "./redux/userSlice";
-import { clearAssignment } from "./redux/currentAssignmentSlice";
+import { clearUserProfile } from "../redux/userSlice";
+import { clearAssignment } from "../redux/currentAssignmentSlice";
 
 export default function ProfilePage2() {
   const [age, setAge] = useState(0);
