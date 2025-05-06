@@ -30,13 +30,13 @@ import { useEffect } from "react"
 import { setUserProfile } from "./redux/userSlice"
 import TutorialView from "./pages/TutorialView"
 import OtpVerification from "./pages/OtpVerification"
-import ProfilePage from "./pages/profilePage"
+import ProfilePage from "./pages/ProfilePage2"
 import ProfileUpdate from "./pages/ProfileUpdate"
 import ChangePassword from "./pages/ChangePassword"
 import ForgotPassword from "./pages/ForgotPassword"
 import OtpVerificationForForgotPassword from "./pages/OtpVerificationForForgotPassword"
 import ResetPassword from "./pages/ResetPassword"
-import ComingSoon from "./pages/ComingSoon"
+import ComingSoon from "./pages/ComingSoon2"
 import PrivacyPolicy from "./pages/PrivacyPolicy"
 import HelpCenter from "./pages/HelpCenter"
 
@@ -63,7 +63,7 @@ function App() {
         <Route path="/course/:assignmentId" element={<CoursePage/>}/>
         <Route path="/modules/:assignmentId/:lessonId" element={<ModulesPage/>}/>
         <Route path="/search" element={<Search/>}/>
-        <Route path="/analytics" element={<ComingSoon/>}/>
+        <Route path="/analytics" element={<ComingSoon2/>}/>
         <Route path="/profile" element={<ProfilePage/>} />
         <Route path="/profile/preferences" element={<ComingSoon/>} />
         <Route path="/profile/language" element={<ComingSoon/>} />

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 
-const ComingSoon = () => {
+const ComingSoon2 = () => {
   
 
   return (
@@ -14,4 +14,4 @@ const ComingSoon = () => {
   );
 };
 
-export default ComingSoon;
+export default ComingSoon2;

@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Logout from "../components/ui/Logout";
 
-export default function ProfilePage() {
+export default function ProfilePage2() {
   const [age, setAge] = useState(0);
   const userProfile = useSelector((state) => state.user.userProfile);
   const navigate = useNavigate();
