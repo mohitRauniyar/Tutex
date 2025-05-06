@@ -17,7 +17,6 @@ import ModulesPage from "./pages/ModulesPage"
 import Search from "./pages/Search"
 import LoginPage from "./login";
 import RegisterPage from "./register";
-import ProfilePage from "./profileUpdate"
 import BankLandingPage from "./Tutorials/UPI/BankPayment/BankLandingPage"
 import Options from "./Tutorials/UPI/BankPayment/ChooseService"
 import AddBenificiaryAccount from "./Tutorials/UPI/BankPayment/AddBenificiary"
@@ -31,6 +30,15 @@ import { useEffect } from "react"
 import { setUserProfile } from "./redux/userSlice"
 import TutorialView from "./pages/TutorialView"
 import OtpVerification from "./pages/OtpVerification"
+import ProfilePage from "./pages/profilePage"
+import ProfileUpdate from "./pages/ProfileUpdate"
+import ChangePassword from "./pages/ChangePassword"
+import ForgotPassword from "./pages/ForgotPassword"
+import OtpVerificationForForgotPassword from "./pages/OtpVerificationForForgotPassword"
+import ResetPassword from "./pages/ResetPassword"
+import ComingSoon from "./pages/ComingSoon"
+import PrivacyPolicy from "./pages/PrivacyPolicy"
+import HelpCenter from "./pages/HelpCenter"
 
 function App() {
 
@@ -55,7 +63,18 @@ function App() {
         <Route path="/course/:assignmentId" element={<CoursePage/>}/>
         <Route path="/modules/:assignmentId/:lessonId" element={<ModulesPage/>}/>
         <Route path="/search" element={<Search/>}/>
+        <Route path="/analytics" element={<ComingSoon/>}/>
         <Route path="/profile" element={<ProfilePage/>} />
+        <Route path="/profile/preferences" element={<ComingSoon/>} />
+        <Route path="/profile/language" element={<ComingSoon/>} />
+        <Route path="/profile/accessibility" element={<ComingSoon/>} />
+        <Route path="/profile/privacy" element={<PrivacyPolicy/>} />
+        <Route path="/profile/help" element={<HelpCenter/>} />
+        <Route path="/profile/update" element={<ProfileUpdate/>} />
+        <Route path="/profile/update/password" element={<ChangePassword/>} />
+        <Route path="/password/forgot" element={<ForgotPassword/>} />
+        <Route path="/password/reset" element={<ResetPassword/>} />
+        <Route path="/password/forgot/otp" element={<OtpVerificationForForgotPassword/>} />
         <Route path="/tutorial/:courseId/view" element={<TutorialView/>}/>
 
         {/*UPI QR routes */}

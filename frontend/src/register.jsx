@@ -3,6 +3,7 @@ import { CgProfile } from "react-icons/cg";
 import { TbLockPassword } from "react-icons/tb";
 import { MdOutlineMail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -14,17 +15,46 @@ const RegisterPage = () => {
     gender: "",
   });
 
+  const [passwordError, setPasswordError] = useState("");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
+  };
+
+  // Password Validation Function
+  const validatePassword = (password) => {
+    let errorMessage = "";
+    if (password.length < 8) {
+      errorMessage = "Password must be at least 8 characters.";
+    } else if (!/[A-Z]/.test(password)) {
+      errorMessage = "Password must contain at least one uppercase letter.";
+    } else if (!/[a-z]/.test(password)) {
+      errorMessage = "Password must contain at least one lowercase letter.";
+    } else if (!/[0-9]/.test(password)) {
+      errorMessage = "Password must contain at least one number.";
+    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      errorMessage = "Password must contain at least one special character.";
+    }
+    return errorMessage;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
+    // Validate password
+    const passwordError = validatePassword(formData.password);
+
+    if (passwordError) {
+      setPasswordError(passwordError);
+      return;
+    }
+
+    setPasswordError("");  // Clear any previous errors
+
     const dobDate = new Date(formData.DOB);
     const body = {
       name: formData.name,
@@ -32,10 +62,10 @@ const RegisterPage = () => {
       DOB: {
         year: dobDate.getFullYear(),
         month: dobDate.getMonth() + 1, // Month is 0-based
-        day: dobDate.getDate()
+        day: dobDate.getDate(),
       },
       gender: formData.gender,
-      email: formData.email
+      email: formData.email,
     };
 
     console.log("Request Body: ", body);
@@ -46,30 +76,30 @@ const RegisterPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials:"include",
-      body: JSON.stringify(body)
+      credentials: "include",
+      body: JSON.stringify(body),
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Success:", data);
-      toast.success("Please check your email for the OTP.")
-      navigate("/register/verify")
-      // You can redirect or show success message here
-    })
-    .catch(error => {
-      console.error("Error:", error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        toast.success("Please check your email for the OTP.");
+        navigate("/register/verify");
+        // You can redirect or show success message here
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
-  
+
   return (
     <div className="flex items-center justify-center min-h-screen w-full bg-cover bg-[url(/assets/background.png)] overflow-y-hidden">
       <div className="bg-white rounded-xl shadow-lg p-8 pb-12 w-full mt-64 fixed bottom-0">
-        <h3 className="text-xl font-bold text-center mt-4">
+        <h3 className="text-2xl font-bold text-center mt-4">
           Create your account
         </h3>
-        <form className="mt-6" id="registrationForm" onSubmit={handleSubmit}>
+        <form className="mt-6 flex flex-col gap-3" id="registrationForm" onSubmit={handleSubmit}>
           <div className="relative mb-4">
-            <label className="block text-sm font-semibold">Username</label>
+            <label className="block text-md font-semibold">Username</label>
             <input
               type="text"
               placeholder="Enter your Name"
@@ -85,7 +115,7 @@ const RegisterPage = () => {
           </div>
 
           <div className="relative mb-4">
-            <label className="block text-sm font-semibold">Email</label>
+            <label className="block text-md font-semibold">Email</label>
             <input
               type="email"
               placeholder="Enter your Email"
@@ -100,7 +130,7 @@ const RegisterPage = () => {
           </div>
 
           <div className="relative mb-4">
-            <label className="block text-sm font-semibold">Password</label>
+            <label className="block text-md font-semibold">Password</label>
             <input
               type="password"
               placeholder="Enter your password"
@@ -112,14 +142,14 @@ const RegisterPage = () => {
             <span className="absolute right-2 top-7 text-gray-500">
               <TbLockPassword className="text-xl font-bold" />
             </span>
+            {/* Show Password Validation Error */}
+            {passwordError && (
+              <div className="text-red-500 text-sm mt-2">{passwordError}</div>
+            )}
           </div>
 
-          <p className="text-sm -mt-2 mb-4 text-[#007BFF] hover:underline hover: cursor-pointer">
-            Forgot password?
-          </p>
-
           <div className="relative mb-4">
-            <label className="block text-sm font-semibold">Date of Birth</label>
+            <label className="block text-md font-semibold">Date of Birth</label>
             <input
               type="date"
               className="w-full border-b-2 border-blue-400 focus:outline-none focus:border-blue-500 py-1 pr-2"
@@ -130,7 +160,7 @@ const RegisterPage = () => {
           </div>
 
           <div className="relative mb-4">
-            <label className="block text-sm font-semibold mb-2">Gender</label>
+            <label className="block text-md font-semibold mb-2">Gender</label>
             <div className="flex items-center gap-4">
               <label className="flex items-center">
                 <input
@@ -168,7 +198,7 @@ const RegisterPage = () => {
             </div>
           </div>
 
-          <div className="flex justify-evenly mt-12">
+          <div className="flex justify-evenly mt-6">
             <button
               type="submit"
               className="bg-[#007BFF] text-white px-6 py-2 rounded-md text-md font-medium "
@@ -178,6 +208,7 @@ const RegisterPage = () => {
             <button
               type="button"
               className="border-[#007BFF] border-1 px-7 py-2 rounded-md text-sm font-medium hover:bg-[#007BFF] hover:text-white"
+              onClick={()=>{navigate("/login")}}
             >
               Login
             </button>
