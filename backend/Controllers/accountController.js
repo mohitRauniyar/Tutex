@@ -74,7 +74,7 @@ export const deleteAccount = async (req,res)=>{
                 userId:userId
             }
         })
-        res.clearCookie("auth-token");
+        res.clearCookie("auth-token",{path:"/",httpOnly:true});
         return res.status(200).json({message:"Account deleted Successfully"});
     }catch(err){
         console.log(err.message);   
