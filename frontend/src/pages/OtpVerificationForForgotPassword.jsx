@@ -33,6 +33,9 @@ export default function OtpVerificationForForgotPassword(){
       } else {
         setMessage(`❌ Error: ${data.message || "Invalid OTP"}`);
         toast.error(data.message)
+        if(response.status === 401){
+          navigate("/login",{replace:true});
+        }
       }
     } catch (error) {
       console.error("Error verifying OTP:", error);

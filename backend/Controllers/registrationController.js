@@ -10,6 +10,7 @@ import UnverifiedUser from "../models/unverifiedData.model.js";
 
 configDotenv();
 export const registrationController = async (req,res)=>{
+    console.log("hi");
     let {name,password,email,DOB,gender } = req.body;
 
     if(!name || !password || !email || !DOB || !gender){
@@ -70,6 +71,15 @@ export const registrationController = async (req,res)=>{
             });
         }
     }
+
+    const OTP = generateOTP();
+    try{
+        sendEmail(email,OTP);
+    }catch(err){
+        console.log(err.message,"  ",err);
+        return res.status(400).json({message:"Couldn't send email"});
+    }
+
     try{
         await UnverifiedUser.create({
             name:name,
@@ -82,13 +92,6 @@ export const registrationController = async (req,res)=>{
         console.log("UnverfiedUsers insertion Error:",err.message);
         return res.status(400).json({message:"Registration failed!"});
     }
-
-    const OTP = generateOTP();
-    try{
-        sendEmail(email,OTP);
-    }catch(err){
-        return res.status(400).json({message:"Couldn't send email"});
-    }
     
     const cookieContent = {
         email:email,
@@ -100,8 +103,8 @@ export const registrationController = async (req,res)=>{
         httpOnly:true,
         path:'/register',
         maxAge:10 * 60 * 1000,
-        // secure:true,
-        // sameSite:"None"
+        secure:true,
+        sameSite:"None"
     });
 
     return res.status(200).json({message:"Check your email. You must have received an OTP"});

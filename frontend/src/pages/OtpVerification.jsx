@@ -1,40 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
-export default function OtpVerification(){
+export default function OtpVerification() {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes = 120 seconds
+  const OTP_VALIDITY_SECONDS = 120;
+  const [timeLeft, setTimeLeft] = useState(OTP_VALIDITY_SECONDS);
   const [resendActive, setResendActive] = useState(false);
+  const startTimeRef = useRef(Date.now()); // Track when OTP screen is loaded
 
-  useEffect(() => {
-    let timer;
-
-    if (timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
+  useEffect(()=>{
+    if(!resendActive){
+      const interval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
+        const remaining = OTP_VALIDITY_SECONDS - elapsed;
+  
+        if (remaining > 0) {
+          setTimeLeft(remaining);
+        } else {
+          setTimeLeft(0);
+          setResendActive(true);
+          clearInterval(interval);
+        }
       }, 1000);
-    } else {
-      setResendActive(true); // Enable resend after timer ends
+  
+      return () => clearInterval(interval);
     }
-
-    return () => clearInterval(timer);
-  }, [timeLeft]);
+  },[resendActive]);
 
   const formatTime = (seconds) => {
-    const min = String(Math.floor(seconds / 60)).padStart(2, '0');
-    const sec = String(seconds % 60).padStart(2, '0');
+    const min = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const sec = String(seconds % 60).padStart(2, "0");
     return `${min}:${sec}`;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
+    // setMessage("");
 
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/register/verify`, {
@@ -43,28 +50,31 @@ export default function OtpVerification(){
           "Content-Type": "application/json",
         },
         credentials: "include", // send cookies if needed
-        body: JSON.stringify({ "otp":otp , resendStatus:false }),
+        body: JSON.stringify({ otp: otp, resendStatus: false }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setMessage("✅ OTP Verified Successfully!");
-        toast.success(data.message)
+        // setMessage("✅ OTP Verified Successfully!");
+        toast.success(data.message);
         navigate("/login");
-        
       } else {
-        setMessage(`❌ Error: ${data.message || "Invalid OTP"}`);
-        toast.error(data.message)
+        // setMessage(`❌ Error: ${data.message || "Invalid OTP"}`);
+        toast.error(data.message);
+        if(response.status === 401){
+          navigate("/register",{replace:true});
+        }
       }
     } catch (error) {
       console.error("Error verifying OTP:", error);
-      setMessage("❌ Network Error");
-      toast.error(data.message)
+      // setMessage("❌ Network Error");
+      toast.error("Network Error");
     } finally {
       setLoading(false);
     }
   };
+
   const handleResendOTP = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/register/verify`, {
@@ -73,30 +83,36 @@ export default function OtpVerification(){
           "Content-Type": "application/json",
         },
         credentials: "include", // send cookies if needed
-        body: JSON.stringify({ "otp":"" , resendStatus:true }),
+        body: JSON.stringify({ otp: "", resendStatus: true }),
       });
 
       const data = await response.json();
-
+     
       if (response.ok) {
-        setMessage("✅ OTP Verified Successfully!");
-        toast.success(data.message)
-        navigate("/login");
-        
+        toast.success(data.message);
+        if(data.verified){
+          setMessage("✅ OTP Verified Successfully!");
+          navigate("/login");
+        }else{
+          console.log("OTP resent");
+          startTimeRef.current = Date.now(); // Reset the start time
+          setTimeLeft(OTP_VALIDITY_SECONDS); // Reset timer
+          setResendActive(false);
+        }
       } else {
-        setMessage(`❌ Error: ${data.message || "Invalid OTP"}`);
-        toast.error(data.message)
+        toast.error(data.message);
+        if(response.status === 401){
+          navigate("/register",{replace:true});
+        }
+        // setMessage(`❌ Error: ${data.message}`);
       }
     } catch (error) {
       console.error("Error verifying OTP:", error);
-      setMessage("❌ Network Error");
-      toast.error(data.message)
+      // setMessage("❌ Network Error");
+      toast.error("Network Error");
     } finally {
       setLoading(false);
     }
-    console.log('OTP resent'); // Add your resend OTP logic here
-    setTimeLeft(120); // Reset timer
-    setResendActive(false);
   };
 
   return (
@@ -104,7 +120,7 @@ export default function OtpVerification(){
       <div className="bg-white rounded-xl p-8 w-95 mt-94 h-108">
         <h3 className="text-xl font-bold text-center mt-4">Enter OTP sent to your mail</h3>
         <form className="mt-6" onSubmit={handleSubmit}>
-        <div className="mb-6">
+          <div className="mb-6">
             <label className="block text-sm font-semibold mb-2" htmlFor="otp">
               Enter OTP
             </label>
@@ -128,20 +144,21 @@ export default function OtpVerification(){
             {loading ? "Verifying..." : "Verify OTP"}
           </button>
 
-          {message && (
+          {/* {message && (
             <p className="text-center mt-4 text-sm font-medium">
               {message}
             </p>
-          )}
+          )} */}
         </form>
+
         <p className="text-xl text-gray-600 mb-2 mt-2">
-        Time remaining: <span className="font-bold">{formatTime(timeLeft)}</span>
+          Time remaining: <span className="font-bold">{formatTime(timeLeft)}</span>
         </p>
 
         <button
           onClick={handleResendOTP}
           className={`px-4 py-2 rounded-md text-white font-semibold cursor-pointer ${
-            resendActive ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'
+            resendActive ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"
           }`}
           disabled={!resendActive}
         >
@@ -150,5 +167,4 @@ export default function OtpVerification(){
       </div>
     </div>
   );
-};
-
+}

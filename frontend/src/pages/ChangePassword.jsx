@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearUserProfile } from "../redux/userSlice";
+import { clearAssignment } from "../redux/currentAssignmentSlice";
 
 export default function ChangePassword() {
   const [formData, setFormData] = useState({
@@ -11,7 +15,8 @@ export default function ChangePassword() {
   
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   // Validate new password
   const validatePassword = (password) => {
     let errorMessage = "";
@@ -55,7 +60,12 @@ export default function ChangePassword() {
         credentials: "include",
         body: JSON.stringify(formData),
       });
-
+      if(response.status === 401){
+        dispatch(clearUserProfile());
+        dispatch(clearAssignment());
+        navigate("/login",{replace:true});
+        return;
+      }
       const data = await response.json();
 
       if (response.ok) {
@@ -79,11 +89,20 @@ export default function ChangePassword() {
         credentials: 'include'
       });
       const data = await res.json();
+      if(res.status === 401){
+        dispatch(clearUserProfile());
+        dispatch(clearAssignment());
+        navigate("/login",{replace:true});
+        return;
+      }
       if (!res.ok) {
         toast.error(data.message);
+      }else{
+        toast.success(data.message);
+        dispatch(clearUserProfile());
+        dispatch(clearAssignment());
+        navigate("/login", { replace: true });
       }
-      toast.success(data.message);
-      navigate("/login", { replace: true });
     } catch (error) {
       toast.error("Error logging out.");
     }
