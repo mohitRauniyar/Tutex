@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function CourseCardLarge({course}) {
-    console.log(course.photoUrl);
   return (
     <Link to={`/course/${course.assignmentId}`}>
         <div className="w-40 h-68 bg-cover" style={{ backgroundImage: `url(/assets/Tutorials/${course.photoUrl})` }}>

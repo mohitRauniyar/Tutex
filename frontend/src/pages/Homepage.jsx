@@ -8,13 +8,15 @@ import CourseBanner from "../components/CourseBanner";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../redux/loadingSlice";
+import toast from "react-hot-toast";
+import { clearAssignment } from "../redux/currentAssignmentSlice";
+import { clearUserProfile } from "../redux/userSlice";
 
 export default function Homepage() {
-  const userProfile = useSelector((state) => state.user.userProfile);
   const loadingStatus = useSelector((state) => state.loading.isLoading);
   const dispatch = useDispatch();
-  const [courses, setCourses] = useState([]);
-  const [subscribedCourses, setSubscribedCourses] = useState([]);
+  const [courses, setCourses] = useState(null);
+  const [subscribedCourses, setSubscribedCourses] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(setLoading(true));
@@ -27,13 +29,16 @@ export default function Homepage() {
           {
             method: "GET",
             credentials: "include",
-            signal:signal
-          },
-
+            signal: signal,
+          }
         );
 
-        if(response.status === 401){
-          navigate("/login",{replace:true});
+        if (response.status === 401) {
+          dispatch(clearUserProfile());
+          dispatch(clearAssignment());
+          navigate("/login", { replace: true });
+          toast.error("Session Expired");
+          return;
         }
 
         if (!response.ok) {
@@ -42,21 +47,21 @@ export default function Homepage() {
 
         const data = await response.json();
         const list = data.body;
-        console.log(data.body);
-        setCourses(list); // store the courses list
-        dispatch(setLoading(false))
+        setCourses(list);
       } catch (err) {
         console.error("Failed to fetch courses:", err);
-        // setError(err.message);
+        // toast.error("Failed to fetch courses");
+      } finally {
+        dispatch(setLoading(false));
       }
     };
-
     fetchCourses();
 
-    return ()=>controller.abort();
+    return () => controller.abort();
   }, []);
 
   useEffect(() => {
+    dispatch(setLoading(true));
     let controller = new AbortController();
     let signal = controller.signal;
     const fetchSubscribedCourses = async () => {
@@ -66,30 +71,36 @@ export default function Homepage() {
           {
             method: "GET",
             credentials: "include",
-            signal:signal
+            signal: signal,
           }
         );
 
-        if(response.status === 401){
-          navigate("/login",{replace:true});
+        if (response.status === 401) {
+          dispatch(clearAssignment());
+          dispatch(clearUserProfile());
+          navigate("/login", { replace: true });
+          toast.error("Session Expired");
+          return;
         }
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
         setSubscribedCourses(data.body || []); // store the subscribedCourses list
-        console.log(subscribedCourses);
-        dispatch(setLoading(false))
       } catch (err) {
         console.error("Failed to fetch subscribedCourses:", err);
-        // setError(err.message);
+        // toast.error("Failed to fetch subscribedCourses");
+      } finally {
+        dispatch(setLoading(false));
       }
     };
 
     fetchSubscribedCourses();
-    return ()=>controller.abort();
+    return () => controller.abort();
   }, []);
+
   return (
     <>
       {loadingStatus ? (
@@ -105,14 +116,15 @@ export default function Homepage() {
               </Link>
             </div>
             <div className="overflow-x-scroll scrollbar-hidden flex gap-3 justify-evenly">
-              {subscribedCourses.map((data, index) => (
-                <CourseCard
-                  imageLink={data.photoUrl}
-                  title={data.title}
-                  status={data.status}
-                  assignmentId={data.assignmentId}
-                />
-              ))}
+              {subscribedCourses &&
+                subscribedCourses.map((data, index) => (
+                  <CourseCard
+                    imageLink={data.photoUrl}
+                    title={data.title}
+                    status={data.status}
+                    assignmentId={data.assignmentId}
+                  />
+                ))}
               {/* <CourseCard imageLink={"/assets/Tutorials/phonepeBanner.png"} title={"UPI Payment Tutorial"}/>
           <CourseCard imageLink={"/assets/Tutorials/whatsapp.png"} title={"Messaging on whatapp"}/>
           <CourseCard imageLink={"/assets/Tutorials/instagram.png"} title={"Using Instagram"}/>
@@ -132,14 +144,15 @@ export default function Homepage() {
 
             <h2 className="mb-8 font-semibold text-lg">Explore</h2>
             <div className="grid grid-cols-2 gap-8 mx-4">
-              {courses.map((data, index) => (
-                <CourseBanner
-                  imageLink={data.photoUrl}
-                  title={data.title}
-                  key={index}
-                  courseId={data.courseId}
-                />
-              ))}
+              {courses &&
+                courses.map((data, index) => (
+                  <CourseBanner
+                    imageLink={data.photoUrl}
+                    title={data.title}
+                    key={index}
+                    courseId={data.courseId}
+                  />
+                ))}
               {/* <CourseBanner imageLink={"/assets/Tutorials/whatsapp.png"} title={"Messaging on whatapp"} lessonCount={4}/>
           <CourseBanner imageLink={"/assets/Tutorials/instagram.png"} title={"Using Instagram"} lessonCount={6}/>
           <CourseBanner imageLink={"/assets/Tutorials/facebook.png"} title={"Using facebook"} lessonCount={5}/>

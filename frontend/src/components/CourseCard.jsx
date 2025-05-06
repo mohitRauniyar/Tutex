@@ -26,7 +26,6 @@ import { Link } from 'react-router-dom'
 // }
 export default function CourseCard({ imageLink, title, status, assignmentId }) {
   const imageUrl = `/assets/Tutorials/${imageLink}`;
-  console.log(imageUrl)
 
   return (
     <Link to={`/course/${assignmentId}`}>

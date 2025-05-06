@@ -9,6 +9,7 @@ import AssessmentOverlay from "./Overlays/AssessmentOverlay";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAssignment } from "../../../redux/currentAssignmentSlice.js";
 import toast from "react-hot-toast";
+import { clearUserProfile } from "../../../redux/userSlice.js";
 
 function EnterPin() {
   const dispatch = useDispatch();
@@ -41,7 +42,12 @@ function EnterPin() {
               credentials: "include",
             }
           );
-
+          if(response.status === 401){
+            dispatch(clearAssignment());
+            dispatch(clearUserProfile());
+            navigate("/login");
+            return;
+          }
           if (response.ok) {
             dispatch(clearAssignment());
             toast.success("Successfully marked completed.");
