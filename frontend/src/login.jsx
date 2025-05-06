@@ -47,11 +47,11 @@ const LoginPage = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen w-full bg-cover bg-center bg-[url(/assets/background.png)]">
-      <div className="bg-white rounded-xl p-8 w-95 mt-94 h-108">
-        <h3 className="text-xl font-bold text-center mt-4">Login</h3>
-        <form className="mt-6" onSubmit={handleSubmit}>
-          <div className="relative mb-4">
-            <label className="block text-sm font-semibold">Username</label>
+      <div className="bg-white rounded-xl p-8 w-full absolute bottom-8 h-108">
+        <h3 className="text-2xl font-bold text-center mt-6">Login</h3>
+        <form className="mt-8" onSubmit={handleSubmit}>
+          <div className="relative mb-6">
+            <label className="block text-md font-semibold">Username</label>
             <input
               type="text"
               placeholder="Enter your Name"
@@ -65,7 +65,7 @@ const LoginPage = () => {
           </div>
 
           <div className="relative mb-4">
-            <label className="block text-sm font-semibold">Password</label>
+            <label className="block text-md font-semibold">Password</label>
             <input
               type="password"
               placeholder="Enter your password"
@@ -77,10 +77,10 @@ const LoginPage = () => {
               <TbLockPassword className="text-xl font-bold" />
             </span>
           </div>
-
-          <p className="text-sm -mt-2 text-[#007BFF] hover:underline cursor-pointer">
+          <p className="text-sm -mt-2 text-[#007BFF] hover:underline cursor-pointer font-semibold" onClick={()=>{navigate("/password/forgot")}}>
             Forgot password?
           </p>
+
 
           <div className="flex justify-evenly mt-12">
             <button

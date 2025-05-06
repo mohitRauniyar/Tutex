@@ -17,7 +17,7 @@ import ModulesPage from "./pages/ModulesPage";
 import Search from "./pages/Search";
 import LoginPage from "./login";
 import RegisterPage from "./register";
-import ProfilePage from "./profileUpdate";
+// import ProfilePage from "./profileUpdate";
 import BankLandingPage from "./Tutorials/UPI/BankPayment/BankLandingPage";
 import Options from "./Tutorials/UPI/BankPayment/ChooseService";
 import AddBenificiaryAccount from "./Tutorials/UPI/BankPayment/AddBenificiary";
@@ -29,10 +29,20 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { setUserProfile } from "./redux/userSlice";
 import TutorialView from "./pages/TutorialView";
-import OtpVerification from "./pages/OtpVerification";
 import ComingSoon from "./pages/ComingSoon";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Loader from "./components/Loader";
+import CoverPage from "./components/CoverPage";
+import OtpVerification from "./pages/OtpVerification";
+import ProfilePage2 from "./pages/ProfilePage2";
+import ProfileUpdate from "./pages/ProfileUpdate";
+import ChangePassword from "./pages/ChangePassword";
+import ForgotPassword from "./pages/ForgotPassword";
+import OtpVerificationForForgotPassword from "./pages/OtpVerificationForForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import HelpCenter from "./pages/HelpCenter";
+import ComingSoon2 from "./pages/ComingSoon2";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -56,7 +66,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/register/verify" element={<OtpVerification />} />
 
-            <Route path="/" element={< ProtectedRoute Component={Homepage} />} />
+            <Route path="/" element={<ProtectedRoute Component={Homepage} />} />
             <Route
               path="/search"
               element={<ProtectedRoute Component={Search} />}
@@ -76,12 +86,29 @@ function App() {
             />
             <Route
               path="/profile"
-              element={<ProtectedRoute Component={ProfilePage} />}
+              element={<ProtectedRoute Component={ProfilePage2} />} 
             />
 
+            <Route path="/analytics" element={<ComingSoon2 />} />
             <Route
               path="/tutorial/:courseId/view"
               element={<ProtectedRoute Component={TutorialView} />}
+            />
+            <Route path="/profile/preferences" element={<ComingSoon2 />} />
+            <Route path="/profile/language" element={<ComingSoon2 />} />
+            <Route path="/profile/accessibility" element={<ComingSoon2 />} />
+            <Route path="/profile/privacy" element={<PrivacyPolicy />} />
+            <Route path="/profile/help" element={<HelpCenter />} />
+            <Route path="/profile/update" element={<ProfileUpdate />} />
+            <Route
+              path="/profile/update/password"
+              element={<ChangePassword />}
+            />
+            <Route path="/password/forgot" element={<ForgotPassword />} />
+            <Route path="/password/reset" element={<ResetPassword />} />
+            <Route
+              path="/password/forgot/otp"
+              element={<OtpVerificationForForgotPassword />}
             />
             <Route
               path="/tutorial/coming-soon"

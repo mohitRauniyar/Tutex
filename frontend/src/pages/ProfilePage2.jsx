@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Header from "./components/Header";
-import Navbar from "./components/Navbar";
-import Button from "./components/button"
-import SettingCard from "./components/ui/SettingsCard";
+import Header from "../components/Header";
+import Navbar from "../components/Navbar";
+import SettingCard from "../components/ui/SettingsCard";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import Logout from "./components/ui/Logout";
-import { clearUserProfile } from "./redux/userSlice";
-import { clearAssignment } from "./redux/currentAssignmentSlice";
+import Logout from "../components/ui/Logout";
+import { clearUserProfile } from "../redux/userSlice";
+import { clearAssignment } from "../redux/currentAssignmentSlice";
 
-export default function ProfilePage() {
+export default function ProfilePage2() {
   const [age, setAge] = useState(0);
   const userProfile = useSelector((state) => state.user.userProfile);
   const navigate = useNavigate();
@@ -21,11 +20,20 @@ export default function ProfilePage() {
     'M': "Male",
     'F': "Female"
   }
+  const map = {
+    "Account Settings" : "/profile/update",
+    "Preferences" : "/profile/preferences",
+    "Language Settings" : "/profile/language",
+    "Accessebility" : "/profile/accessibility",
+    "Help Center" : "/profile/help",
+    "Privacy Policy": "/profile/privacy"
+  }
   useEffect(()=>{
     if(userProfile != null){
       setAge(new Date().getFullYear() - parseInt(userProfile.dob));
     }
   }, [userProfile])
+
 
   const handleLogout = async ()=>{
     try {
@@ -47,6 +55,10 @@ export default function ProfilePage() {
       setSignOut(false);
     }
   }
+
+  const handleClick = (e)=>{
+    navigate(map[e.target.textContent]);
+  }
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
@@ -54,26 +66,26 @@ export default function ProfilePage() {
 
       {/* Profile Info */}
       <div className="flex flex-row justify-evenly mt-27">
-        <div className="w-27 h-27 mt-5 rounded-full bg-gray-300" />
+        <div className="w-32 h-32 mt-5 rounded-full bg-gray-300" />
         {userProfile && (
 
-          <div className="w-fit h-fit mt-5 relative">
-          <h2 className="text-lg font-semibold">{userProfile.name}</h2>
+          <div className="w-fit h-fit mt-5 flex flex-col gap-2">
+          <h2 className="text-2xl font-semibold">{userProfile.name}</h2>
           <p className="text-sm text-gray-600">{userProfile.email}</p>
           <p className="text-sm text-gray-600">Age: {age}</p>
           <p className="text-sm text-gray-600">Gender: {gender[userProfile.gender]}</p>
-          <button className="bg-[#30A0FE] border-1 px-7 text-white absolute right-0 mt-4 ">Edit</button>
+          {/* <button className="bg-[#30A0FE] border-1 px-7 text-white absolute right-0 mt-4" onClick={()=>{navigate("/profile/update")}}>Edit</button> */}
         </div>
         )}
       </div>
 
       <div className="h-full w-full mt-22 mb-20">
-        <SettingCard name = "Change Password" />
-        <SettingCard name = "Preferences"/>
-        <SettingCard name = "Language Settings"/>
-        <SettingCard name = "Accessebility"/>
-        <SettingCard name = "Help Center"/>
-        <SettingCard name = "Privacy Policy"/>
+        <SettingCard name = "Account Settings" handleNext = {handleClick}/>
+        <SettingCard name = "Preferences" handleNext = {handleClick}/>
+        <SettingCard name = "Language Settings" handleNext = {handleClick}/>
+        <SettingCard name = "Accessebility" handleNext = {handleClick}/>
+        <SettingCard name = "Help Center" handleNext = {handleClick}/>
+        <SettingCard name = "Privacy Policy" handleNext = {handleClick}/>
         <Logout handleLogout={handleLogout} disabled={signOut}/>
       </div>
       <Navbar/>
