@@ -8,6 +8,7 @@ import registrationRoute from "./routes/registrationRoute.js"
 import tutorialRoute from "./routes/tutorialRoute.js"
 import userRoute from "./routes/userRoute.js"
 import forgotPasswordRoute from "./routes/passwordRoute.js"
+import autoLoginRoute from "./routes/autoLoginRoute.js"
 import syncDB from "./models/index.js";
 
 
@@ -31,6 +32,7 @@ app.use("/password/forgot",forgotPasswordRoute);
 
 //authorized routes;
 app.use(authenticateUser);
+app.use("/",autoLoginRoute);
 app.use("/tutorial",tutorialRoute);
 app.use("/user",userRoute);
 

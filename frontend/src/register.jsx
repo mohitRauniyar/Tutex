@@ -42,7 +42,7 @@ const RegisterPage = () => {
     return errorMessage;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     // Validate password
@@ -70,25 +70,23 @@ const RegisterPage = () => {
 
     console.log("Request Body: ", body);
 
-    // Example fetch request
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(body),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        toast.success("Please check your email for the OTP.");
-        navigate("/register/verify");
-        // You can redirect or show success message here
+
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/register`,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(body),
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      const data = await response.json();
+      if(response.ok){
+        toast.success(data.message);
+        navigate("/register/verify");
+      }else{
+        toast.error(data.message);
+      }
+
   };
 
   return (

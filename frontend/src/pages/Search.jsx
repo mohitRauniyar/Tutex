@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../redux/loadingSlice";
 import Loader from "../components/Loader";
+import { clearAssignment } from "../redux/currentAssignmentSlice";
+import { clearUserProfile } from "../redux/userSlice";
 
 export default function Search() {
   const [courses, setCourses] = useState([]);
@@ -31,6 +33,8 @@ export default function Search() {
 
         if (response.status === 401) {
           navigate("/login", { replace: true });
+          dispatch(clearAssignment());
+          dispatch(clearUserProfile());
           toast.error("Session Expired");
           return;
         }

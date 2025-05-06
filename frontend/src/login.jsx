@@ -28,12 +28,11 @@ const LoginPage = () => {
         }
       );
       if (response.status == 200) {
-        console.log("Login successful:", response.data.body);
         dispatch(setUserProfile(response.data.body.userProfile)); // store in Redux
-        localStorage.setItem(
-          "userProfile",
-          JSON.stringify(response.data.body.userProfile)
-        ); // store in LocalStorage
+        // localStorage.setItem(
+        //   "userProfile",
+        //   JSON.stringify(response.data.body.userProfile)
+        // ); // store in LocalStorage
         toast.success(response.data.message);
         navigate("/");
       } else {

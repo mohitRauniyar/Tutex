@@ -123,6 +123,7 @@ export default function Homepage() {
                     title={data.title}
                     status={data.status}
                     assignmentId={data.assignmentId}
+                    key={index}
                   />
                 ))}
               {/* <CourseCard imageLink={"/assets/Tutorials/phonepeBanner.png"} title={"UPI Payment Tutorial"}/>

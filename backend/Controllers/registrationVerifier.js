@@ -23,7 +23,7 @@ export const verifyRegistration = async (req,res)=>{
     }
     const timeElapsed = new Date().getTime() - cookieContent.time;
     if(resendStatus){
-        if( timeElapsed<= 2.2*60*1000) return res.status(200).json({message:"Please enter your existing OTP"});
+        if( timeElapsed<= 2.2*60*1000) return res.status(400).json({message:"Please enter your existing OTP"});
         const newOTP = generateOTP();
         try{
             sendEmail(cookieContent.email,newOTP);
@@ -38,7 +38,7 @@ export const verifyRegistration = async (req,res)=>{
         }
         const newverifyToken = generateToken(newCookieContent);
         res.cookie("verify-token",newverifyToken);//total time will still be counted
-        return res.status(200).json({message:"Otp resent on email address"});
+        return res.status(200).json({message:"Otp resent on email address",verified:false});
     }else{
         if(timeElapsed <= 2.2*60*1000){
             if(otp != cookieContent.otp){
@@ -74,7 +74,7 @@ export const verifyRegistration = async (req,res)=>{
                     password:user.password,
                     userId:newUser.userId
                 });
-                return res.status(200).json({message:"Verification Successful"});
+                return res.status(200).json({message:"Verification Successful",verified:true});
             }
         }else{
             return res.status(400).json({message:"OTP expired!"})

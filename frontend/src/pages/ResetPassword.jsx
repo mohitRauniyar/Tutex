@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { clearUserProfile } from "../redux/userSlice";
+import { clearAssignment } from "../redux/currentAssignmentSlice";
 
 export default function ResetPassword() {
   const [formData, setFormData] = useState("");
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validatePassword = (password) => {
     let errorMessage = "";
@@ -60,6 +64,12 @@ export default function ResetPassword() {
         navigate("/login");
       } else {
         toast.error(data.message || "Failed to update password.");
+        if(response.status === 401){
+          dispatch(clearUserProfile());
+          dispatch(clearAssignment());
+          toast.error("Session Expired");
+          navigate("/login",{replace:true});
+        }
       }
     } catch (error) {
       console.error("Internal server error:", error);

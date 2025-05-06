@@ -17,7 +17,6 @@ import ModulesPage from "./pages/ModulesPage";
 import Search from "./pages/Search";
 import LoginPage from "./login";
 import RegisterPage from "./register";
-// import ProfilePage from "./profileUpdate";
 import BankLandingPage from "./Tutorials/UPI/BankPayment/BankLandingPage";
 import Options from "./Tutorials/UPI/BankPayment/ChooseService";
 import AddBenificiaryAccount from "./Tutorials/UPI/BankPayment/AddBenificiary";
@@ -32,7 +31,6 @@ import TutorialView from "./pages/TutorialView";
 import ComingSoon from "./pages/ComingSoon";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Loader from "./components/Loader";
-import CoverPage from "./components/CoverPage";
 import OtpVerification from "./pages/OtpVerification";
 import ProfilePage2 from "./pages/ProfilePage2";
 import ProfileUpdate from "./pages/ProfileUpdate";
@@ -48,11 +46,17 @@ function App() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
-    const storedProfile = localStorage.getItem("userProfile");
-    if (storedProfile) {
-      dispatch(setUserProfile(JSON.parse(storedProfile)));
-    }
-    setLoading(false);
+    const autoLogin = async () => {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/`, {
+        credentials: "include",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(setUserProfile(data.body.userProfile));
+      }
+      setLoading(false);
+    };
+    autoLogin();
   }, []);
 
   return (
@@ -65,7 +69,8 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/register/verify" element={<OtpVerification />} />
-
+            <Route path="/password/forgot" element={<ForgotPassword />} />
+            <Route path="/password/reset" element={<ResetPassword />} />
             <Route path="/" element={<ProtectedRoute Component={Homepage} />} />
             <Route
               path="/search"
@@ -86,7 +91,7 @@ function App() {
             />
             <Route
               path="/profile"
-              element={<ProtectedRoute Component={ProfilePage2} />} 
+              element={<ProtectedRoute Component={ProfilePage2} />}
             />
 
             <Route path="/analytics" element={<ComingSoon2 />} />
@@ -94,18 +99,34 @@ function App() {
               path="/tutorial/:courseId/view"
               element={<ProtectedRoute Component={TutorialView} />}
             />
-            <Route path="/profile/preferences" element={<ComingSoon2 />} />
-            <Route path="/profile/language" element={<ComingSoon2 />} />
-            <Route path="/profile/accessibility" element={<ComingSoon2 />} />
-            <Route path="/profile/privacy" element={<PrivacyPolicy />} />
-            <Route path="/profile/help" element={<HelpCenter />} />
-            <Route path="/profile/update" element={<ProfileUpdate />} />
+            <Route
+              path="/profile/preferences"
+              element={<ProtectedRoute Component={ComingSoon2} />}
+            />
+            <Route
+              path="/profile/language"
+              element={<ProtectedRoute Component={ComingSoon2} />}
+            />
+            <Route
+              path="/profile/accessibility"
+              element={<ProtectedRoute Component={ComingSoon2} />}
+            />
+            <Route
+              path="/profile/privacy"
+              element={<ProtectedRoute Component={PrivacyPolicy} />}
+            />
+            <Route
+              path="/profile/help"
+              element={<ProtectedRoute Component={HelpCenter} />}
+            />
+            <Route
+              path="/profile/update"
+              element={<ProtectedRoute Component={ProfileUpdate} />}
+            />
             <Route
               path="/profile/update/password"
               element={<ChangePassword />}
             />
-            <Route path="/password/forgot" element={<ForgotPassword />} />
-            <Route path="/password/reset" element={<ResetPassword />} />
             <Route
               path="/password/forgot/otp"
               element={<OtpVerificationForForgotPassword />}
