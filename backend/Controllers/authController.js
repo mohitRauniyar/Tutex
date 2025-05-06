@@ -61,7 +61,7 @@ export const logOutController = (req,res)=>{
         if(req.cookies["auth-token"] === undefined){
             return res.status(400).json({message:"Bad request"});
         }
-        res.clearCookie("auth-token",{path:"/",httpOnly:true,secure:"true",sameSite:"None"});
+        res.clearCookie("auth-token",{path:"/",httpOnly:true,secure:true,sameSite:"None"});
         return res.status(200).json({message:"Logout Successful"});
     }catch(err){
         console.log(err.message);

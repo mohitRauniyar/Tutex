@@ -63,7 +63,7 @@ export const forgotPasswordVerifier = async (req,res)=>{
         if(actualOTP === undefined || parseInt(actualOTP) !== parseInt(otp)){
             return res.status(400).json({message:"Please enter the correct OTP!"});
         }
-        res.clearCookie("token-v",{httpOnly:true,path:"/password/forgot"});
+        res.clearCookie("token-v",{httpOnly:true,path:"/password/forgot",secure:true,sameSite:"None"});
         let cookieContent = {
             email:email,
             emailVerified:true
@@ -113,8 +113,8 @@ export const forgotPasswordUpdatePassword = async (req,res)=>{
                 username:email
             }
         });
-        res.clearCookie("auth-token");//path is always necessary to specify. By default '/' is taken on which auth-token is set and hence no need to mention it.
-        res.clearCookie("token-s",{httpOnly:true,path:"/password/forgot"});
+        res.clearCookie("auth-token",{path:"/",httpOnly:true,secure:"true",sameSite:"None"});//path is always necessary to specify. By default '/' is taken on which auth-token is set and hence no need to mention it.
+        res.clearCookie("token-s",{httpOnly:true,path:"/password/forgot",secure:true,sameSite:"None"});
         return res.status(200).json({message:"Password Updated Successfully!"});
 
     }catch(err){

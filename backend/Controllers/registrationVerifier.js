@@ -18,7 +18,7 @@ export const verifyRegistration = async (req,res)=>{
     try{
         cookieContent = decryptToken(verifyToken);
     }catch(err){
-        res.clearCookie("verify-token",{httpOnly:true,path:"/register"});
+        res.clearCookie("verify-token",{httpOnly:true,path:"/register",sameSite:"None",secure:true});
         return res.status(401).json({message:"Registration Cancelled!"})
     }
     const timeElapsed = new Date().getTime() - cookieContent.time;
@@ -45,7 +45,7 @@ export const verifyRegistration = async (req,res)=>{
                 return res.status(400).json({message:"Invalid OTP"})
             }else{
                 //otp is valid and within time so move data from unverifiedUser to user and profile
-                res.clearCookie("verify-token",{httpOnly:true,path:"/register"});
+                res.clearCookie("verify-token",{httpOnly:true,path:"/register",secure:true,sameSite:"None"});
                 const user = await UnverifiedUser.findOne({
                     where:{
                         email:cookieContent.email
