@@ -55,11 +55,10 @@ function App() {
       if (response.ok) {
         const data = await response.json();
         dispatch(setUserProfile(data.body.userProfile));
-        dispatch(setAccountLoading(false));
       }
+      dispatch(setAccountLoading(false));
     };
     if (!profile) {
-      console.log("hello");
       autoLogin();
     }
   }, []);
