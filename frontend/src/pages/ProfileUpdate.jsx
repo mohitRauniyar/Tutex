@@ -67,28 +67,25 @@ export default function ProfileUpdate() {
         profileUrl: null,
       };
 
-      const response = await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/user/update`, // Change to your real endpoint
-        patchData,
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.statusText == "OK") {
-        toast.success(response.data.message);
-        const data = await response.data.body;
-        dispatch(setUserProfile(data));
-        localStorage.setItem("userProfile", JSON.stringify(data));
+     
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/update`,{
+        method:"PATCH",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify(patchData),
+        credentials:"include"
+      })
+      const data = await response.json();
+      if (response.ok) {
+        toast.success(data.message);
+        dispatch(setUserProfile(data.body));
       } else {
-        toast.error(response.data.message);
+        toast.error(data.message);
       }
       setIsEditing(false);
     } catch (error) {
-      if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
         toast.error("Something went wrong while updating profile");
-      }
     } finally {
       setLoading(false);
     }
