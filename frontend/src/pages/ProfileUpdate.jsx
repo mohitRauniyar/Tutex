@@ -264,10 +264,18 @@ export default function ProfileUpdate() {
           </div>
 
           <div className="mt-8">
+            
+            <SettingCard
+              name="Change Password"
+              handleNext={() => {
+                navigate("/profile/update/password");
+              }}
+            />
             <>
               <SettingCard
                 name="Delete Account"
                 handleNext={() => setShowConfirm(true)}
+                color={"#ff0000"}
               />
               <ConfirmDialog
                 open={showConfirm}
@@ -277,12 +285,6 @@ export default function ProfileUpdate() {
                 message="Are you sure you want to delete your account? This action cannot be undone."
               />
             </>
-            <SettingCard
-              name="Change Password"
-              handleNext={() => {
-                navigate("/profile/update/password");
-              }}
-            />
           </div>
           <Navbar />
         </div>

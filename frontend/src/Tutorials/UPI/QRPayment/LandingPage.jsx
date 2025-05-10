@@ -20,7 +20,7 @@ function LandingPage({mode}) {
   
   const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
   return (
-    <div className="bg-white min-h-screen text-black font-sans">
+    <div className={`bg-white text-black font-sans ${mode === MODES.WALKTHROUGH?"h-screen overflow-hidden":"min-h-screen"}`}>
       {mode === MODES.PRACTICE && (<CoverPage/>)}
       {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
         <WalkthroughOverlay

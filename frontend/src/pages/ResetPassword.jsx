@@ -6,12 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearUserProfile } from "../redux/userSlice";
 import { clearAssignment } from "../redux/currentAssignmentSlice";
 import Loader from "../components/Loader";
+import { FiEye,FiEyeOff } from "react-icons/fi";
 
 export default function ResetPassword() {
   const loadingStatus = useSelector((state) => state.loading.isLoading);
   const [formData, setFormData] = useState("");
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+  const [newPassStatus, setNewPassStatus] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -95,24 +97,31 @@ export default function ResetPassword() {
               onSubmit={handleReset}
               className="max-w-md mx-auto mt-6 p-8 rounded flex flex-col gap-6"
             >
-              <div>
+              <div className="relative">
                 <label className="block mb-2 text-lg font-medium">
                   New Password
                 </label>
                 <input
-                  type="password"
+                  type={newPassStatus?"text":"password"}
                   value={formData}
                   placeholder="Create a new password"
                   onChange={(e) => setFormData(e.target.value)}
                   required
                   className="w-full px-3 py-2 border rounded"
                 />
+                <span
+                  className="absolute top-12 right-3 text-gray-500 cursor-pointer"
+                  onClick={() => setNewPassStatus((prev) => !prev)}
+                >
+                  {newPassStatus ? <FiEye size={20} /> : <FiEyeOff size={20} />}
+                </span>
                 {passwordError && (
                   <div className="text-red-500 text-sm mt-2">
                     {passwordError}
                   </div>
                 )}
               </div>
+
               <button
                 type="submit"
                 disabled={loading}

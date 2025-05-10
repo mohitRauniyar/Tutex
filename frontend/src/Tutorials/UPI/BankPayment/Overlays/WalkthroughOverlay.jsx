@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./WalkThroughOverlay.css"
 import EnterAmount from "../EnterAmount";
 
-function WalkthroughOverlay({ step, refs, onComplete }) {
+function WalkthroughOverlay({ step, refs, onComplete,reload }) {
   const instructions = {
     landing: [
       {
@@ -18,7 +18,7 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
       {
         text: "Tap the Bank icon to choose receiver's bank.",
         target: "BankButtonRef",
-        instructionPosition: { x: 0, y: 300 },
+        instructionPosition: { x: -12, y: 300 },
         pulsate: true,
       },
     ],
@@ -68,17 +68,20 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
       {
         text:"Enter correct receiver Account Number: 123456789. Enter correct receiver IFSC code: DLXB0000",
         target:"inputRef",
-        button:true
+        button:true,
+        instructionPosition:{x:0,y:50}
       },
       {
         text:"Now you can see the account holder name to whom you are sending the money. You can verify the name of account holder.",
         button:true,
-        target:"accountHolder"
+        target:"accountHolder",
+        instructionPosition:{x:0,y:5}
       },
       {
         text:"Click on 'PROCEED TO PAY' button",
         target:"buttonRef",
-        pulsate:true
+        pulsate:true,
+        instructionPosition:{x:0,y:-200}
       },
       {
         text:"Please Enter correct receiver Account Number and correct IFSC code.",
@@ -88,13 +91,13 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
     ],
     EnterAmount:[
       {
-        text:"In this page, you will have to enter the amount you want to send to the receiver. you can verify the details from top of the page.",
+        text:"In this page, you will have to enter the amount you want to send to the receiver. you can verify the details of receiver from here.",
         target:"headRef",
         button:true,
         instructionPosition:{x:0,y:250}
       },
       {
-        text:"Enter the amount and click the green send button:",
+        text:"Here, you need to enter the amount. For practice purpose, enter 120 and click the green send button:",
         target:"inputRef",
         instructionPosition:{x:0,y:-500}
       }
@@ -249,7 +252,7 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
     <div className="fixed top-0 left-0 w-full h-full z-[10000] pointer-events-none">
       {/* Dim Background with Cutout */}
       <div
-        className="absolute top-0 left-0 w-full h-full bg-[#000000dd] pointer-events-none"
+        className="absolute top-0 left-0 w-full h-full bg-[#000000dd] pointer-events-auto"
         style={{
           clipPath: showHighlight
             ? `polygon(
@@ -274,7 +277,7 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
 
       {/* Instruction Box */}
       <div
-        className="fixed p-8 bg-[#6510C5] text-white rounded-lg shadow-lg max-w-md w-full text-center z-[10001] pointer-events-auto"
+        className="fixed p-8 bg-[#6510C5] text-white rounded-lg shadow-lg w-full text-center z-[10001] pointer-events-auto"
         style={instructionBoxStyle}
       >
         <p className="mb-4">{currentInstruction?.text}</p>

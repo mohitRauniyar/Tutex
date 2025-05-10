@@ -18,6 +18,7 @@ export default function EnterAmount() {
   const { mode } = useParams();
   const [isWalkthroughComplete, setIsWalkthroughComplete] = useState(false);
   const headRef = useRef();
+  const [reload,setReload] = useState(false);
 
   const handleChange = (e) => {
     const value = e.target.value.replace(/[^0-9]/g, "");
@@ -36,6 +37,7 @@ export default function EnterAmount() {
             headRef,
           }}
           onComplete={() => setIsWalkthroughComplete(true)}
+          reload
         />
       )}
       {mode === MODES.PRACTICE && (
@@ -87,12 +89,14 @@ export default function EnterAmount() {
             onChange={handleChange}
             className="flex-1 text-lg outline-none px-3"
             placeholder="Enter amount or chat"
+            onFocus={()=>setReload((prev)=>!prev)}
+            onBlur={()=>setReload((prev)=>!prev)}
           />
           <button
             className={`px-4 py-2 rounded-full text-white font-medium ${
-              amount ? "bg-green-500" : "bg-gray-300"
+              amount === "120" ? "bg-green-500" : "bg-gray-300"
             }`}
-            disabled={!amount}
+            disabled={amount != "120"}
             onClick={() =>
               navigate(`/tutorial/UPI/Bank/enter-bank-pin/${mode}`, { state: { amount: amount,bankName:bankName } })
             }
