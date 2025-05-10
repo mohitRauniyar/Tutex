@@ -2,18 +2,20 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import SettingCard from "../components/ui/SettingsCard";
-import { clearUserProfile, setUserProfile } from "../redux/userSlice";
+import { clearUserProfile, setAccountLoading, setUserProfile } from "../redux/userSlice";
 import { clearAssignment } from "../redux/currentAssignmentSlice";
 import Loader from "../components/Loader";
+import ConfirmDialog from "../components/ui/ConfirmDialog";
+import { setLoading as setReduxLoading } from "../redux/loadingSlice";
 
 export default function ProfileUpdate() {
   const userProfile = useSelector((state) => state.user.userProfile);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showConfirm, setShowConfirm] = useState(false);
   const loadingStatus = useSelector((state) => state.loading.isLoading);
   const [formData, setFormData] = useState({
     name: "",
@@ -67,15 +69,17 @@ export default function ProfileUpdate() {
         profileUrl: null,
       };
 
-     
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/update`,{
-        method:"PATCH",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify(patchData),
-        credentials:"include"
-      })
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/user/update`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(patchData),
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         toast.success(data.message);
@@ -85,21 +89,15 @@ export default function ProfileUpdate() {
       }
       setIsEditing(false);
     } catch (error) {
-        toast.error("Something went wrong while updating profile");
+      toast.error("Something went wrong while updating profile");
     } finally {
       setLoading(false);
     }
   };
 
   const handleDeleteAccount = async () => {
-    if (
-      !window.confirm(
-        "Are you sure you want to delete your account? This action cannot be undone."
-      )
-    ) {
-      return;
-    }
-    dispatch(setLoading(true));
+    setShowConfirm(false);
+    dispatch(setReduxLoading(true));
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/user/delete`,
@@ -115,15 +113,15 @@ export default function ProfileUpdate() {
         toast.success("Account deleted successfully.");
         dispatch(clearUserProfile());
         dispatch(clearAssignment());
-        navigate("/login", { relative: true });
+        navigate("/login", { replace: true });
       } else {
         toast.error(data.message || "Failed to delete account.");
       }
     } catch (error) {
       console.error("Delete account error:", error);
       toast.error("Something went wrong. Please try again later.");
-    }finally{
-      dispatch(setLoading(false));
+    } finally {
+      dispatch(setReduxLoading(false));
     }
   };
 
@@ -266,10 +264,19 @@ export default function ProfileUpdate() {
           </div>
 
           <div className="mt-8">
-            <SettingCard
-              name="Delete Account"
-              handleNext={handleDeleteAccount}
-            />
+            <>
+              <SettingCard
+                name="Delete Account"
+                handleNext={() => setShowConfirm(true)}
+              />
+              <ConfirmDialog
+                open={showConfirm}
+                onCancel={() => setShowConfirm(false)}
+                onConfirm={handleDeleteAccount}
+                title="Delete Account"
+                message="Are you sure you want to delete your account? This action cannot be undone."
+              />
+            </>
             <SettingCard
               name="Change Password"
               handleNext={() => {
