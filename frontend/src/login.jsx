@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CgProfile } from "react-icons/cg";
-import { TbLockPassword } from "react-icons/tb";
+// import { TbLockPassword } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios"; // Install it if you haven't: npm install axios
@@ -8,11 +8,13 @@ import { setUserProfile } from "./redux/userSlice";
 import toast from "react-hot-toast";
 import Loader from "./components/Loader";
 import { setLoading } from "./redux/loadingSlice";
+import { TbEye,TbEyeOff } from "react-icons/tb";
 
 const LoginPage = () => {
   const loadingStatus = useSelector((state) => state.loading.isLoading);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -33,10 +35,6 @@ const LoginPage = () => {
       );
       if (response.status == 200) {
         dispatch(setUserProfile(response.data.body.userProfile)); // store in Redux
-        // localStorage.setItem(
-        //   "userProfile",
-        //   JSON.stringify(response.data.body.userProfile)
-        // ); // store in LocalStorage
         toast.success(response.data.message);
         navigate("/");
       } else {
@@ -45,7 +43,7 @@ const LoginPage = () => {
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);
       toast.error("Login failed. Please check your credentials.");
-    }finally{
+    } finally {
       dispatch(setLoading(false));
     }
   };
@@ -76,16 +74,27 @@ const LoginPage = () => {
               <div className="relative mb-4">
                 <label className="block text-md font-semibold">Password</label>
                 <input
-                  type="password"
+                  type={show ? "text" : "password"}
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full border-b-2 border-blue-400 focus:outline-none focus:border-blue-500 py-1 pr-8"
                 />
                 <span className="absolute right-2 top-7 text-gray-500">
-                  <TbLockPassword className="text-xl font-bold" />
+                  {!show ? (
+                    <TbEyeOff
+                      onClick={() => setShow((prev) => !prev)}
+                      className="text-xl font-bold"
+                    />
+                  ) : (
+                    <TbEye
+                      onClick={() => setShow((prev) => !prev)}
+                      className="text-xl font-bold"
+                    />
+                  )}
                 </span>
               </div>
+
               <p
                 className="text-sm -mt-2 text-[#007BFF] hover:underline cursor-pointer font-semibold"
                 onClick={() => {
