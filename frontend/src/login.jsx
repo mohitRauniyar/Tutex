@@ -61,7 +61,7 @@ const LoginPage = () => {
                 <label className="block text-md font-semibold">Username</label>
                 <input
                   type="text"
-                  placeholder="Enter your Name"
+                  placeholder="Enter your username or email"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full border-b-2 border-blue-400 focus:outline-none focus:border-blue-500 py-1 pr-8"

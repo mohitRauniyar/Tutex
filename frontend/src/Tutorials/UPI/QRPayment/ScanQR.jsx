@@ -33,7 +33,7 @@ function ScanQR() {
   };
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-screen overflow-hidden">
       {mode === MODES.WALKTHROUGH && !isWalkthroughComplete && (
         <WalkthroughOverlay
           step="qrScanning"
