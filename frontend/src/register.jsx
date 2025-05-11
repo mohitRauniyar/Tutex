@@ -7,11 +7,13 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "./components/Loader";
 import { setLoading } from "./redux/loadingSlice";
+import { TbEye,TbEyeOff } from "react-icons/tb";
 
 const RegisterPage = () => {
   const loadingStatus = useSelector((state) => state.loading.isLoading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showpassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -145,7 +147,7 @@ const RegisterPage = () => {
               <div className="relative mb-4">
                 <label className="block text-md font-semibold">Password</label>
                 <input
-                  type="password"
+                  type={showpassword?"text":"password"}
                   placeholder="Enter your password"
                   className="w-full border-b-2 border-blue-400 focus:outline-none focus:border-blue-500 py-1 pr-8"
                   name="password"
@@ -153,7 +155,17 @@ const RegisterPage = () => {
                   onChange={handleChange}
                 />
                 <span className="absolute right-2 top-7 text-gray-500">
-                  <TbLockPassword className="text-xl font-bold" />
+                  {showpassword ? (
+                    <TbEye
+                      onClick={() => setShowPassword(false)}
+                      className="text-xl font-bold"
+                    />
+                  ) : (
+                    <TbEyeOff
+                      onClick={() => setShowPassword(true)}
+                      className="text-xl font-bold"
+                    />
+                  )}
                 </span>
                 {/* Show Password Validation Error */}
                 {passwordError && (
