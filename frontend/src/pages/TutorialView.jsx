@@ -10,6 +10,7 @@ import Loader from "../components/Loader";
 import { setLoading } from "../redux/loadingSlice";
 import { clearUserProfile } from "../redux/userSlice";
 import { clearAssignment } from "../redux/currentAssignmentSlice";
+import { COURSES } from "../constants";
 
 export default function TutorialView() {
   const courseId = useParams().courseId;
@@ -113,7 +114,12 @@ export default function TutorialView() {
                   />
                 ))}
               </div>
-              <Button hanldeStartCourse={hanldeStartCourse} loading={loading} />
+              {COURSES.includes(courseTitle)?<Button hanldeStartCourse={hanldeStartCourse} loading={loading} />:(
+                <p className="mt-3 ml-auto w-fit px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-gray-700 to-gray-900 rounded-lg shadow-md">
+                Coming Soon
+              </p>
+              
+              )}
             </div>
           )}
           <Navbar />

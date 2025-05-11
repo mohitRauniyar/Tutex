@@ -59,7 +59,7 @@ function App() {
       dispatch(setAccountLoading(false));
     };
     if (!profile) {
-      autoLogin();
+     autoLogin();
     }
   }, []);
   return (

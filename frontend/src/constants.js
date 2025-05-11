@@ -207,3 +207,5 @@ export const INSTRUCTIONS = {
             </div>`
   }
 }
+
+export const COURSES = ["UPI Payment"];

@@ -3,6 +3,7 @@ import "./WalkThroughOverlay.css"
 import EnterAmount from "../EnterAmount";
 
 function WalkthroughOverlay({ step, refs, onComplete,reload }) {
+  console.log(reload);
   const instructions = {
     landing: [
       {

@@ -72,6 +72,8 @@ export default function ModulesPage() {
           console.log(i);
           if (i + 1 < assignmentDetail.lessons.length) {
             setNextLessonId(assignmentDetail.lessons[i + 1].lessonId);
+          }else{
+            setNextLessonId(0);
           }
         }
       }

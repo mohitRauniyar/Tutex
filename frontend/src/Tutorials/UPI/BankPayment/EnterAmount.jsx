@@ -37,7 +37,7 @@ export default function EnterAmount() {
             headRef,
           }}
           onComplete={() => setIsWalkthroughComplete(true)}
-          reload
+          reload={reload}
         />
       )}
       {mode === MODES.PRACTICE && (
