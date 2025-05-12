@@ -159,7 +159,7 @@ export default function Homepage() {
               <div className="w-full h-28 mt-4 bg-[#30A0FE] p-4 text-white rounded-sm relative" onClick={()=>{navigate("/feedback")}}>
               <p className="text-lg font-semibold mb-2">Help us improve our services.</p>
               <p>Submit your feedback</p>
-              <a href="/feedback" className="text-[#30A0FE] bg-white text-md px-3 py-2 absolute right-3 bottom-3 rounded-sm">Go to feedback</a>
+              <Link to="/feedback" className="text-[#30A0FE] bg-white text-md px-3 py-2 absolute right-3 bottom-3 rounded-sm">Go to feedback</Link>
           </div>
             )}
             <Link
