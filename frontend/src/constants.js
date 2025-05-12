@@ -174,8 +174,8 @@ export const INSTRUCTIONS = {
       instructionText: `<div class="flex flex-col gap-4 text-xl">
               <h1>Send the following amount to the receiver using the QR code scanning method using the pin given below.</h1>
               <ul class="list-disc ml-8">
-                <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
-                <li><h1><strong>Your Pin: </strong> 0000</h1></li>
+                <li><h1><strong>Amount: </strong>Any Amount</h1></li>
+                <li><h1><strong>Your Pin: </strong>0000</h1></li>
               </ul>
               <h2><i>Click on the start button to start practicing.</i></h2>
             </div>`,
@@ -185,8 +185,8 @@ export const INSTRUCTIONS = {
       instructionText: `<div class="flex flex-col gap-4 text-xl">
               <h1>Send the following amount to the receiver using the QR code scanning method using the pin given below.</h1>
               <ul class="list-disc ml-8">
-                <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
-                <li><h1><strong>Your Pin: </strong> 0000</h1></li>
+                <li><h1><strong>Amount: </strong>Any Amount</h1></li>
+                <li><h1><strong>Your Pin: </strong>0000</h1></li>
               </ul>
               <h2><i>Click on the start button to start practicing.</i></h2>
             </div>`,
@@ -200,7 +200,7 @@ export const INSTRUCTIONS = {
               <ul class="list-disc ml-8">
                 <li><h1><strong>Receiver: </strong>Any Person</h1></li>
                 <li><h1><strong>Amount: </strong>Any Amount</h1></li>
-                <li><h1><strong>Your Pin: </strong> 0000</h1></li>
+                <li><h1><strong>Your Pin: </strong>0000</h1></li>
               </ul>
               <h2><i>Click on the start button to start practicing.</i></h2>
             </div>`,
@@ -228,7 +228,7 @@ export const INSTRUCTIONS = {
                 <li><h1><strong>IFSC Code: </strong>ABCD0000</h1></li>
                 <li><h1><strong>Account Number: </strong>5432102</h1></li>
                 <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
-                <li><h1><strong>Your Pin: </strong> 0000</h1></li>
+                <li><h1><strong>Your Pin: </strong>0000</h1></li>
               </ul>
               <h2><i>Click on the start button to start practicing.</i></h2>
             </div>`,
@@ -242,7 +242,7 @@ export const INSTRUCTIONS = {
                 <li><h1><strong>IFSC Code: </strong>IFSC1234</h1></li>
                 <li><h1><strong>Account Number: </strong>8521349</h1></li>
                 <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
-                <li><h1><strong>Your Pin: </strong> 0000</h1></li>
+                <li><h1><strong>Your Pin: </strong>0000</h1></li>
               </ul>
               <h2><i>Click on the start button to start practicing.</i></h2>
             </div>`,
