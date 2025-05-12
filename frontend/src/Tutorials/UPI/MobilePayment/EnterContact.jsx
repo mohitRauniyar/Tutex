@@ -48,22 +48,27 @@ function EnterContactPage() {
           onComplete={() => setIsWalkthroughComplete(true)}
         />
       )}
-      {mode === MODES.PRACTICE && <PracticeOverlay step="UPI_Mobile_TypeMarie"  refs={{Textbox}}/>}
+      {mode === MODES.PRACTICE && (
+        <PracticeOverlay step="UPI_Mobile_TypeMarie" refs={{ Textbox }} />
+      )}
       {mode === MODES.ASSESSMENT && <AssessmentOverlay />}
 
       <div className="w-full h-screen bg-white p-4">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <MdArrowBack size={24} />
+          <MdArrowBack
+            size={24}
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
           <FaQuestionCircle size={20} />
         </div>
 
         {/* Search Bar */}
         <div className="mt-6 w-full">
           <p className="text-lg font-semibold">Select Contact</p>
-          <div
-            className="flex items-center bg-gray-100 rounded-full p-2 mt-4 w-full justify-between"
-          >
+          <div className="flex items-center bg-gray-100 rounded-full p-2 mt-4 w-full justify-between">
             <FaSearch className="text-gray-500 ml-2 w-5" />
             <input
               type="text"
@@ -71,7 +76,7 @@ function EnterContactPage() {
               className="w-70 bg-transparent outline-none px-2 py-3 block flex-1"
               onFocus={() => setSearchActive(true)}
               onBlur={() => setSearchActive(false)}
-              onChange={(e) => setSearchTerm((e.target.value).toLowerCase())}
+              onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
               ref={Textbox}
             />
           </div>

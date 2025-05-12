@@ -8,7 +8,7 @@ import { setUserProfile } from "./redux/userSlice";
 import toast from "react-hot-toast";
 import Loader from "./components/Loader";
 import { setLoading } from "./redux/loadingSlice";
-import { TbEye,TbEyeOff } from "react-icons/tb";
+import { TbEye, TbEyeOff } from "react-icons/tb";
 
 const LoginPage = () => {
   const loadingStatus = useSelector((state) => state.loading.isLoading);
@@ -58,10 +58,10 @@ const LoginPage = () => {
             <h3 className="text-2xl font-bold text-center mt-6">Login</h3>
             <form className="mt-8" onSubmit={handleSubmit}>
               <div className="relative mb-6">
-                <label className="block text-md font-semibold">Username</label>
+                <label className="block text-md font-semibold">Email</label>
                 <input
                   type="text"
-                  placeholder="Enter your username or email"
+                  placeholder="Enter your email"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full border-b-2 border-blue-400 focus:outline-none focus:border-blue-500 py-1 pr-8"
