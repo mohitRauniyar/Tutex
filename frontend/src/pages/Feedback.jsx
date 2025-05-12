@@ -41,6 +41,7 @@ const Feedback = () => {
           comment,
           suggestion,
         }),
+        credentials:"include"
       });
 
       if (!response.ok) throw new Error("Submission failed");
