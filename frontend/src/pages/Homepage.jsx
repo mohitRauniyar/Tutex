@@ -147,13 +147,7 @@ export default function Homepage() {
                     key={index}
                   />
                 ))}
-              {/* <CourseCard imageLink={"/assets/Tutorials/phonepeBanner.png"} title={"UPI Payment Tutorial"}/>
-          <CourseCard imageLink={"/assets/Tutorials/whatsapp.png"} title={"Messaging on whatapp"}/>
-          <CourseCard imageLink={"/assets/Tutorials/instagram.png"} title={"Using Instagram"}/>
-          <CourseCard imageLink={"/assets/Tutorials/facebook.png"} title={"Using facebook"}/>
-          <CourseCard imageLink={"/assets/Tutorials/irctc.png"} title={"Ticket booking"}/>
-          <CourseCard imageLink={"/assets/Tutorials/amazon.png"} title={"Shopping on Amazon"}/>
-          <CourseCard imageLink={"/assets/Tutorials/flipkart.png"} title={"Shopping on Flipkart"}/> */}
+              
             </div>
             {showFeedback && (
               <div className="w-full h-28 mt-4 bg-[#30A0FE] p-4 text-white rounded-sm relative" onClick={()=>{navigate("/feedback")}}>
@@ -181,13 +175,7 @@ export default function Homepage() {
                     courseId={data.courseId}
                   />
                 ))}
-              {/* <CourseBanner imageLink={"/assets/Tutorials/whatsapp.png"} title={"Messaging on whatapp"} lessonCount={4}/>
-          <CourseBanner imageLink={"/assets/Tutorials/instagram.png"} title={"Using Instagram"} lessonCount={6}/>
-          <CourseBanner imageLink={"/assets/Tutorials/facebook.png"} title={"Using facebook"} lessonCount={5}/>
-          <CourseBanner imageLink={"/assets/Tutorials/uber.png"} title={"Booking Taxi"} lessonCount={4}/>
-          <CourseBanner imageLink={"/assets/Tutorials/irctc.png"} title={"Ticket booking"} lessonCount={2}/>
-          <CourseBanner imageLink={"/assets/Tutorials/amazon.png"} title={"Shopping on Amazon"} lessonCount={3}/>
-          <CourseBanner imageLink={"/assets/Tutorials/flipkart.png"} title={"Shopping on Flipkart"} lessonCount={3}/> */}
+             
             </div>
           </div>
           <Navbar />
