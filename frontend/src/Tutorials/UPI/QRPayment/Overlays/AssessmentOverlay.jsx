@@ -55,10 +55,10 @@ export default function AssessmentOverlay() {
                     <div className="w-full h-full bg-gradient-to-b from-transparent to-[#000]"></div>
                   </div>
                   <div className="flex flex-col gap-6">
-                    <h1 className="text-2xl">Tutorial Title</h1>
-                    <p className="opacity-50">Lesson-0</p>
-                    <h1>Lesson Title</h1>
-                    <p>Module Name</p>
+                    {/* <h1 className="text-2xl">Tutorial Title</h1>
+                    <p className="opacity-50">Lesson-1</p>
+                    <h1>Lesson Title</h1> */}
+                    <p>Assessment</p>
                   </div>
                 </div>
                 <div className="flex justify-between my-16 gap-4">
