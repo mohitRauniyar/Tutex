@@ -13,12 +13,12 @@ const MainPage = () => {
   const navigate = useNavigate();
 
   const contacts = [
-    { name: "Aabiskar", number: "9849942073", bankingName: "AABISKAR ACHARYA" },
-    { name: "Aadi Yadav", number: "7892835803", bankingName: "AADITYA YADAV" },
-    { name: "Aarav", number: "6397948717", bankingName: "AARAV KUMAR" },
-    { name: "John Doe", number: "9857393330", bankingName: "JOHN DOE" },
-    { name: "Alice", number: "8538920483", bankingName: "ALICE SMITH" },
-    { name: "Marie", number: "5893748091", bankingName: "MARIE CURIE" },
+    { name: "Person 1", number: "1111111111", bankingName: "Person 1" },
+    { name: "Person 2", number: "2222222222", bankingName: "Person 2" },
+    { name: "Person 3", number: "3333333333", bankingName: "Person 3" },
+    { name: "John Doe", number: "4444444444", bankingName: "John Doe" },
+    { name: "Alice", number: "5555555555", bankingName: "Alice" },
+    { name: "Marie", number: "6666666666", bankingName: "Marie" },
   ];
 
   // const filteredContacts = contacts.filter(
