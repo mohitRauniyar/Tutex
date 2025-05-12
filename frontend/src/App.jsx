@@ -42,6 +42,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import HelpCenter from "./pages/HelpCenter";
 import ComingSoon2 from "./pages/ComingSoon2";
 import { setLoading } from "./redux/loadingSlice";
+import Feedback from "./pages/Feedback";
 
 function App() {
   const dispatch = useDispatch();
@@ -127,6 +128,10 @@ function App() {
         <Route
           path="/tutorial/coming-soon"
           element={<ProtectedRoute Component={ComingSoon} />}
+        />
+        <Route
+          path="/feedback"
+          element={<Feedback/>}
         />
 
         {/*UPI QR routes */}
