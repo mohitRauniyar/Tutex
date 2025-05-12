@@ -5,6 +5,7 @@ import Lesson from "./lesson.model.js";
 import Course from "./course.model.js";
 import Assignment from "./assignment.model.js";
 import UnverifiedUser from "./unverifiedData.model.js";
+import Feedback from "./feedback.model.js";
 
 //the above imports are important as it make sure that the sequelize object which is imported below contains info of all the models.
 import sequelize from "../config/database.js";
