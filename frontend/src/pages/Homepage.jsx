@@ -102,21 +102,24 @@ export default function Homepage() {
     return () => controller.abort();
   }, []);
 
-  useEffect(async()=>{
-    try{
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/feedback/query`, {
-        method: "GET",
-        credentials: "include",
-      })
-      if(!response.ok){
-        setShowFeedback(true);
+  useEffect(()=>{
+    const handleFeedback = async ()=>{
+      try{
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/feedback/query`, {
+          method: "GET",
+          credentials: "include",
+        })
+        if(!response.ok){
+          setShowFeedback(true);
+        }
+        else{
+          setShowFeedback(false);
+        }
+      }catch(err){
+        console.log("Failed to fetch the feedback data" + err);
       }
-      else{
-        setShowFeedback(false);
-      }
-    }catch(err){
-      console.log("Failed to fetch the feedback data" + err);
     }
+    handleFeedback()
   }, [])
 
   return (
@@ -153,10 +156,10 @@ export default function Homepage() {
           <CourseCard imageLink={"/assets/Tutorials/flipkart.png"} title={"Shopping on Flipkart"}/> */}
             </div>
             {showFeedback && (
-              <div className="w-full h-32 bg-[#30A0FE] p-4 text-white rounded-sm relative" onClick={()=>{navigate("/feedback")}}>
-              <p className="text-xl font-semibold mb-2">Help us improve our services.</p>
+              <div className="w-full h-28 mt-4 bg-[#30A0FE] p-4 text-white rounded-sm relative" onClick={()=>{navigate("/feedback")}}>
+              <p className="text-lg font-semibold mb-2">Help us improve our services.</p>
               <p>Submit your feedback</p>
-              <a href="/feedback" className="text-[#30A0FE] bg-white text-lg px-3 py-2 absolute right-3 bottom-3 rounded-sm">Go to feedback</a>
+              <a href="/feedback" className="text-[#30A0FE] bg-white text-md px-3 py-2 absolute right-3 bottom-3 rounded-sm">Go to feedback</a>
           </div>
             )}
             <Link

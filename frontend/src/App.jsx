@@ -131,7 +131,9 @@ function App() {
         />
         <Route
           path="/feedback"
-          element={<Feedback/>}
+          element={
+            <ProtectedRoute Component={Feedback} />
+          }
         />
 
         {/*UPI QR routes */}
