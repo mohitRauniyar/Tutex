@@ -16,12 +16,12 @@ export default function NumberSearch() {
 
   const handleContactClick = () => {
     if (number.length === 10) {
-      navigate("/tutorial/UPI/send-money", {
+      navigate(`/tutorial/UPI/Mobile/send-money/${mode}`, {
         state: {
           name: "Unknown",
           number: number,
-          bankingName: "Person1"
-        }
+          bankingName: "Person1",
+        },
       });
     }
   };
@@ -29,7 +29,12 @@ export default function NumberSearch() {
   return (
     <div className="p-2 max-w-md mx-auto bg-gray-100 min-h-screen">
       <div className="flex items-center pb-2 bg-white rounded fixed top-0 left-0 right-0 z-10 h-15">
-        <button onClick={() => navigate('/tutorial/UPI/to-contact')} className="mr-2 ml-3">
+        <button
+          onClick={() =>
+            navigate(`/tutorial/UPI/Mobile/choose-contact/${mode}`)
+          }
+          className="mr-2 ml-3"
+        >
           <ArrowLeft size={24} />
         </button>
         <input
@@ -43,7 +48,7 @@ export default function NumberSearch() {
       {number && (
         <div className="mt-15 p-1 shadow-md bg-white rounded-lg">
           <h3 className="text-gray-600 font-semibold pl-3">Search Results</h3>
-          <div 
+          <div
             className="flex items-center mt-1 p-2 bg-white rounded-lg cursor-pointer"
             onClick={handleContactClick}
           >
