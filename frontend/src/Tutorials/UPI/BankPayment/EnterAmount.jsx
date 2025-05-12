@@ -73,7 +73,7 @@ export default function EnterAmount() {
       </div>
 
       {/* Amount Input */}
-      <div className="mt-auto w-full px-4">
+      <div className="absolute bottom-4 w-full px-4">
         <div className="w-full mt-auto flex justify-end">
           <button className="px-4 py-2 mb-2 border-gray-400 border-2 border-dashed rounded-full text-sm">
             Send ₹1

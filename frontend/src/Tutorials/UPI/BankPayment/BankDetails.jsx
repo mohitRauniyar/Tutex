@@ -26,7 +26,12 @@ export default function AddBankDetails() {
       "practice":"ABCD0000",
       "assessment":"IFSC1234"
     }
-    if(accountNumber === "123456789" && ifsc === ifsc_mode[mode]){
+    const accNos = {
+      "walkthrough":"123456789",
+      "practice":"5432102",
+      "assessment":"8521349"
+    }
+    if(accountNumber === accNos[mode] && ifsc === ifsc_mode[mode]){
         setDisabled(false);
     }else setDisabled(true);
   },[accountNumber,ifsc])

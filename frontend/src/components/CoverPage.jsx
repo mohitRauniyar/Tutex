@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { INSTRUCTIONS } from "../constants";
 
-export default function CoverPage() {
-  const [show, setShow] = useState(true);
+export default function CoverPage({show,setShow,mode}) {
   const { assignmentId, lessonId, moduleName } = useSelector(
     (state) => state.currentAssignment
   );
@@ -15,16 +14,16 @@ export default function CoverPage() {
     navigate(-1);
   }
   return (
-    <div className={show?"absolute z-50 bg-white h-screen w-full":"hidden"}>
+    <div className={show?" bg-white h-screen w-full":"hidden"}>
       <Header />
-      <div className="mt-20 mb-16 p-8">
-        <h2 className="text-3xl mb-8">Practice</h2>
-        <h1 className="text-4xl mb-8">{lessonId && INSTRUCTIONS[lessonId].title}</h1>
+      <div className="pt-24 mb-16 p-8 h-full">
+        <h2 className="text-3xl mb-8">{mode.charAt(0).toUpperCase()+mode.substring(1)}</h2>
+        <h1 className="text-4xl mb-8">{lessonId && INSTRUCTIONS[lessonId][mode].title}</h1>
         
         <h1 className="text-2xl mb-8 font-bold">Your Task:</h1>
         <div
           className="mb-12"
-          dangerouslySetInnerHTML={lessonId && { __html: INSTRUCTIONS[lessonId].instructionText }}
+          dangerouslySetInnerHTML={lessonId && { __html: INSTRUCTIONS[lessonId][mode].instructionText }}
         ></div>
         {lessonId && (
 

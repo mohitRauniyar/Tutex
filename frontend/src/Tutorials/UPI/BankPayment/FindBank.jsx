@@ -7,6 +7,7 @@ import AssessmentOverlay from "./Overlays/AssessmentOverlay";
 import { MODES } from "../../../constants.js";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import {toast} from "react-hot-toast"
 
 const popularBanks = [
   { name: "State Bank of India", logo: "/logos/sbi.png" },
@@ -63,7 +64,10 @@ const BankSelector = () => {
     setBanks(filteredBanks);
   };
   const handleSelect = (bankName)=>{
-    navigate(`/tutorial/UPI/Bank/addDetails/${mode}`,{state:{bankName:bankName}});
+    if(mode === MODES.WALKTHROUGH || mode === MODES.PRACTICE && bankName === "State Bank Of India" || mode === MODES.ASSESSMENT && bankName === "Bank Of Baroda")
+      navigate(`/tutorial/UPI/Bank/addDetails/${mode}`,{state:{bankName:bankName}});
+    else
+      toast.error("Please Select the instructed bank");
   }
   
   return (

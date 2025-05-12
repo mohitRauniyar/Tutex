@@ -17,7 +17,7 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
       {
         text: "Click on To Mobile Number",
         target: "mobilecontact",
-        instructionPosition: { x: 105, y: 100 },
+        instructionPosition: { x: 109, y: 100 },
         pulsate: true,
       },
     ],
@@ -41,7 +41,7 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
         text: "Type marie on the search box. If you something else then you won't be able to move forward",
         target: "Textbox",
         button: true,
-        instructionPosition: { x: 0, y: 100 },
+        instructionPosition: { x: 4, y: 100 },
         pulsate: true,
       },
       {
@@ -49,7 +49,7 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
         target: "searchtext",
         // button: true,
         pulsate: true,
-        // instructionPosition: { x: 8  0, y: 100 },
+        instructionPosition: { x: 18, y: 80 },
       },
     ],
     enterAmount: [
@@ -61,7 +61,7 @@ function WalkthroughOverlay({ step, refs, onComplete }) {
       {
         text: "Enter the amount in the highlighted field. For this exercise let's enter an amount of Rs. 120.",
         target: "amountInputRef",
-        instructionPosition: { x:50, y: -400 },
+        instructionPosition: { x:20, y: -400 },
         // button: true
       },
       {
