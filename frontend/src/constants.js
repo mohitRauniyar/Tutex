@@ -1,9 +1,9 @@
 import { Divide } from "lucide-react";
 
 export const MODES = {
-    WALKTHROUGH: "walkthrough",
-    PRACTICE: "practice",
-    ASSESSMENT: "assessment",
+  WALKTHROUGH: "walkthrough",
+  PRACTICE: "practice",
+  ASSESSMENT: "assessment",
 };
 
 export const UPI_QR_INSTRUCTIONS = {
@@ -94,118 +94,160 @@ export const UPI_QR_INSTRUCTIONS = {
 };
 
 export const HINTS = {
-  "UPI_QR_landing": {
+  UPI_QR_landing: {
     text: "Click on the Scan QR code button at the bottom of the screen.",
-    ref: ["qrScanRef"]
+    ref: ["qrScanRef"],
   },
-  "UPI_QR_qrScanning":{
-    text : "Drag the QR code at the bottom into the scanning area.",
-    ref: ["qrCodeRef", "scanningArea"]
+  UPI_QR_qrScanning: {
+    text: "Drag the QR code at the bottom into the scanning area.",
+    ref: ["qrCodeRef", "scanningArea"],
   },
-  "UPI_QR_enterAmount":{
+  UPI_QR_enterAmount: {
     text: "Enter the amount and click on 'Proceed to Pay' button.",
-    ref: ["amountInputRef", "proceedRef"]
+    ref: ["amountInputRef", "proceedRef"],
   },
-  "UPI_QR_enterPin":{
+  UPI_QR_enterPin: {
     text: "Enter the pin as '0000' using the keyboard.",
-    ref: []
+    ref: [],
   },
-  "UPI_Mobile_landing":{
+  UPI_Mobile_landing: {
     text: "Click on the To mobile Number icon right below the Money Transfer",
-    ref:["mobilecontact"]
+    ref: ["mobilecontact"],
   },
-  "UPI_Mobile_Searchbox":{
+  UPI_Mobile_Searchbox: {
     text: "Click on the search box.",
-    ref:["searchbox"],
+    ref: ["searchbox"],
   },
-  "UPI_Mobile_TypeMarie":{
-    text:"Type marie on the search box first and then click on the box where Marie's contact is popping up.",
-    ref:["Textbox"],
+  UPI_Mobile_TypeMarie: {
+    text: "Type marie on the search box first and then click on the box where Marie's contact is popping up.",
+    ref: ["Textbox"],
   },
-  "UPI_Mobile_EnterAmount":{
-    text:"Click on the chatbox to enter an amount of your choice and then click on green send button at the right corner.",
-    ref:["amountInputRef"],
+  UPI_Mobile_EnterAmount: {
+    text: "Click on the chatbox to enter an amount of your choice and then click on green send button at the right corner.",
+    ref: ["amountInputRef"],
   },
-  "UPI_Mobile_EnterPin":{
+  UPI_Mobile_EnterPin: {
     text: "Enter pin 0000 using the keyboard to send an amount.",
-    ref:[],
+    ref: [],
   },
-  "Bank_Pay_landing":{
-    text:"Click on the bank icon present at the middle of the screen.",
-    ref:[]
+  Bank_Pay_landing: {
+    text: "Click on the bank icon present at the middle of the screen.",
+    ref: [],
   },
-  "Bank_Choose_Option":{
-    text:"Select 'To Account Number & IFSC' in second option",
-    ref:[]
+  Bank_Choose_Option: {
+    text: "Select 'To Account Number & IFSC' in second option",
+    ref: [],
   },
-  "Bank_Add_Button":{
-    text:"Click on 'Add Beneficiary Account' button.",
-    ref:[]
+  Bank_Add_Button: {
+    text: "Click on 'Add Beneficiary Account' button.",
+    ref: [],
   },
-  "Select_Bank_Step":{
-    text:"Search the name of receiver's bank or select from the given options.",
-    ref:[]
+  Select_Bank_Step: {
+    text: "Search the name of receiver's bank or select from the given options. Here receiver's bank is State Bank Of India",
+    ref: [],
   },
-  "Fill_Account_Details":{
-    text:"Here, you need to fill the account number and IFSC code of receiver's bank. For practice purpose, Assume receiver's account number = '123456789' and IFSC code = 'ABCD0000'. After entering correctly receiver's name: XYZ will be displayed.",
-    ref:[]
+  Fill_Account_Details: {
+    text: "Here, you need to fill the account number and IFSC code of receiver's bank.Here, receiver's account number = '5432102' and IFSC code = 'ABCD0000'. After entering correctly receiver's name: XYZ will be displayed.",
+    ref: [],
   },
-  "Enter_Amount_Value":{
-    text:"Here, you need the enter the amount you want to send to the receiver's bank account.",
-    ref:[]
+  Enter_Amount_Value: {
+    text: "Here, you need the enter the amount you want to send to the receiver's bank account.",
+    ref: [],
   },
-  "Enter_Pin_Value":{
-    text:"Here, you need to give your pin. For practice, assume pin = '0000'",
-    ref:[]
-  }
-
+  Enter_Pin_Value: {
+    text: "Here, you need to give your pin. For practice, assume pin = '0000'",
+    ref: [],
+  },
 };
 
 export const URL_MAPS = {
   1: "UPI",
   2: "UPI/Mobile",
   3: "UPI/Bank",
-  _: "coming-soon"
-}
+  _: "coming-soon",
+};
 
 export const INSTRUCTIONS = {
   1: {
-    title: "UPI payments via QR Scan",
-    instructionText:`<div class="flex flex-col gap-4 text-xl">
+    practice: {
+      title: "UPI payments via QR Scan",
+      instructionText: `<div class="flex flex-col gap-4 text-xl">
               <h1>Send the following amount to the receiver using the QR code scanning method using the pin given below.</h1>
               <ul class="list-disc ml-8">
                 <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
                 <li><h1><strong>Your Pin: </strong> 0000</h1></li>
               </ul>
               <h2><i>Click on the start button to start practicing.</i></h2>
-            </div>`
+            </div>`,
+    },
+    assessment: {
+      title: "UPI payments via QR Scan",
+      instructionText: `<div class="flex flex-col gap-4 text-xl">
+              <h1>Send the following amount to the receiver using the QR code scanning method using the pin given below.</h1>
+              <ul class="list-disc ml-8">
+                <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
+                <li><h1><strong>Your Pin: </strong> 0000</h1></li>
+              </ul>
+              <h2><i>Click on the start button to start practicing.</i></h2>
+            </div>`,
+    },
   },
   2: {
-    title: "UPI payments to a mobile number",
-    instructionText:`<div class="flex flex-col gap-4 text-xl">
+    practice: {
+      title: "UPI payments to a mobile number",
+      instructionText: `<div class="flex flex-col gap-4 text-xl">
               <h1>Send the following amount to the receiver using their mobile number scanning method using the pin given below.</h1>
               <ul class="list-disc ml-8">
-                <li><h1><strong>Receiver: </strong>Marie</h1></li>
-                <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
+                <li><h1><strong>Receiver: </strong>Any Person</h1></li>
+                <li><h1><strong>Amount: </strong>Any Amount</h1></li>
                 <li><h1><strong>Your Pin: </strong> 0000</h1></li>
               </ul>
               <h2><i>Click on the start button to start practicing.</i></h2>
-            </div>`
+            </div>`,
+    },
+    assessment: {
+      title: "UPI payments to a mobile number",
+      instructionText: `<div class="flex flex-col gap-4 text-xl">
+              <h1>Send the following amount to the receiver using their mobile number scanning method using the pin given below.</h1>
+              <ul class="list-disc ml-8">
+                <li><h1><strong>Receiver: </strong>Any Person</h1></li>
+                <li><h1><strong>Amount: </strong>Any Amount</h1></li>
+                <li><h1><strong>Your Pin: </strong>0000</h1></li>
+              </ul>
+              <h2><i>Click on the start button to start practicing.</i></h2>
+            </div>`,
+    },
   },
   3: {
-    title: "UPI payments via QR Scan",
-    instructionText:`<div class="flex flex-col gap-4 text-xl">
-              <h1>Send the following amount to the receiver using their bank account number using the pin given below.</h1>
+    practice: {
+      title: "UPI payments via Bank",
+      instructionText: `<div class="flex flex-col gap-4 text-xl">
+              <h1>Send the following amount to the receiver using their bank account details using the pin given below.</h1>
               <ul class="list-disc ml-8">
-                <li><h1><strong>Bank: </strong>DhanLaxmi Bank</h1></li>
+                <li><h1><strong>Bank: </strong>State Bank Of India</h1></li>
                 <li><h1><strong>IFSC Code: </strong>ABCD0000</h1></li>
-                <li><h1><strong>Account Number: </strong>123456789</h1></li>
+                <li><h1><strong>Account Number: </strong>5432102</h1></li>
                 <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
                 <li><h1><strong>Your Pin: </strong> 0000</h1></li>
               </ul>
               <h2><i>Click on the start button to start practicing.</i></h2>
-            </div>`
-  }
-}
+            </div>`,
+    },
+    assessment: {
+      title: "UPI payments via Bank",
+      instructionText: `<div class="flex flex-col gap-4 text-xl">
+              <h1>Send the following amount to the receiver using their bank account details using the pin given below.</h1>
+              <ul class="list-disc ml-8">
+                <li><h1><strong>Bank: </strong>Bank Of Baroda</h1></li>
+                <li><h1><strong>IFSC Code: </strong>IFSC1234</h1></li>
+                <li><h1><strong>Account Number: </strong>8521349</h1></li>
+                <li><h1><strong>Amount: </strong>Rs. 120</h1></li>
+                <li><h1><strong>Your Pin: </strong> 0000</h1></li>
+              </ul>
+              <h2><i>Click on the start button to start practicing.</i></h2>
+            </div>`,
+    },
+  },
+};
 
 export const COURSES = ["UPI Payment"];

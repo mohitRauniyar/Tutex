@@ -21,7 +21,7 @@ export default function SendMoneyPage() {
 
   const handleChange = (e) => {
     const value = e.target.value.replace(/[^0-9]/g, "");
-    if (value === "" || parseInt(value, 10) <= 100000) {
+    if (value === "" || parseInt(value,10) >0 && parseInt(value, 10) <= 100000) {
       setAmount(value);
     }
   };
