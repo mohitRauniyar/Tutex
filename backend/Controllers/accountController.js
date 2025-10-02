@@ -4,9 +4,6 @@ import { getDataFromSequelizeResponse } from "../utils/SequelizeToData.js";
 import { configDotenv } from "dotenv";
 import bcrypt from "bcryptjs";
 import { validatePassword } from "../utils/verificationUtilities.js";
-import { generateOTP } from "../utils/OTPGeneration.js";
-import { sendEmail } from "../utils/EmailUtility.js";
-import { decryptToken, generateToken } from "../utils/JwtTokenHandler.js";
 
 
 configDotenv();
@@ -74,7 +71,6 @@ export const deleteAccount = async (req,res)=>{
                 userId:userId
             }
         })
-        res.clearCookie("auth-token",{path:"/",httpOnly:true,sameSite:"None",secure:true});
         return res.status(200).json({message:"Account deleted Successfully"});
     }catch(err){
         console.log(err.message);   

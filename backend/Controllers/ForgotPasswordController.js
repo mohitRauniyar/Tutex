@@ -6,119 +6,130 @@ import bcrypt from "bcryptjs";
 import { validatePassword } from "../utils/verificationUtilities.js";
 import { generateOTP } from "../utils/OTPGeneration.js";
 import { sendEmail } from "../utils/EmailUtility.js";
-import { decryptToken, generateToken } from "../utils/JwtTokenHandler.js";
-
+import Verification from "../models/verfication.model.js";
 
 configDotenv();
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
-export const forgotPassword = async(req,res)=>{
-    try{
-        const {email} = req.body;
-        if(email === undefined){
-            return res.status(400).json({message:"Incomplete request"});
-        }
-        const queryResponse = await User.findOne({
-            where:{
-                username:email
-            }
-        });
-
-        if(!queryResponse){
-            return res.status(400).json({message:"Please provide your registered email address"});
-        }
-    
-        const OTP = generateOTP();
-        sendEmail(email,OTP);
-        const cookieContent = {
-            otp:OTP,
-            email:email
-        }
-        const verifyToken = generateToken(cookieContent);
-        res.cookie("token-v",verifyToken,{
-            httpOnly:true,
-            path:'/password/forgot',
-            maxAge:2*60*1000,
-            secure:true,
-            sameSite:"None"
-        });
-        return res.status(200).json({message:"Please enter otp sent on your email address"});
-
-    }catch(err){
-        console.log(err.message);   
-        return res.status(500).json({message:"Internal Server Error"});
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (email === undefined) {
+      return res.status(400).json({ message: "Incomplete request" });
     }
-}
+    const queryResponse = await Profile.findOne({
+      where: {
+        email: email,
+      },
+      include:User
+    });
 
-export const forgotPasswordVerifier = async (req,res)=>{
-    try{
-        const {otp} = req.body;
-        if(otp === undefined)return res.status(400).json({message:"Incomplete request"});
-
-        const token = req.cookies["token-v"];
-        if(!token){
-            return res.status(401).json({message:"OTP expired. Please restart the process!"});
-        }
-        let {otp:actualOTP,email} = decryptToken(token);
-        if(actualOTP === undefined || parseInt(actualOTP) !== parseInt(otp)){
-            return res.status(400).json({message:"Please enter the correct OTP!"});
-        }
-        res.clearCookie("token-v",{httpOnly:true,path:"/password/forgot",secure:true,sameSite:"None"});
-        let cookieContent = {
-            email:email,
-            emailVerified:true
-        }
-        const newtoken = generateToken(cookieContent);
-        res.cookie("token-s",newtoken,{
-            httpOnly:true,
-            path:'/password/forgot',
-            maxAge:5*60*1000,
-            secure:true,
-            sameSite:"None"
-        })
-        return res.status(200).json({message:"Please enter your new password!"});
-    }catch(err){
-        console.log(err.message);   
-        return res.status(500).json({message:"Internal Server Error"});
+    if (!queryResponse) {
+      return res
+        .status(400)
+        .json({ message: "Please provide your registered email address" });
     }
-}
-
-
-export const forgotPasswordUpdatePassword = async (req,res)=>{
-    try{
-        const {password} = req.body;
-        if(password === undefined){
-            return res.status(400).json({message:"Incomplete request!"});
-        }
-        if(!validatePassword(password)){
-            return res.status(400).json({message:"Password doesn't satisfy necessary conditions!"});
-        }
-
-        const token = req.cookies["token-s"];
-        if(!token){
-            return res.status(400).json({message:"Session expired. Please restart the process"});
-        }
-        const {email,emailVerified} = decryptToken(token);
-        if(!emailVerified){
-            return res.status(401).json({message:"Access Denied"});
-        }
-
-        //update the password
-        const hashPassword = bcrypt.hashSync(password,saltRounds);
-
-        await User.update({
-            password:hashPassword,
-        },{
-            where:{
-                username:email
-            }
-        });
-        res.clearCookie("auth-token",{path:"/",httpOnly:true,secure:"true",sameSite:"None"});//path is always necessary to specify. By default '/' is taken on which auth-token is set and hence no need to mention it.
-        res.clearCookie("token-s",{httpOnly:true,path:"/password/forgot",secure:true,sameSite:"None"});
-        return res.status(200).json({message:"Password Updated Successfully!"});
-
-    }catch(err){
-        console.log(err.message);   
-        return res.status(500).json({message:"Internal Server Error"});
+    const {User:user} = getDataFromSequelizeResponse(queryResponse);
+    if(!user.verified){
+      return res.status(400).json({message:"Please provide your registered email address"});
     }
-}
+    const OTP = generateOTP();
+    sendEmail(email, OTP);
+    //utilizing the same verification table for storing the OTP in case of forgot password as well
+    await Verification.update(
+      {
+        otp: OTP,
+        otpExpiryTime: new Date(new Date() + 5 * 60 * 1000),
+      },
+      {
+        where: {
+          email: email,
+        },
+      }
+    );
+    return res
+      .status(200)
+      .json({ message: "Please enter otp sent on your email address" });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const forgotPasswordVerifier = async (req, res) => {
+  try {
+    const { otp, email } = req.body;
+    if(otp === undefined || email === undefined){
+        return res.status(400).json({message:"Incomplete request"})
+    }
+    const verficationResponse = await Verification.findOne({
+      where: {
+        otp: otp,
+        email: email,
+      },
+    });
+
+    if (!verficationResponse) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+    const { otpExpiryTime } = getDataFromSequelizeResponse(verficationResponse);
+    if (otpExpiryTime < new Date()) {
+      return res.status(400).json({ message: "OTP expired" });
+    }
+    //otp matched so verification is successful
+    return res
+      .status(200)
+      .json({
+        message:
+          "Authentication Successful. Proceed to provide the new password.",
+      });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const forgotPasswordUpdatePassword = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (email === undefined || password === undefined) {
+      return res.status(400).json({ message: "Incomplete request!" });
+    }
+    if (!validatePassword(password)) {
+      return res.status(400).json({ message: "Password doesn't satisfy necessary conditions!" });
+    }
+
+    const profileResponse = await Profile.findOne({
+      where: {
+        email: email,
+      },
+      attributes: ["userId"],
+      include: User
+    });
+
+    if (!profileResponse) {
+      return res.status(400).json({ message: "Bad request" });
+    }
+
+    const { userId, User:user } = getDataFromSequelizeResponse(profileResponse);
+    //check if the password matches the previous password
+    if(bcrypt.compareSync(password, user.password)){
+        return res.status(400).json({message:"Please provide a new password!"});
+    }
+    const hashPassword = bcrypt.hashSync(password, saltRounds);
+    await User.update(
+      {
+        password: hashPassword,
+      },
+      {
+        where: {
+          userId: userId,
+        },
+      }
+    );
+    return res.status(200).json({ message: "Password Updated Successfully!" });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};

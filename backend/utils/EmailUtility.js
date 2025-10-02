@@ -4,7 +4,6 @@ import nodemailer from "nodemailer";
 configDotenv();
 
 export const sendEmail = (email, message) => {
-    console.log(email);
     
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",

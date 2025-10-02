@@ -44,27 +44,5 @@ export const loginController = async (req,res)=>{
 
 const handleResponse = (req,res,profile)=>{
     const authToken = generateToken(profile.profileId);
-    res.cookie("auth-token",authToken,{
-        maxAge:24*60*60*1000,
-        httpOnly:true,
-        secure:true,
-        sameSite:"None"
-    });
-    return res.status(200).json({message:"Login Successful",body:{userProfile:profile}});
-}
-
-
-
-
-export const logOutController = (req,res)=>{
-    try{
-        if(req.cookies["auth-token"] === undefined){
-            return res.status(400).json({message:"Bad request"});
-        }
-        res.clearCookie("auth-token",{path:"/",httpOnly:true,secure:true,sameSite:"None"});
-        return res.status(200).json({message:"Logout Successful"});
-    }catch(err){
-        console.log(err.message);
-        return res.status(500).json({message:"Internal Server error"});
-    }
+    return res.status(200).json({message:"Login Successful",body:{userProfile:profile, "auth_token":authToken}});
 }
