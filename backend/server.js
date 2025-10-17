@@ -9,12 +9,14 @@ import forgotPasswordRoute from "./routes/passwordRoute.js"
 import autoLoginRoute from "./routes/autoLoginRoute.js"
 import healthRoute from "./routes/healthCheckRoute.js"
 import syncDB from "./models/index.js";
+import cors from "cors";
 
 
 configDotenv();
 const app = express();
 const port = process.env.PORT;
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
